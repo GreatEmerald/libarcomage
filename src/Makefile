@@ -10,7 +10,7 @@ clean:
 
 #GE: This line is repeated when linking. This is linking.
 $(BIN): minIni.o arco.o common.o cards.o config.o network.o
-	$(CC) -shared minIni.o arco.o common.o cards.o config.o network.o -m64 `pkg-config --libs sdl` -lSDL_image -lSDL_net -lSDL_mixer `pkg-config --libs lua` -lrt ../lib/libArcomageD.a -lphobos2 -lpthread -o $(BIN)
+	$(CC) -shared -Wl,--no-undefined minIni.o arco.o common.o cards.o config.o network.o -m64 `pkg-config --libs sdl` -lSDL_image -lSDL_net -lSDL_mixer `pkg-config --libs lua` -lrt ../lib/libArcomageD.a -lphobos2 -lpthread -o $(BIN)
 
 #GE: Unsupported FIXME!
 $(BINSERVER): minIni.o arcosrv.o network.o common.o cards.o
@@ -18,4 +18,4 @@ $(BINSERVER): minIni.o arcosrv.o network.o common.o cards.o
 
 #GE: This line is repeated for each of the files. This is compilation.
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ `pkg-config --cflags sdl` `pkg-config --cflags lua`
+	$(CC) $(CFLAGS) -shared -fPIC -c $< -o $@ `pkg-config --cflags sdl` `pkg-config --cflags lua`
