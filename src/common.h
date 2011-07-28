@@ -16,6 +16,25 @@
 	void FatalError(char *fmt,...);
 	void OpenWebLink(char *web);
 
+  enum SoundTypes
+  {
+    Shuffle,
+    Damage,
+    ResB_Up,
+    ResB_Down,
+    ResS_Up,
+    ResS_Down,
+    Tower_Up,
+    Wall_Up
+  };
+
+  struct FrontendFunctions
+  {
+    void (*Sound_Play)(enum SoundTypes);
+  }FrontendFunctions;
+  
+  //void Sound_Play(enum SoundTypes);
+
 #ifdef linux
 	#define OPERATINGSYSTEM 1
 	#define CONFIGFILE "arcomage.cfg"

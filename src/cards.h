@@ -16,20 +16,7 @@ int bSpecialTurn; ///< Used for determining whether or not this is a discarding 
 int turn; ///< Number of the player whose turn it is.
 int nextturn; ///< Number of the player who will go next.
 int lastturn; ///< Number of the player whose turn ended before.
-
-/*struct CardInfo { //GE: OBSOLETE -- Use D instead!
-    int ID;
-    int Frequency; //GE: This is the number of cards of this type in the deck. 1=Rare, 2=Uncommon, 3=Common
-    char Name[128];
-    char Description[128];
-    int BrickCost; //GE: These three are for rendering purposes, but are used in code as well
-    int GemCost;
-    int RecruitCost;
-    char *Colour; //GE: Red, Geen, Blue, Gray/Grey/Black, Brown/White. Rendering purposes, mostly for 0 cost coloured cards
-    char *Picture; //GE: Rendering purposes. Might also add coordinates.
-    char *Keywords; //GE: Might become an array. These are MArcomage keywords, also used in Lua functions
-    char *LuaFunction; //GE: This is what we call on playing the card.
-};*/                                  
+                            
 //GE: The longest names are with 16 characters right now. ...blasted char arrays :\
 //GE: Also funny that it's an array of structs of arrays.
 int GetCard();

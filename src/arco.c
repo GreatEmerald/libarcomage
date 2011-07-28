@@ -25,6 +25,7 @@
 SDL_Event event; ///< Event placeholder.
 lua_State *L; ///< Lua support, main state.
 
+void DecoySoundPlay(enum SoundTypes);
 
 /**
  * Dumps the contents of the Lua stack.
@@ -146,6 +147,7 @@ void Init()
 {
     aiplayer=-1;
     netplayer=-1;
+    FrontendFunctions.Sound_Play = &DecoySoundPlay;
     
     InitLua();
     InitD();
@@ -153,16 +155,16 @@ void Init()
     ReadConfig();
 
     atexit(SDL_Quit); //GE: What is this for?
-    if (soundenabled) Sound_Init();
-    Graphics_Init(fullscreen);
+    //if (soundenabled) Sound_Init();
+    //Graphics_Init(fullscreen);
 }
 
 /// Exit sequence.
 /// Authors: GreatEmerald, STiCK.
 void Quit()
 {
-    Graphics_Quit();
-    Sound_Quit();
+    //Graphics_Quit();
+    //Sound_Quit();
     lua_close(L); //GE: Close Lua
     rt_term(); //GE: Terminate D
 }

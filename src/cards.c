@@ -5,6 +5,7 @@
 #include <lauxlib.h>
 #include "cards.h"
 #include "config.h"
+#include "common.h"
 //#include "sound.h"
 
 int req[3][35] = {
@@ -333,7 +334,7 @@ void ShuffleQ()
 	{
       printf("After: Q[%d]=%d\n", i, Q[i]);
   } */
-	Sound_Play(SHUFFLE);
+	FrontendFunctions.Sound_Play(Shuffle);
 }
 
 void InitDeck()
@@ -1206,7 +1207,7 @@ int L_Damage (lua_State *L)
 	Player[Who].t -= (Amount - Player[Who].w);
 	Player[Who].w = 0;
     }
-    Sound_Play(DAMAGE);
+    FrontendFunctions.Sound_Play(Damage);
     
     return 0;
 }
@@ -1224,7 +1225,7 @@ int L_AddQuarry (lua_State *L)
     if (Player[Who].q < 99)
     {
 	Player[Who].q += Amount;
-	Sound_Play(RESB_UP);
+	FrontendFunctions.Sound_Play(ResB_Up);
     }
     
     return 0;
@@ -1243,7 +1244,7 @@ int L_AddMagic (lua_State *L)
     if (Player[Who].m < 99)
     {
 	Player[Who].m += Amount;
-	Sound_Play(RESB_UP);
+	FrontendFunctions.Sound_Play(ResB_Up);
     }
     
     return 0;
@@ -1262,7 +1263,7 @@ int L_AddDungeon (lua_State *L)
     if (Player[Who].d < 99)
     {
 	Player[Who].d += Amount;
-	Sound_Play(RESB_UP);
+	FrontendFunctions.Sound_Play(ResB_Up);
     }
     
     return 0;
@@ -1281,7 +1282,7 @@ int L_AddBricks (lua_State *L)
     if (Player[Who].b < 999)
     {
 	Player[Who].b += Amount;
-	Sound_Play(RESS_UP);
+	FrontendFunctions.Sound_Play(ResS_Up );
     }
     
     return 0;
@@ -1300,7 +1301,7 @@ int L_AddGems (lua_State *L)
     if (Player[Who].g < 999)
     {
 	Player[Who].g += Amount;
-	Sound_Play(RESS_UP);
+	FrontendFunctions.Sound_Play(ResS_Up);
     }
     
     return 0;
@@ -1319,7 +1320,7 @@ int L_AddRecruits (lua_State *L)
     if (Player[Who].r < 999)
     {
 	Player[Who].r += Amount;
-	Sound_Play(RESS_UP);
+	FrontendFunctions.Sound_Play(ResS_Up);
     }
     
     return 0;
@@ -1338,7 +1339,7 @@ int L_AddTower (lua_State *L)
     if (Player[Who].t < 200)
     {
 	Player[Who].t += Amount;
-	Sound_Play(TOWER_UP);
+	FrontendFunctions.Sound_Play(Tower_Up);
     }
     
     return 0;
@@ -1357,7 +1358,7 @@ int L_AddWall (lua_State *L)
     if (Player[Who].w < 200)
     {
 	Player[Who].w += Amount;
-	Sound_Play(WALL_UP);
+	FrontendFunctions.Sound_Play(Wall_Up);
     }
     
     return 0;
@@ -1376,7 +1377,7 @@ int L_RemoveQuarry (lua_State *L)
     if (Player[Who].q > 1)
     {
 	Player[Who].q -= Amount;
-	Sound_Play(RESB_DOWN);
+	FrontendFunctions.Sound_Play(ResB_Down);
     }
     
     return 0;
@@ -1395,7 +1396,7 @@ int L_RemoveMagic (lua_State *L)
     if (Player[Who].m > 1)
     {
 	Player[Who].m -= Amount;
-	Sound_Play(RESB_DOWN);
+	FrontendFunctions.Sound_Play(ResB_Down);
     }
     
     return 0;
@@ -1414,7 +1415,7 @@ int L_RemoveDungeon (lua_State *L)
     if (Player[Who].d > 1)
     {
 	Player[Who].d -= Amount;
-	Sound_Play(RESB_DOWN);
+	FrontendFunctions.Sound_Play(ResB_Down);
     }
     
     return 0;
@@ -1433,7 +1434,7 @@ int L_RemoveBricks (lua_State *L)
     if (Player[Who].b > 0)
     {
 	Player[Who].b -= Amount;
-	Sound_Play(RESS_DOWN);
+	FrontendFunctions.Sound_Play(ResS_Down);
     }
     
     return 0;
@@ -1452,7 +1453,7 @@ int L_RemoveGems (lua_State *L)
     if (Player[Who].g > 0)
     {
 	Player[Who].g -= Amount;
-	Sound_Play(RESS_DOWN);
+	FrontendFunctions.Sound_Play(ResS_Down);
     }
     
     return 0;
@@ -1471,7 +1472,7 @@ int L_RemoveRecruits (lua_State *L)
     if (Player[Who].r > 0)
     {
 	Player[Who].r -= Amount;
-	Sound_Play(RESS_DOWN);
+	FrontendFunctions.Sound_Play(ResS_Down);
     }
     
     return 0;
@@ -1488,7 +1489,7 @@ int L_RemoveTower (lua_State *L)
     Who = GetAbsolutePlayer(Who); //GE: Relative to absolute conversion.
     
     Player[Who].t -= Amount;
-    Sound_Play(DAMAGE);
+    FrontendFunctions.Sound_Play(Damage);
     
     return 0;
 }
@@ -1506,7 +1507,7 @@ int L_RemoveWall (lua_State *L)
     if (Player[Who].w > 0)
     {
 	Player[Who].w -= Amount;
-	Sound_Play(DAMAGE);
+	FrontendFunctions.Sound_Play(Damage);
     }
     
     return 0;
@@ -1635,9 +1636,9 @@ int L_SetQuarry (lua_State *L)
     Who = GetAbsolutePlayer(Who); //GE: Relative to absolute conversion.
     
     if (Player[Who].q < Amount)
-	Sound_Play(RESB_UP);
+	FrontendFunctions.Sound_Play(ResB_Up);
     else if (Player[Who].q > Amount)
-	Sound_Play(RESB_DOWN);
+	FrontendFunctions.Sound_Play(ResB_Down);
     
     Player[Who].q = Amount;
     
@@ -1655,9 +1656,9 @@ int L_SetMagic (lua_State *L)
     Who = GetAbsolutePlayer(Who); //GE: Relative to absolute conversion.
     
     if (Player[Who].m < Amount)
-	Sound_Play(RESB_UP);
+	FrontendFunctions.Sound_Play(ResB_Up);
     else if (Player[Who].m > Amount)
-	Sound_Play(RESB_DOWN);
+	FrontendFunctions.Sound_Play(ResB_Down);
     
     Player[Who].m = Amount;
     
@@ -1675,9 +1676,9 @@ int L_SetWall (lua_State *L)
     Who = GetAbsolutePlayer(Who); //GE: Relative to absolute conversion.
     
     if (Player[Who].w < Amount)
-	Sound_Play(WALL_UP);
+	FrontendFunctions.Sound_Play(Wall_Up);
     else if (Player[Who].w > Amount)
-	Sound_Play(DAMAGE);
+	FrontendFunctions.Sound_Play(Damage);
     
     Player[Who].w = Amount;
     
