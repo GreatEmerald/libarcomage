@@ -1753,7 +1753,7 @@ void PlayCard(int c,int discrd)
     lastturn=turn;
     turn=nextturn;
 
-    RedrawScreenFull();
+    FrontendFunctions.RedrawScreenFull();
 }
 
 int Turn(struct Stats *s1,struct Stats *s2,int card,int turn)

@@ -31,9 +31,10 @@
   struct FrontendFunctions
   {
     void (*Sound_Play)(enum SoundTypes);
+    void (*RedrawScreenFull)();
   }FrontendFunctions;
   
-  //void Sound_Play(enum SoundTypes);
+  void DecoySoundPlay(enum SoundTypes);
 
 #ifdef linux
 	#define OPERATINGSYSTEM 1
