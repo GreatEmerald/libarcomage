@@ -32,9 +32,8 @@
   {
     void (*Sound_Play)(enum SoundTypes);
     void (*RedrawScreenFull)();
+    void (*PrecacheCard)(const char*, int);
   }FrontendFunctions;
-  
-  void DecoySoundPlay(enum SoundTypes);
 
 #ifdef linux
 	#define OPERATINGSYSTEM 1

@@ -230,7 +230,7 @@ void InitCardDB()
                     error(L, "This is not a string.");
                 printf("Currently held string is: %s\n", lua_tostring(L, -1));
                 if (lua_objlen(L, -1) != 0) //GE: Don't load this in memory if it's empty.
-                    PrecacheCard(lua_tostring(L, -1), lua_objlen(L, -1)); //GE: Put this into the linked list and load the image in memory.
+                    FrontendFunctions.PrecacheCard(lua_tostring(L, -1), lua_objlen(L, -1)); //GE: Put this into the linked list and load the image in memory.
                 D_setPictureFile(0, card, lua_tostring(L, -1));
                 lua_pop(L, 1); //GE: Removed one element from the stack, counting from the top.
                 //GE: Removed an element. STACK: -1: table, -2: table, -3: table
