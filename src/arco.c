@@ -25,7 +25,9 @@
 //SDL_Event event; ///< Event placeholder.
 lua_State *L; ///< Lua support, main state.
 
-void DecoySoundPlay(enum SoundTypes);
+void DecoySoundPlay(enum SoundTypes SoundTypes)
+{
+}
 
 /**
  * Dumps the contents of the Lua stack.
