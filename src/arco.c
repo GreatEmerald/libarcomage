@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <SDL.h>
+//#include <SDL.h>
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
@@ -22,7 +22,7 @@
 //#include "sound.h"
 #include "cards.h"
 
-SDL_Event event; ///< Event placeholder.
+//SDL_Event event; ///< Event placeholder.
 lua_State *L; ///< Lua support, main state.
 
 void DecoySoundPlay(enum SoundTypes);
@@ -154,7 +154,7 @@ void Init()
 
     ReadConfig();
 
-    atexit(SDL_Quit); //GE: What is this for?
+    //atexit(SDL_Quit); //GE: What is this for?
     //if (soundenabled) Sound_Init();
     //Graphics_Init(fullscreen);
 }
