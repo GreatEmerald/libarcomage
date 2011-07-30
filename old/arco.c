@@ -29,6 +29,11 @@ void DecoySoundPlay(enum SoundTypes SoundTypes)
 {
 }
 
+int main() //GE: For compilers.
+{
+    return 0;
+}
+
 /**
  * Dumps the contents of the Lua stack.
  *
@@ -232,24 +237,27 @@ void InitGame()
 ///Authors: STiCK.
 int NetRemPlay(int *t,int *d)
 {
-    char *s;
+    /*char *s;
     int r;
 
     r=Recv(&s,0);
     *t=s[0];*d=s[1];
 
-    return r;
+    return r;*/
+    printf("ERROR: Network play is no longer supported! Please use an earlier version of the program or wait for a new implementation.");
+    return 0;
 }
 
 /// Net Local Play.
 /// Authors: STiCK.
 void NetLocPlay(int t,int d,int card)
 {
-    char s[5];
+    /*char s[5];
     s[0]=t;s[1]=d;s[2]=turn;
     s[3]=card >> 8;
     s[4]=card & 0xFF;
-    Send(s,5,0);
+    Send(s,5,0);*/
+    printf("ERROR: Network play is no longer supported! Please use an earlier version of the program or wait for a new implementation.");
 }
 
 /// Network game support.

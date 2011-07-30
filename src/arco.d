@@ -1,7 +1,17 @@
-module ArcomageD;
+/**
+ * The main module of libarcomage.
+ * Initialisation, configuration, contact with frontends and other important
+ * functions are here. Most code is in arcomage.cards though.
+ * 
+ * Authors: GreatEmerald
+ */
+
+module arcomage.arco;
 import std.stdio; //GE: Debugging purposes so far.
 import std.conv;
 import std.string;
+import luad.all;
+import luad.c.all;
 
 /*struct Coords {
     int X, Y, W, H;
@@ -48,12 +58,59 @@ string[] PoolNames; //GE: Holds the names of each pool. Becareful to align this 
 string[] PrecachePictures;
 //int[] Queue; //GE: This is the list of card IDs in the bank.
 
+struct ConfigOptions {
+    bool Fullscreen;
+    bool SoundEnabled;
+    byte CardTranslucency;
+    int TowerLevels;
+    int WallLevels;
+    int QuarryLevels;
+    int MagicLevels;
+    int DungeonLevels;
+    int BrickQuantities;
+    int GemQuantities;
+    int RecruitQuantities;
+    int TowerVictory;
+    int ResourceVictory;
+    bool OneResourceVictory;
+} Config;
+
+auto L = luaL_newstate(); /// Workaround for SIGSEGV on exit.
+auto lua = new LuaState(L); /// The main Lua state.
+
 version(linux) //GE: Linux needs an entry point.
 {
     int main()
     {
         return 0;
     }
+}
+
+/**
+ * Lua initialisation. Normally, LuaD handles everything for us - this is just
+ * additional content specific to our libary.
+ * 
+ * Authors: GreatEmerald
+ */ 
+void initLua()
+{
+    lua.openLibs();
+    lua.doFile("lua/Configuration.lua"); //GE: This sets global variables inside Lua. We need to fish them out now.
+    Config.Fullscreen = lua.get!bool("Fullscreen");
+    Config.SoundEnabled = lua.get!bool("SoundEnabled");
+    Config.CardTranslucency = lua.get!byte("CardTranslucency");
+    Config.TowerLevels = lua.get!int("TowerLevels");
+    Config.WallLevels = lua.get!int("WallLevels");
+    Config.QuarryLevels = lua.get!int("QuarryLevels");
+    Config.MagicLevels = lua.get!int("MagicLevels");
+    Config.DungeonLevels = lua.get!int("DungeonLevels");
+    Config.BrickQuantities = lua.get!int("BrickQuantities");
+    Config.GemQuantities = lua.get!int("GemQuantities");
+    Config.RecruitQuantities = lua.get!int("RecruitQuantities");
+    Config.TowerVictory = lua.get!int("TowerVictory");
+    Config.ResourceVictory = lua.get!int("ResourceVictory");
+    Config.OneResourceVictory = lua.get!bool("OneResourceVictory");
+    lua.doFile("lua/CardPools.lua"); //GE: Execute the CardPools file. Not sure if it's really necessary.
 }
 
 //GE: Make sure the array we have is big enough to use.
@@ -77,6 +134,19 @@ extern (C) bool  rt_term( void delegate( Exception ) dg = null );
  */
 
 extern(C):
+
+    /**
+     * The main initialisation function. This needs to be called from the
+     * frontend to initialise the game.
+     * 
+     * Note: Do not forget to call rt_init() and D_LinuxInit() as well.
+     * 
+     * Authors: GreatEmerald
+     */
+    void InitArcomage()
+    {
+        initLua();
+    }
 
     void D_LinuxInit() //GE: Special Linux initialisation.
     {
