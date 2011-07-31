@@ -131,7 +131,15 @@ void initLua()
     Config.TowerVictory = lua.get!int("TowerVictory");
     Config.ResourceVictory = lua.get!int("ResourceVictory");
     Config.OneResourceVictory = lua.get!bool("OneResourceVictory");
-    lua.doFile("lua/CardPools.lua"); //GE: Execute the CardPools file. Not sure if it's really necessary.
+    lua.doFile("lua/CardPools.lua"); //GE: Execute the CardPools file. Here we get to know what pools there are on the system.
+    auto Pools = lua.get!string[string][int]("PoolInfo");
+    /*foreach (int i, string[string] s; Pools)
+    {
+        foreach (string index, string value; s)
+        {
+            
+        }
+    }*/
 }
 
 //GE: Make sure the array we have is big enough to use.

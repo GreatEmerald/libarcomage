@@ -1223,10 +1223,6 @@ Card
     AIFunction = function () return 0 end;
 }
 
-        CardInfo.Name = "Sanctuary"
-        CardInfo.Description = "+10 Tower\n+5 Wall\nGain 5\nrecruits"
-        CardInfo.GemCost = 15
-        CardInfo.Colour = "Blue"
 Card 
 {
     Name = "Sanctuary";
