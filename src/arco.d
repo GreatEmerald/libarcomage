@@ -35,7 +35,7 @@ struct PictureInfo {
 }
 
 struct CardInfo { //GE: Holds information about a single card.
-    int ID;
+    //int ID; //GE: Obsolete, use n from CardDB[i][n] instead
     int Frequency; //GE: This is the number of cards of this type in the deck. 1=Rare, 2=Uncommon, 3=Common
     string Name;
     string Description;
@@ -46,7 +46,28 @@ struct CardInfo { //GE: Holds information about a single card.
     string Colour; //GE: Red, Geen, Blue, Gray/Grey/Black, Brown/White. Rendering purposes, mostly for 0 cost coloured cards
     PictureInfo Picture; //GE: Rendering purposes.
     string Keywords; //GE: Might become an array. These are MArcomage keywords, also used in Lua functions
-    string LuaFunction; //GE: This is what we call on playing the card.
+    LuaFunction PlayFunction; //GE: This is what we call on playing the card.
+    LuaFunction AIFunction; /// The function that rates the desirability of the card.
+    
+    /**
+     * Creates a function in Lua that adds a card to the card array. The Lua
+     * code only contains calls to this function.
+     * 
+     * Authors: GreatEmerald, JakobOvrum
+     */ 
+    static CardInfo[] fromFile(string path)
+    {
+        CardInfo[] Cards;
+
+        lua["Card"] = (CardInfo Card)
+        {
+            Cards ~= Card;
+        };
+
+        lua.doFile(path);
+
+        return Cards;
+    }
 };
 //CardInfo[] CardPool; //GE: Holds information about all cards in a single Card Pool.
 /*struct CardPoolInfo {
