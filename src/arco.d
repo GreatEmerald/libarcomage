@@ -83,6 +83,7 @@ struct ConfigOptions {
     bool Fullscreen;
     bool SoundEnabled;
     byte CardTranslucency;
+    byte CardsInHand;
     int TowerLevels;
     int WallLevels;
     int QuarryLevels;
@@ -94,7 +95,16 @@ struct ConfigOptions {
     int TowerVictory;
     int ResourceVictory;
     bool OneResourceVictory;
+    bool UseOriginalCards;
+    bool UseOriginalMenu;
+    string OriginalDataDir;
 } Config;
+
+struct FrontendFunctions {
+    void (*Sound_Play)(enum SoundTypes);
+    void (*RedrawScreenFull)();
+    void (*PrecacheCard)(const char*, int);
+};
 
 lua_State * L; /// Workaround for SIGSEGV on exit.
 LuaState lua; /// The main Lua state.
@@ -123,6 +133,7 @@ void initLua()
     Config.Fullscreen = lua.get!bool("Fullscreen"); //GE: Configuration support.
     Config.SoundEnabled = lua.get!bool("SoundEnabled");
     Config.CardTranslucency = lua.get!byte("CardTranslucency");
+    Config.CardsInHand = lua.get!byte("CardsInHand");
     Config.TowerLevels = lua.get!int("TowerLevels");
     Config.WallLevels = lua.get!int("WallLevels");
     Config.QuarryLevels = lua.get!int("QuarryLevels");
@@ -134,9 +145,12 @@ void initLua()
     Config.TowerVictory = lua.get!int("TowerVictory");
     Config.ResourceVictory = lua.get!int("ResourceVictory");
     Config.OneResourceVictory = lua.get!bool("OneResourceVictory");
+    Config.UseOriginalMenu = lua.get!bool("UseOriginalMenu");
+    Config.UseOriginalCards = lua.get!bool("UseOriginalCards");
+    Config.OriginalDataDir = lua.get!string("OriginalDataDir");
     
     lua["Damage"] = (int Who, int Amount); //GE: Register D functions in Lua.
-    lua["AddQuarry"] = (int Who, int Amount); //GE: TODO - implement the actual functions
+    lua["AddQuarry"] = (int Who, int Amount); //GE: TODO - implement the actual functions, send them over to cards module
     lua["AddMagic"] = (int Who, int Amount);
     lua["AddDungeon"] = (int Who, int Amount);
     lua["AddBricks"] = (int Who, int Amount);
@@ -152,14 +166,14 @@ void initLua()
     lua["RemoveRecruits"] = (int Who, int Amount);
     lua["RemoveTower"] = (int Who, int Amount);
     lua["RemoveWall"] = (int Who, int Amount);
-    lua["GetQuarry"] = int (int Who) { return 0; }
-    lua["GetMagic"] = int (int Who) { return 0; }
-    lua["GetDungeon"] = int (int Who) { return 0; }
-    lua["GetBricks"] = int (int Who) { return 0; }
-    lua["GetGems"] = int (int Who) { return 0; }
-    lua["GetRecruits"] = int (int Who) { return 0; }
-    lua["GetTower"] = int (int Who) { return 0; }
-    lua["GetWall"] = int (int Who) { return 0; }
+    lua["GetQuarry"] = (int Who) { return 0; }
+    lua["GetMagic"] = (int Who) { return 0; }
+    lua["GetDungeon"] = (int Who) { return 0; }
+    lua["GetBricks"] = (int Who) { return 0; }
+    lua["GetGems"] = (int Who) { return 0; }
+    lua["GetRecruits"] = (int Who) { return 0; }
+    lua["GetTower"] = (int Who) { return 0; }
+    lua["GetWall"] = (int Who) { return 0; }
     lua["SetQuarry"] = (int Who, int Amount);
     lua["SetMagic"] = (int Who, int Amount);
     lua["SetWall"] = (int Who, int Amount);
