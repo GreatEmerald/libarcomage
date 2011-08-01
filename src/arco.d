@@ -96,8 +96,8 @@ struct ConfigOptions {
     bool OneResourceVictory;
 } Config;
 
-auto L = luaL_newstate(); /// Workaround for SIGSEGV on exit.
-auto lua = new LuaState(L); /// The main Lua state.
+lua_State * L; /// Workaround for SIGSEGV on exit.
+LuaState lua; /// The main Lua state.
 
 version(linux) //GE: Linux needs an entry point.
 {
@@ -115,9 +115,12 @@ version(linux) //GE: Linux needs an entry point.
  */ 
 void initLua()
 {
+    L = luaL_newstate();
+    lua = new LuaState(L);
     lua.openLibs();
+    
     lua.doFile("lua/Configuration.lua"); //GE: This sets global variables inside Lua. We need to fish them out now.
-    Config.Fullscreen = lua.get!bool("Fullscreen");
+    Config.Fullscreen = lua.get!bool("Fullscreen"); //GE: Configuration support.
     Config.SoundEnabled = lua.get!bool("SoundEnabled");
     Config.CardTranslucency = lua.get!byte("CardTranslucency");
     Config.TowerLevels = lua.get!int("TowerLevels");
@@ -131,15 +134,50 @@ void initLua()
     Config.TowerVictory = lua.get!int("TowerVictory");
     Config.ResourceVictory = lua.get!int("ResourceVictory");
     Config.OneResourceVictory = lua.get!bool("OneResourceVictory");
+    
+    lua["Damage"] = (int Who, int Amount); //GE: Register D functions in Lua.
+    lua["AddQuarry"] = (int Who, int Amount); //GE: TODO - implement the actual functions
+    lua["AddMagic"] = (int Who, int Amount);
+    lua["AddDungeon"] = (int Who, int Amount);
+    lua["AddBricks"] = (int Who, int Amount);
+    lua["AddGems"] = (int Who, int Amount);
+    lua["AddRecruits"] = (int Who, int Amount);
+    lua["AddTower"] = (int Who, int Amount);
+    lua["AddWall"] = (int Who, int Amount);
+    lua["RemoveQuarry"] = (int Who, int Amount);
+    lua["RemoveMagic"] = (int Who, int Amount);
+    lua["RemoveDungeon"] = (int Who, int Amount);
+    lua["RemoveBricks"] = (int Who, int Amount);
+    lua["RemoveGems"] = (int Who, int Amount);
+    lua["RemoveRecruits"] = (int Who, int Amount);
+    lua["RemoveTower"] = (int Who, int Amount);
+    lua["RemoveWall"] = (int Who, int Amount);
+    lua["GetQuarry"] = int (int Who) { return 0; }
+    lua["GetMagic"] = int (int Who) { return 0; }
+    lua["GetDungeon"] = int (int Who) { return 0; }
+    lua["GetBricks"] = int (int Who) { return 0; }
+    lua["GetGems"] = int (int Who) { return 0; }
+    lua["GetRecruits"] = int (int Who) { return 0; }
+    lua["GetTower"] = int (int Who) { return 0; }
+    lua["GetWall"] = int (int Who) { return 0; }
+    lua["SetQuarry"] = (int Who, int Amount);
+    lua["SetMagic"] = (int Who, int Amount);
+    lua["SetWall"] = (int Who, int Amount);
+    
     lua.doFile("lua/CardPools.lua"); //GE: Execute the CardPools file. Here we get to know what pools there are on the system.
-    auto Pools = lua.get!string[string][int]("PoolInfo");
-    /*foreach (int i, string[string] s; Pools)
+    lua.doString("PoolSize = #PoolInfo"); //GE: Get the amount of pools installed.
+    auto TableSize = lua.get!int("PoolSize");
+    PoolNames.length = TableSize; //GE: Make sure we're not out of bounds.
+    CardDB.length = TableSize;
+    auto Table = lua.get!LuaTable("PoolInfo"); //GE: Get a table.
+    LuaTable Cell;
+    string Name, Path;
+    for (int i=1; i<=TableSize; i++)
     {
-        foreach (string index, string value; s)
-        {
-            
-        }
-    }*/
+        Cell = Table.get!LuaTable(i);
+        PoolNames[i-1] = Cell.get!string("Name"); //GE: Put pool names into PoolNames[].
+        CardDB[i-1] = CardInfo.fromFile(Cell.get!string("Path")); //GE: Populate the CardDB.
+    }
 }
 
 //GE: Make sure the array we have is big enough to use.
@@ -183,99 +221,6 @@ extern(C):
             main();
     }
     
-    void D_setPoolName(int Pool, const char* Name)
-    {
-        if (Pool >= PoolNames.length) //GE: Make sure we're not out of bounds.
-            PoolNames.length = Pool+1;
-        PoolNames[Pool] = to!string(Name);
-    }
-    
-    void D_setID(int Pool, int Card, int ID)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].ID = ID;
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setFrequency(int Pool, int Card, int Frequency)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].Frequency = Frequency;
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setName(int Pool, int Card, const char* Name)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].Name = to!string(Name);
-        //writeln("Named card: ", CardDB[Pool][Card].Name);
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setDescription(int Pool, int Card, const char* Description)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].Description = to!string(Description);
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setBrickCost(int Pool, int Card, int BrickCost)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].BrickCost = BrickCost;
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setGemCost(int Pool, int Card, int GemCost)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].GemCost = GemCost;
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setRecruitCost(int Pool, int Card, int RecruitCost)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].RecruitCost = RecruitCost;
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setCursed(int Pool, int Card, int Cursed)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].Cursed = cast(bool)Cursed;
-	//writeln("Cursed: ", cast(bool)Cursed);
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setColour(int Pool, int Card, const char* Colour)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].Colour = to!string(Colour);
-        //writeln("CardDB.Length is ", CardDB.length, " and that pool has ", CardDB[Pool].length, " cards registered so far.");
-    }
-
-    void D_setPictureFile(int Pool, int Card, const char* File)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].Picture.File = to!string(File);
-    }
-
-    void D_setPictureCoords(int Pool, int Card, int X, int Y, int W, int H)
-    {
-        setBounds(Pool, Card);
-        CardDB[Pool][Card].Picture.Coordinates.x = to!short(X);
-        CardDB[Pool][Card].Picture.Coordinates.y = to!short(Y);
-        CardDB[Pool][Card].Picture.Coordinates.w = to!ushort(W);
-        CardDB[Pool][Card].Picture.Coordinates.h = to!ushort(H);
-    }
-
-    void D_setLuaFunction(int Pool, int Card, const char* LuaFunction)
-    {
-	setBounds(Pool, Card);
-        CardDB[Pool][Card].LuaFunction = to!string(LuaFunction);
-    }
-
     // GE: GET CODE BEGIN ---------------------------------------
 
     int D_getFrequency(int Pool, int Card)
