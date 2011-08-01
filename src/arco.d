@@ -179,18 +179,16 @@ void initLua()
     lua["SetWall"] = (int Who, int Amount);
     
     lua.doFile("lua/CardPools.lua"); //GE: Execute the CardPools file. Here we get to know what pools there are on the system.
-    lua.doString("PoolSize = #PoolInfo"); //GE: Get the amount of pools installed.
-    auto TableSize = lua.get!int("PoolSize");
-    PoolNames.length = TableSize; //GE: Make sure we're not out of bounds.
-    CardDB.length = TableSize;
-    auto Table = lua.get!LuaTable("PoolInfo"); //GE: Get a table.
-    LuaTable Cell;
-    string Name, Path;
-    for (int i=1; i<=TableSize; i++)
+    struct PoolInfo                  //GE: Thanks to JakobOvrum for a nice way to fill PoolNames and CardDB!
     {
-        Cell = Table.get!LuaTable(i);
-        PoolNames[i-1] = Cell.get!string("Name"); //GE: Put pool names into PoolNames[].
-        CardDB[i-1] = CardInfo.fromFile(Cell.get!string("Path")); //GE: Populate the CardDB.
+        string Name;
+        string Path;
+    };
+    auto Pools = lua.get!(PoolInfo[])("PoolInfo");
+    foreach (int i, PoolInfo Pool; Pools)
+    {
+        PoolNames[i] = Pool.Name; //GE: Put pool names into PoolNames[].
+        CardDB[i] = CardInfo.fromFile(Pool.Path); //GE: Populate the CardDB.
     }
 }
 

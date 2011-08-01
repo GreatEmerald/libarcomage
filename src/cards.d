@@ -5,6 +5,8 @@
 module arcomage.cards;
 import std.stdio;
 import arcomage.arco;
+import std.random;
+import std.algorithm;
 
 struct Stats
 {
@@ -45,7 +47,7 @@ auto InitGame()
 
 void InitDeck()
 {
-    int i, i2=0, i3=0;
+    int i;
 
     if (!InitComplete)
     {
@@ -67,7 +69,7 @@ void ShuffleQueue()
 	{
 		a=rand()%Queue.length;
 		b=rand()%Queue.length;
-		t=Q[a]; Q[a]=Q[b]; Q[b]=t;
+		t=Queue[a]; Queue[a]=Queue[b]; Queue[b]=t;
 	}
 	FrontendFunctions.Sound_Play(SHUFFLE);
 }
@@ -84,4 +86,58 @@ CardInfo GetCard()//GE: Returns next card in the Queue array and moves CurrentPo
       CurrentPosition = 0;
     }
     return CI;
+}
+
+bool IsVictorious(int PlayerNumber)
+{
+    foreach (int i, Stats P; Player) //GE: Check if we are the last man standing.
+    {
+        if (P.Tower > 0 && i != PlayerNumber)
+            break;
+        else if (i == Player.length-1)
+            return true;
+    }
+    if (Player[PlayerNumber].Tower >= Config.TowerVictory) //GE: Check if we got a tower victory.
+        return true;
+    
+    if (Config.OneResourceVictory)
+        return ((Player[PlayerNumber].Bricks >= Config.ResourceVictory) ||
+            (Player[PlayerNumber].Gems >= Config.ResourceVictory) ||
+            (Player[PlayerNumber].Recruits >= Config.ResourceVictory));
+    else
+        return ((Player[PlayerNumber].Bricks >= Config.ResourceVictory) &&
+            (Player[PlayerNumber].Gems >= Config.ResourceVictory) &&
+            (Player[PlayerNumber].Recruits >= Config.ResourceVictory));
+}
+
+void AIPlay()
+{
+    float HighestPriority=-1.f, CurrentPriority, LowestPriority=0.f;
+    CardInfo Favourite, Worst;
+    
+    foreach (CardInfo CI; Player[Turn].Hand)
+    {
+        CurrentPriority = CI.AIFunction();
+        if ( (CanAffordCard(CI)) &&                                       //GE: If we can afford the card
+            ( (HighestPriority < CurrentPriority) ||                      //GE: And it is more attractive than what we saw before
+            (HighestPriority == CurrentPriority && uniform(0,2) => 1) ) ) //GE: Or it is as attractive (in which case we let luck decide)
+        {
+            HighestPriority = CurrentPriority; //GE: Get the highest priority card
+            Favourite = CI;
+        }
+        if ( (!CI.Cursed) &&
+            ( (LowestPriority > CurrentPriority) ||
+            (LowestPriority == CurrentPriority && uniform(0,2) => 1) ) )
+        {
+            LowestPriority = CurrentPriority; //GE: Get the lowest priority card
+            Worst = CI;
+        }
+    }
+    if ((HighestPriority < 0.f) || ((HighestPriority == 0.f) && (uniform(0,2) => 1)))
+    {
+        PlayCard(Worst, true); //GE: If we have bad cards, pick the worst one and discard.
+        return;
+    }
+    
+    PlayCard(Favourite, false);
 }
