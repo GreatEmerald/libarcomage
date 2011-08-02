@@ -20,6 +20,7 @@ BrickQuantities = 15 -- The amount of resources that the players start out with.
 GemQuantities = 15
 RecruitQuantities = 15
 
+MaxWall = 200 -- The maximum allowed wall height.
 TowerVictory = 200 -- The height of the tower a player must reach to win.
 ResourceVictory = 500 -- The amount of resources a player must gather to win.
 OneResourceVictory = false -- Whether to allow victory for getting only one of the resources to the amount indicated above.

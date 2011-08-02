@@ -60,7 +60,15 @@ Card
         RemoveBricks(1, 8)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.0
+        if GetBricks(0) < 8 then Priority += 0.15 end
+        if GetBricks(1) < 8 then Priority -= 0.15 end
+        if GetBricks(1) >= GetResourceVictory()*0.75 then Priority += 0.25 end
+        if GetQuarry(0) > GetQuarry(1) then Priority += 0.15
+        elseif GetQuarry(0) < GetQuarry(1) then Priority -= 0.15 end
+        return Priority
+    end;
 }
 
 Card 
@@ -80,7 +88,7 @@ Card
         AddGems(0, 2)
         return 0
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function () return 1 end;
 }
 
 Card 

@@ -92,6 +92,7 @@ struct ConfigOptions {
     int BrickQuantities;
     int GemQuantities;
     int RecruitQuantities;
+    int MaxWall;
     int TowerVictory;
     int ResourceVictory;
     bool OneResourceVictory;
@@ -100,8 +101,12 @@ struct ConfigOptions {
     string OriginalDataDir;
 } Config;
 
+enum SoundTypes {
+    Damage, ResB_Up, ResS_Up, Tower_Up, Wall_Up, ResB_Down, ResS_Down
+}
+
 struct FrontendFunctions {
-    void (*Sound_Play)(enum SoundTypes);
+    void (*Sound_Play)(SoundTypes);
     void (*RedrawScreenFull)();
     void (*PrecacheCard)(const char*, int);
 };
@@ -142,6 +147,7 @@ void initLua()
     Config.BrickQuantities = lua.get!int("BrickQuantities");
     Config.GemQuantities = lua.get!int("GemQuantities");
     Config.RecruitQuantities = lua.get!int("RecruitQuantities");
+    Config.MaxWall = lua.get!int("MaxWall");
     Config.TowerVictory = lua.get!int("TowerVictory");
     Config.ResourceVictory = lua.get!int("ResourceVictory");
     Config.OneResourceVictory = lua.get!bool("OneResourceVictory");
@@ -149,34 +155,7 @@ void initLua()
     Config.UseOriginalCards = lua.get!bool("UseOriginalCards");
     Config.OriginalDataDir = lua.get!string("OriginalDataDir");
     
-    lua["Damage"] = (int Who, int Amount); //GE: Register D functions in Lua.
-    lua["AddQuarry"] = (int Who, int Amount); //GE: TODO - implement the actual functions, send them over to cards module
-    lua["AddMagic"] = (int Who, int Amount);
-    lua["AddDungeon"] = (int Who, int Amount);
-    lua["AddBricks"] = (int Who, int Amount);
-    lua["AddGems"] = (int Who, int Amount);
-    lua["AddRecruits"] = (int Who, int Amount);
-    lua["AddTower"] = (int Who, int Amount);
-    lua["AddWall"] = (int Who, int Amount);
-    lua["RemoveQuarry"] = (int Who, int Amount);
-    lua["RemoveMagic"] = (int Who, int Amount);
-    lua["RemoveDungeon"] = (int Who, int Amount);
-    lua["RemoveBricks"] = (int Who, int Amount);
-    lua["RemoveGems"] = (int Who, int Amount);
-    lua["RemoveRecruits"] = (int Who, int Amount);
-    lua["RemoveTower"] = (int Who, int Amount);
-    lua["RemoveWall"] = (int Who, int Amount);
-    lua["GetQuarry"] = (int Who) { return 0; }
-    lua["GetMagic"] = (int Who) { return 0; }
-    lua["GetDungeon"] = (int Who) { return 0; }
-    lua["GetBricks"] = (int Who) { return 0; }
-    lua["GetGems"] = (int Who) { return 0; }
-    lua["GetRecruits"] = (int Who) { return 0; }
-    lua["GetTower"] = (int Who) { return 0; }
-    lua["GetWall"] = (int Who) { return 0; }
-    lua["SetQuarry"] = (int Who, int Amount);
-    lua["SetMagic"] = (int Who, int Amount);
-    lua["SetWall"] = (int Who, int Amount);
+    InitLuaFunctions();
     
     lua.doFile("lua/CardPools.lua"); //GE: Execute the CardPools file. Here we get to know what pools there are on the system.
     struct PoolInfo                  //GE: Thanks to JakobOvrum for a nice way to fill PoolNames and CardDB!
