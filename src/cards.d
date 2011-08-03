@@ -264,6 +264,11 @@ auto InitLuaFunctions()
         return Config.ResourceVictory;
     }
     
+    lua["GetMaxWall"] = ()
+    {
+        return Config.MaxWall;
+    }
+    
     lua["SetQuarry"] = (int Who, int Amount)
     {
         Stats P = Player[GetAbsolutePlayer(Who)];
@@ -299,6 +304,8 @@ auto InitLuaFunctions()
 
         P.Wall = Amount;
     }
+    
+    lua["OneResourceVictory"] = Config.OneResourceVictory;
 }
 
 auto InitGame()

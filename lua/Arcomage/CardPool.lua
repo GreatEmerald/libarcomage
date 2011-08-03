@@ -62,10 +62,13 @@ Card
     end;
     AIFunction = function ()
         local Priority = 0.0
-        if GetBricks(0) < 8 then Priority += 0.15 end
+        if GetBricks(0) < 8 then Priority += 0.10 end
         if GetBricks(1) < 8 then Priority -= 0.15 end
-        if GetBricks(1) >= GetResourceVictory()*0.75 then Priority += 0.25 end
-        if GetQuarry(0) > GetQuarry(1) then Priority += 0.15
+        if GetBricks(1) >= GetResourceVictory()*0.75 then
+            if OneResourceVictory then Priority += 0.20
+            elseif GetGems(1) >= GetResourceVictory() and GetRecruits(1) >= GetResourceVictory() then Priority += 0.25 end
+        end
+        if GetQuarry(0) > GetQuarry(1) then Priority += 0.10
         elseif GetQuarry(0) < GetQuarry(1) then Priority -= 0.15 end
         return Priority
     end;
@@ -107,7 +110,7 @@ Card
         AddWall(0, 1)
         return 0
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function () return 1 end;
 }
 
 Card 
@@ -126,7 +129,15 @@ Card
         AddQuarry(0, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.25
+        if GetQuarry(0) >= 99 then return 0 end
+        if GetBricks(0) <= GetResourceVictory()*0.25 then Priority += 0.15 end
+        if GetBricks(0) >= GetResourceVictory() then Priority -= 0.15 end
+        if GetQuarry(0) >= 10 then Priority -= 0.15 
+        else Priority += 0.1 end
+        return Priority
+    end;
 }
 
 Card 
@@ -149,7 +160,16 @@ Card
         end
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.25
+        if GetQuarry(0) >= 99 then return 0 end
+        if GetQuarry(0) < GetQuarry(1) then Priority += 0.25 end
+        if GetBricks(0) <= GetResourceVictory()*0.25 then Priority += 0.15 end
+        if GetBricks(0) >= GetResourceVictory() then Priority -= 0.15 end
+        if GetQuarry(0) >= 10 then Priority -= 0.15 
+        else Priority += 0.1 end
+        return Priority
+    end;
 }
 
 Card 
@@ -169,7 +189,17 @@ Card
         AddQuarry(0, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.29
+        if GetQuarry(0) >= 99 then Priority = 0.04 end
+        if GetBricks(0) <= GetResourceVictory()*0.25 then Priority += 0.15 end
+        if GetBricks(0) >= GetResourceVictory() then Priority -= 0.15 end
+        if GetQuarry(0) >= 10 then Priority -= 0.15 
+        else Priority += 0.1 end
+        if GetWall(0) <= GetMaxWall()*0.25 then Priority += 0.04
+        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= 0.08 end
+        return Priority
+    end;
 }
 
 Card 
@@ -189,7 +219,13 @@ Card
         RemoveGems(0, 6)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.02
+        if GetGems(0) <= 6 then Priority += 0.03 end
+        if GetWall(0) <= GetMaxWall()*0.25 then Priority += 0.05
+        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= 0.1 end
+        return Priority
+    end;
 }
 
 Card 
@@ -210,7 +246,15 @@ Card
         end
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = math.min((GetQuarry(1) - GetQuarry(0))*0.25, 0.95) 
+        if GetQuarry(0) >= 99 or GetQuarry(0) >= GetQuarry(1) then return 0 end
+        if GetBricks(0) <= GetResourceVictory()*0.25 then Priority += 0.15 end
+        if GetBricks(0) >= GetResourceVictory() then Priority -= 0.15 end
+        if GetQuarry(0) >= 10 then Priority -= 0.15 
+        else Priority += 0.1 end
+        return Priority
+    end;
 }
 
 Card 
@@ -229,7 +273,12 @@ Card
         AddWall(0, 3)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.03
+        if GetWall(0) <= GetMaxWall()*0.25 then Priority += 0.03
+        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= 0.03 end
+        return Priority
+    end;
 }
 
 Card 
@@ -248,7 +297,12 @@ Card
         AddWall(0, 4)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.04
+        if GetWall(0) <= GetMaxWall()*0.25 then Priority += 0.04
+        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= 0.04 end
+        return Priority
+    end;
 }
 
 Card 
@@ -269,7 +323,15 @@ Card
         AddGems(0, 4)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.02
+        if GetGems(0) >= GetResourceVictory() then Priority -= 0.02 
+        elseif GetGems(0) >= GetResourceVictory()*0.75 then Priority += 0.02 end
+        if GetQuarry(1) == 1 then Priority -= 0.04 end
+        if GetQuarry(0) < GetQuarry(1) then Priority += 0.02
+        elseif GetQuarry(0) > GetQuarry(1) then Priority -= 0.02 end
+        return Priority
+    end;
 }
 
 Card 
