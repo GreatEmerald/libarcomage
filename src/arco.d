@@ -12,6 +12,7 @@ import std.conv;
 import std.string;
 import luad.all;
 import luad.c.all;
+import arcomage.cards;
 
 /*struct Coords {
     int X, Y, W, H;
@@ -109,6 +110,7 @@ struct FrontendFunctions {
     void (*Sound_Play)(SoundTypes);
     void (*RedrawScreenFull)();
     void (*PrecacheCard)(const char*, int);
+    void (*PlayCardAnimation)(CardInfo, int);
 };
 
 lua_State * L; /// Workaround for SIGSEGV on exit.
