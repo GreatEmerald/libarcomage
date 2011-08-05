@@ -264,6 +264,11 @@ auto InitLuaFunctions()
         return Config.ResourceVictory;
     }
     
+    lua["GetTowerVictory"] = ()
+    {
+        return Config.TowerVictory;
+    }
+    
     lua["GetMaxWall"] = ()
     {
         return Config.MaxWall;
@@ -306,6 +311,158 @@ auto InitLuaFunctions()
     }
     
     lua["OneResourceVictory"] = Config.OneResourceVictory;
+    
+    //GE: Place Lua functions into Lua. I don't want to put this into the main
+    //Lua files since it could get misplaced and it's supposed to be read-only.
+    lua.doString(
+    "function AIAddFacility(Amount, Facilities, Resources, OtherResourcesA, OtherResourcesB)
+        local Priority = Amount*0.25
+        if Facilities >= 99 then return 0 end
+        if Resources <= math.min(GetResourceVictory()*0.25, 15) then Priority += 0.15*Amount end
+        if Resources >= GetResourceVictory() then Priority -= 0.15*Amount
+        elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority += 0.15*Amount end
+        if Facilities >= 10 then Priority -= 0.15*Amount 
+        else Priority += 0.1*Amount end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIRemoveFacility(Amount, Facilities, Resources, OtherResourcesA, OtherResourcesB)
+        local Priority = Amount*(-0.25)
+        if Facilities <= 1 then return 0 end
+        if Resources <= math.min(GetResourceVictory()*0.25, 15) then Priority -= 0.15*Amount end
+        if Resources >= GetResourceVictory() then Priority += 0.15*Amount
+        elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority -= 0.15*Amount end
+        if Facilities >= 10 then Priority += 0.15*Amount 
+        else Priority -= 0.1*Amount end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyFacility(Amount, Facilities, Resources, OtherResourcesA, OtherResourcesB)
+        local Priority = Amount*0.25
+        if Facilities <= 1 then return 0 end
+        if Resources <= math.min(GetResourceVictory()*0.25, 15) then Priority += 0.15*Amount end
+        if Resources >= GetResourceVictory() then Priority -= 0.15*Amount
+        elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority += 0.15*Amount end
+        if Facility >= 10 then Priority -= 0.15*Amount 
+        else Priority += 0.1*Amount end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIAddQuarry(Amount)
+        return AIAddFacility(Amount, GetQuarry(0), GetBricks(0), GetGems(0), GetRecruits(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveQuarry(Amount)
+        return AIRemoveFacility(Amount, GetQuarry(0), GetBricks(0), GetGems(0), GetRecruits(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyQuarry(Amount)
+        return AIRemoveEnemyFacility(Amount, GetQuarry(1), GetBricks(1), GetGems(1), GetRecruits(1))
+    end");
+    
+    lua.doString(
+    "function AIAddDungeon(Amount)
+        return AIAddFacility(Amount, GetDungeon(0), GetRecruits(0), GetGems(0), GetBricks(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveDungeon(Amount)
+        return AIRemoveFacility(Amount, GetDungeon(0), GetRecruits(0), GetGems(0), GetBricks(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyDungeon(Amount)
+        return AIRemoveEnemyFacility(Amount, GetDungeon(1), GetRecruits(1), GetGems(1), GetBricks(1))
+    end");
+    
+    lua.doString(
+    "function AIAddResources(Amount, Resources, OtherResourcesA, OtherResourcesB)
+        local Priority = Amount*0.01
+        if Resources >= GetResourceVictory() then Priority -= 0.01*Amount
+        elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority += 0.01*Amount end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIAddGems(Amount)
+        return AIAddResources(Amount, GetGems(0), GetBricks(0), GetRecruits(0))
+    end");
+    
+    lua.doString(
+    "function AIAddRecruits(Amount)
+        return AIAddResources(Amount, GetRecruits(0), GetBricks(0), GetGems(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveRecruits(Amount)
+        local Priority = (Amount-math.min(GetRecruits(0), Amount))*(-0.01)
+        if GetRecruits(0) >= GetResourceVictory() then Priority += 0.01*Amount
+        elseif GetRecruits(0) >= GetResourceVictory()*0.75 and (OneResourceVictory or (GetGems(0) >= GetResourceVictory() and GetRecruits(0) >= GetResourceVictory())) then Priority -= 0.01*Amount end
+        return Priority
+    end");
+    
+    lua.doString(
+    "function AIAddWall(Amount)
+        local Priority = Amount*0.01
+        if GetWall(0) <= GetMaxWall()*0.25 then Priority += Amount*0.01
+        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= Amount*0.01 end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIAddEnemyWall(Amount)
+        local Priority = Amount*(-0.01)
+        if GetWall(1) <= GetMaxWall()*0.25 then Priority -= Amount*0.01
+        elseif GetWall(1) >= GetMaxWall()*0.75 then Priority += Amount*0.01 end
+        return math.max(Priority, -0.95)
+    end");
+    
+    lua.doString(
+    "function AIRemoveWall(Amount)
+        local Priority = Amount*(-0.01)
+        if GetWall(0) >= GetMaxWall()*0.75 or GetWall(0) < Amount then Priority += Amount*0.01
+        elseif GetWall(0) <= GetMaxWall()*0.25 then Priority -= Amount*0.01 end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyWall(Amount)
+        local Priority = Amount*0.01
+        if GetWall(1) >= GetMaxWall()*0.75 or GetWall(1) < Amount then Priority -= Amount*0.01
+        elseif GetWall(1) <= GetMaxWall()*0.25 then Priority += Amount*0.01 end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIAddTower(Amount)
+        local Priority = Amount*0.02
+        if GetTower(0) <= GetTowerVictory()*0.25 or GetTower(0) >= GetTowerVictory()*0.75 then Priority += Amount*0.02 end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIRemoveTower(Amount)
+        local Priority = Amount*(-0.02)
+        if GetTower(0) <= GetTowerVictory()*0.25 or GetTower(0) >= GetTowerVictory()*0.75 then Priority += Amount*(-0.02) end
+        return math.max(Priority, -0.95)
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyTower(Amount)
+        local Priority = Amount*0.02
+        if GetTower(1) >= GetTowerVictory()*0.75 or GetTower(1) <= GetTowerVictory()*0.25 then Priority += Amount*0.02 end
+        return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIDamageEnemy(Amount)
+        return AIRemoveEnemyWall(math.min(Amount, GetWall(1))) + AIRemoveEnemyTower(math.max(Amount-GetWall(1), 0))
+    end");
 }
 
 auto InitGame()

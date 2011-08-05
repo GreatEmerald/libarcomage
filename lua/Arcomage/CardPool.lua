@@ -62,14 +62,14 @@ Card
     end;
     AIFunction = function ()
         local Priority = 0.0
-        if GetBricks(0) < 8 then Priority += 0.10 end
-        if GetBricks(1) < 8 then Priority -= 0.15 end
+        if GetBricks(0) < 8 then Priority += 0.04 end
+        if GetBricks(1) < 8 then Priority -= 0.04 end
         if GetBricks(1) >= GetResourceVictory()*0.75 then
-            if OneResourceVictory then Priority += 0.20
-            elseif GetGems(1) >= GetResourceVictory() and GetRecruits(1) >= GetResourceVictory() then Priority += 0.25 end
+            if OneResourceVictory then Priority += 0.08
+            elseif GetGems(1) >= GetResourceVictory() and GetRecruits(1) >= GetResourceVictory() then Priority += 0.08 end
         end
-        if GetQuarry(0) > GetQuarry(1) then Priority += 0.10
-        elseif GetQuarry(0) < GetQuarry(1) then Priority -= 0.15 end
+        if GetQuarry(0) > GetQuarry(1) then Priority += 0.04
+        elseif GetQuarry(0) < GetQuarry(1) then Priority -= 0.08 end
         return Priority
     end;
 }
@@ -110,7 +110,7 @@ Card
         AddWall(0, 1)
         return 0
     end;
-    AIFunction = function () return 1 end;
+    AIFunction = function () return 0.97 end;
 }
 
 Card 
@@ -130,13 +130,7 @@ Card
         return 1
     end;
     AIFunction = function ()
-        local Priority = 0.25
-        if GetQuarry(0) >= 99 then return 0 end
-        if GetBricks(0) <= GetResourceVictory()*0.25 then Priority += 0.15 end
-        if GetBricks(0) >= GetResourceVictory() then Priority -= 0.15 end
-        if GetQuarry(0) >= 10 then Priority -= 0.15 
-        else Priority += 0.1 end
-        return Priority
+        return AIAddQuarry(1)
     end;
 }
 
@@ -161,14 +155,8 @@ Card
         return 1
     end;
     AIFunction = function ()
-        local Priority = 0.25
-        if GetQuarry(0) >= 99 then return 0 end
-        if GetQuarry(0) < GetQuarry(1) then Priority += 0.25 end
-        if GetBricks(0) <= GetResourceVictory()*0.25 then Priority += 0.15 end
-        if GetBricks(0) >= GetResourceVictory() then Priority -= 0.15 end
-        if GetQuarry(0) >= 10 then Priority -= 0.15 
-        else Priority += 0.1 end
-        return Priority
+        if GetQuarry(0) < GetQuarry(1) then return AIAddQuarry(2) end
+        return AIAddQuarry(1)
     end;
 }
 
@@ -190,15 +178,7 @@ Card
         return 1
     end;
     AIFunction = function ()
-        local Priority = 0.29
-        if GetQuarry(0) >= 99 then Priority = 0.04 end
-        if GetBricks(0) <= GetResourceVictory()*0.25 then Priority += 0.15 end
-        if GetBricks(0) >= GetResourceVictory() then Priority -= 0.15 end
-        if GetQuarry(0) >= 10 then Priority -= 0.15 
-        else Priority += 0.1 end
-        if GetWall(0) <= GetMaxWall()*0.25 then Priority += 0.04
-        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= 0.08 end
-        return Priority
+        return math.min(AIAddQuarry(1) + AIAddWall(4), 0.95)
     end;
 }
 
@@ -220,11 +200,7 @@ Card
         return 1
     end;
     AIFunction = function ()
-        local Priority = 0.02
-        if GetGems(0) <= 6 then Priority += 0.03 end
-        if GetWall(0) <= GetMaxWall()*0.25 then Priority += 0.05
-        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= 0.1 end
-        return Priority
+        return AIAddWall(5)-(math.min(GetGems(0), 6)*0.01)
     end;
 }
 
@@ -242,18 +218,12 @@ Card
     Keywords = "";
     PlayFunction = function ()
         if GetQuarry(0) < GetQuarry(1) then
-        SetQuarry(0, GetQuarry(1))
+            SetQuarry(0, GetQuarry(1))
         end
         return 1
     end;
     AIFunction = function ()
-        local Priority = math.min((GetQuarry(1) - GetQuarry(0))*0.25, 0.95) 
-        if GetQuarry(0) >= 99 or GetQuarry(0) >= GetQuarry(1) then return 0 end
-        if GetBricks(0) <= GetResourceVictory()*0.25 then Priority += 0.15 end
-        if GetBricks(0) >= GetResourceVictory() then Priority -= 0.15 end
-        if GetQuarry(0) >= 10 then Priority -= 0.15 
-        else Priority += 0.1 end
-        return Priority
+        return AIAddQuarry(math.max(GetQuarry(1)-GetQuarry(0), 0))
     end;
 }
 
@@ -274,10 +244,7 @@ Card
         return 1
     end;
     AIFunction = function ()
-        local Priority = 0.03
-        if GetWall(0) <= GetMaxWall()*0.25 then Priority += 0.03
-        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= 0.03 end
-        return Priority
+        return AIAddWall(3)
     end;
 }
 
@@ -298,10 +265,7 @@ Card
         return 1
     end;
     AIFunction = function ()
-        local Priority = 0.04
-        if GetWall(0) <= GetMaxWall()*0.25 then Priority += 0.04
-        elseif GetWall(0) >= GetMaxWall()*0.75 then Priority -= 0.04 end
-        return Priority
+        return AIAddWall(4)
     end;
 }
 
@@ -324,9 +288,7 @@ Card
         return 1
     end;
     AIFunction = function ()
-        local Priority = 0.02
-        if GetGems(0) >= GetResourceVictory() then Priority -= 0.02 
-        elseif GetGems(0) >= GetResourceVictory()*0.75 then Priority += 0.02 end
+        local Priority = AIAddGems(4)
         if GetQuarry(1) == 1 then Priority -= 0.04 end
         if GetQuarry(0) < GetQuarry(1) then Priority += 0.02
         elseif GetQuarry(0) > GetQuarry(1) then Priority -= 0.02 end
@@ -354,7 +316,10 @@ Card
         end
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        if GetWall(0) == 0 then return AIAddWall(6) end
+        return AIAddWall(3)
+    end;
 }
 
 Card 
@@ -374,7 +339,9 @@ Card
         RemoveWall(0, 5)
         return 0
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIRemoveWall(math.min(GetWall(0), 5)) + AIRemoveEnemyWall(math.min(GetWall(1), 5))
+    end;
 }
 
 Card 
@@ -393,7 +360,7 @@ Card
         AddMagic(0, 1)
         return 0
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function () return 0.97 end;
 }
 
 Card 
@@ -413,7 +380,13 @@ Card
         RemoveQuarry(0, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        local Priority = 0.0
+        if GetQuarry(0) == 1 then return 0.25 end
+        if GetQuarry(0) < GetQuarry(1) then Priority -= 0.05
+        elseif GetQuarry(0) > GetQuarry(1) then Priority += 0.05 end
+        return Priority
+    end;
 }
 
 Card 
@@ -432,7 +405,9 @@ Card
         AddWall(0, 6)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddWall(6)
+    end;
 }
 
 Card 
@@ -451,7 +426,9 @@ Card
         RemoveQuarry(1, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIRemoveEnemyQuarry(1)
+    end;
 }
 
 Card 
@@ -470,7 +447,9 @@ Card
         AddQuarry(0, 2)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddQuarry(2)
+    end;
 }
 
 Card 
@@ -491,7 +470,9 @@ Card
         AddGems(0, 5)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIRemoveQuarry(1) + AIAddWall(10) + AIAddGems(5), 0.95)
+    end;
 }
 
 Card 
@@ -510,7 +491,9 @@ Card
         AddWall(0, 8)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddWall(8)
+    end;
 }
 
 Card 
@@ -530,7 +513,9 @@ Card
         AddDungeon(0, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(6) + AIAddDungeon(1), 0.95)
+    end;
 }
 
 Card 
@@ -550,7 +535,9 @@ Card
         AddGems(0, 7)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(7) + AIAddGems(7), 0.95)
+    end;
 }
 
 Card 
@@ -570,7 +557,9 @@ Card
         AddTower(0, 3)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(6) + AIAddTower(3), 0.95)
+    end;
 }
 
 Card 
@@ -589,7 +578,9 @@ Card
         AddWall(0, 12)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddWall(12)
+    end;
 }
 
 Card 
@@ -609,7 +600,9 @@ Card
         AddTower(0, 5)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(8) + AIAddTower(5), 0.95)
+    end;
 }
 
 Card 
@@ -628,7 +621,9 @@ Card
         AddWall(0, 15)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddWall(15)
+    end;
 }
 
 Card 
@@ -648,7 +643,9 @@ Card
         Damage(1, 10)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(6) + AIDamageEnemy(10), 0.95)
+    end;
 }
 
 Card 
@@ -668,7 +665,9 @@ Card
         AddTower(0, 8)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(20) + AIAddTower(8), 0.95)
+    end;
 }
 
 Card 
@@ -688,7 +687,9 @@ Card
         RemoveRecruits(0, 5)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(9) + AIRemoveRecruits(5), 0.95)
+    end;
 }
 
 Card 
@@ -709,7 +710,9 @@ Card
         AddRecruits(0, 2)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(1)+AIAddTower(1)+AIAddRecruits(2), 0.95)
+    end;
 }
 
 Card 
@@ -734,7 +737,10 @@ Card
         end
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        if GetWall(0) < GetWall(1) then return math.max(AIRemoveDungeon(1)+AIRemoveTower(2), -0.95)
+        else return math.min(AIRemoveEnemyDungeon(1)+AIRemoveEnemyTower(2), 0.95) end
+    end;
 }
 
 Card 
@@ -757,7 +763,10 @@ Card
         end
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        if GetDungeon(0) < GetDungeon(1) then return math.min(AIAddRecruits(6)+AIAddWall(6)+AIAddDungeon(1), 0.95) end
+        return math.min(AIAddRecruits(6)+AIAddWall(6), 0.95)
+    end;
 }
 
 Card 
@@ -777,7 +786,9 @@ Card
         Damage(1, 6)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddWall(7)+AIDamageEnemy(6), 0.95)
+    end;
 }
 
 Card 
@@ -798,7 +809,10 @@ Card
         SetWall(1, temp)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        if GetWall(0) > GetWall(1) then return math.max(AIRemoveWall(GetWall(0)-GetWall(1))+AIAddEnemyWall(GetWall(0)-GetWall(1)), -0.95) end
+        return math.min(AIAddWall(GetWall(1)-GetWall(0))+AIRemoveEnemyWall(GetWall(1)-GetWall(0)), 0.95)
+    end;
 }
 
 Card 
