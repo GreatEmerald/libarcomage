@@ -381,11 +381,55 @@ auto InitLuaFunctions()
     end");
     
     lua.doString(
+    "function AIAddMagic(Amount)
+        return AIAddFacility(Amount, GetMagic(0), GetGems(0), GetRecruits(0), GetBricks(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveMagic(Amount)
+        return AIRemoveFacility(Amount, GetMagic(0), GetGems(0), GetRecruits(0), GetBricks(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyMagic(Amount)
+        return AIRemoveEnemyFacility(Amount, GetMagic(1), GetGems(1), GetRecruits(1), GetBricks(1))
+    end");
+    
+    lua.doString(
     "function AIAddResources(Amount, Resources, OtherResourcesA, OtherResourcesB)
         local Priority = Amount*0.01
         if Resources >= GetResourceVictory() then Priority -= 0.01*Amount
         elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority += 0.01*Amount end
         return math.min(Priority, 0.95)
+    end");
+    
+    lua.doString(
+    "function AIRemoveResources(Amount, Resources, OtherResourcesA, OtherResourcesB)
+        local Priority = (Amount-math.min(Resources, Amount))*(-0.01)
+        if Resources >= GetResourceVictory() then Priority += 0.01*Amount
+        elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority -= 0.01*Amount end
+        return Priority
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyResources(Amount, Resources, OtherResourcesA, OtherResourcesB)
+        if Resources < Amount then Amount -= Resources end
+        return AIAddResources(Amount, Resources, OtherResourcesA, OtherResourcesB)
+    end");
+    
+    lua.doString(
+    "function AIAddBricks(Amount)
+        return AIAddResources(Amount, GetBricks(0), GetRecruits(0), GetGems(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveBricks(Amount)
+        return AIRemoveResources(Amount, GetBricks(0), GetRecruits(0), GetGems(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyBricks(Amount)
+        return AIRemoveEnemyResources(Amount, GetBricks(1), GetGems(1), GetRecruits(1))
     end");
     
     lua.doString(
@@ -400,10 +444,7 @@ auto InitLuaFunctions()
     
     lua.doString(
     "function AIRemoveRecruits(Amount)
-        local Priority = (Amount-math.min(GetRecruits(0), Amount))*(-0.01)
-        if GetRecruits(0) >= GetResourceVictory() then Priority += 0.01*Amount
-        elseif GetRecruits(0) >= GetResourceVictory()*0.75 and (OneResourceVictory or (GetGems(0) >= GetResourceVictory() and GetRecruits(0) >= GetResourceVictory())) then Priority -= 0.01*Amount end
-        return Priority
+        return AIRemoveResources(Amount, GetRecruits(0), GetBricks(0), GetGems(0))
     end");
     
     lua.doString(
@@ -440,13 +481,23 @@ auto InitLuaFunctions()
     
     lua.doString(
     "function AIAddTower(Amount)
+        if GetTower(0) + Amount >= GetTowerVictory() then return 1 end
         local Priority = Amount*0.02
         if GetTower(0) <= GetTowerVictory()*0.25 or GetTower(0) >= GetTowerVictory()*0.75 then Priority += Amount*0.02 end
         return math.min(Priority, 0.95)
     end");
     
     lua.doString(
+    "function AIAddEnemyTower(Amount)
+        if GetTower(1) + Amount >= GetTowerVictory() then return -1 end
+        local Priority = Amount*(-0.02)
+        if GetTower(1) <= GetTowerVictory()*0.25 or GetTower(1) >= GetTowerVictory()*0.75 then Priority -= Amount*0.02 end
+        return math.max(Priority, -0.95)
+    end");
+    
+    lua.doString(
     "function AIRemoveTower(Amount)
+        if GetTower(0) - Amount < 0 then return -1 end
         local Priority = Amount*(-0.02)
         if GetTower(0) <= GetTowerVictory()*0.25 or GetTower(0) >= GetTowerVictory()*0.75 then Priority += Amount*(-0.02) end
         return math.max(Priority, -0.95)
@@ -454,6 +505,7 @@ auto InitLuaFunctions()
     
     lua.doString(
     "function AIRemoveEnemyTower(Amount)
+        if GetTower(1) - Amount <= 0 then return 1 end
         local Priority = Amount*0.02
         if GetTower(1) >= GetTowerVictory()*0.75 or GetTower(1) <= GetTowerVictory()*0.25 then Priority += Amount*0.02 end
         return math.min(Priority, 0.95)
@@ -584,7 +636,7 @@ void AIPlay()
             Worst = i;
         }
     }
-    if ((HighestPriority < 0.f) || ((HighestPriority == 0.f) && (uniform(0,2) => 1)))
+    if (((HighestPriority < 0.f) || ((HighestPriority == 0.f) && (uniform(0,2) => 1))) && !Player[Turn].Hand[Worst].Cursed )
     {
         PlayCard(Worst, true); //GE: If we have bad cards, pick the worst one and discard.
         return;

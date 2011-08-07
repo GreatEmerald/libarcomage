@@ -831,7 +831,7 @@ Card
         AddTower(0, 1)
         return 0
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function () return 0.95 end;
 }
 
 Card 
@@ -850,7 +850,7 @@ Card
         RemoveTower(1, 1)
         return 0
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function () return 0.95 end;
 }
 
 Card 
@@ -869,7 +869,9 @@ Card
         AddTower(0, 3)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(3)
+    end;
 }
 
 Card 
@@ -888,7 +890,9 @@ Card
         AddMagic(0, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddMagic(1)
+    end;
 }
 
 Card 
@@ -906,7 +910,9 @@ Card
     PlayFunction = function () 
         return -1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return 0.01
+    end;
 }
 
 Card 
@@ -925,7 +931,9 @@ Card
         AddTower(0, 3)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(3)
+    end;
 }
 
 Card 
@@ -945,7 +953,9 @@ Card
         RemoveTower(1, 2)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddTower(2), AIRemoveEnemyTower(2), 0.95)
+    end;
 }
 
 Card 
@@ -966,7 +976,9 @@ Card
         AddTower(1, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddMagic(1)+AIAddTower(3)+AIAddEnemyTower(1), 0.95)
+    end;
 }
 
 Card 
@@ -985,7 +997,9 @@ Card
         RemoveTower(1, 3)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIRemoveEnemyTower(3)
+    end;
 }
 
 Card 
@@ -1004,7 +1018,9 @@ Card
         AddTower(0, 5)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(5)
+    end;
 }
 
 Card 
@@ -1023,7 +1039,9 @@ Card
         RemoveTower(1, 5)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIRemoveEnemyTower(5)
+    end;
 }
 
 Card 
@@ -1043,7 +1061,9 @@ Card
         AddMagic(0, 2)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIRemoveTower(5)+AIAddMagic(2)
+    end;
 }
 
 Card 
@@ -1064,7 +1084,9 @@ Card
         AddWall(0, 3)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddMagic(1)+AIAddTower(3)+AIAddWall(3), 0.95)
+    end;
 }
 
 Card
@@ -1085,7 +1107,10 @@ Card
         SetMagic(1, HighestMagic)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        if GetMagic(0) < GetMagic(1) then return AIAddMagic(GetMagic(1)-GetMagic(0)) end
+        return -0.07
+    end;
 }
 
 Card 
@@ -1104,7 +1129,9 @@ Card
         AddTower(0, 8)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(8)
+        end;
 }
 
 Card 
@@ -1124,7 +1151,9 @@ Card
         AddMagic(0, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddTower(5)+AIAddMagic(1), 0.95)
+    end;
 }
 
 Card 
@@ -1144,7 +1173,10 @@ Card
         RemoveTower(1, 9)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        if AIRemoveEnemyTower(9) > 0.95 then return AIRemoveEnemyTower(9) end
+        return AIRemoveMagic(1)+AIRemoveEnemyTower(9)
+    end;
 }
 
 Card 
@@ -1164,7 +1196,9 @@ Card
         RemoveBricks(1, 6)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return math.min(AIAddTower(5)+AIRemoveEnemyBricks(6), 0.95)
+    end;
 }
 
 Card 
@@ -1183,7 +1217,9 @@ Card
         AddTower(0, 11)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(11)
+    end;
 }
 
 Card 
@@ -1205,7 +1241,9 @@ Card
         RemoveMagic(1, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIRemoveTower(7)+AIRemoveEnemyTower(7)+AIRemoveMagic(1)+AIRemoveEnemyMagic(1)
+    end;
 }
 
 Card 
@@ -1245,7 +1283,9 @@ Card
         RemoveBricks(0, 10)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(7)+AIRemoveBricks(10)
+    end;
 }
 
 Card 
@@ -1265,7 +1305,9 @@ Card
         AddWall(0, 3)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(8)+AIAddWall(3)
+    end;
 }
 
 Card 
@@ -1285,7 +1327,9 @@ Card
         AddDungeon(0, 1)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(8)+AIAddDungeon(1)
+    end;
 }
 
 Card 
@@ -1304,7 +1348,9 @@ Card
         AddTower(0, 15)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(15)
+    end;
 }
 
 Card 
@@ -1325,7 +1371,9 @@ Card
         AddRecruits(0, 5)
         return 1
      end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(10)+AIAddWall(5)+AIAddRecruits(5)
+    end;
 }
 
 Card 
@@ -1345,7 +1393,9 @@ Card
         Damage(1, 6)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(12)+AIDamageEnemy(6)
+    end;
 }
 
 Card 
@@ -1364,7 +1414,9 @@ Card
         AddTower(0, 20)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(20)
+    end;
 }
 
 Card 
@@ -1384,7 +1436,9 @@ Card
         RemoveWall(0, 6)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(11)+AIRemoveWall(6)
+    end;
 }
 
 Card 
@@ -1407,7 +1461,10 @@ Card
         end
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        if GetTower(0) < GetTower(1) then return AIAddTower(2) end
+        return AIAddTower(1)
+    end;
 }
 
 Card 
@@ -1428,7 +1485,9 @@ Card
         AddGems(0, 3)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(1)+AIAddEnemyTower(1)+AIAddGems(3)
+    end;
 }
 
 Card 
@@ -1449,7 +1508,9 @@ Card
         RemoveTower(1, 2)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(4)+AIRemoveRecruits(3)+AIRemoveEnemyTower(2)
+    end;
 }
 
 Card 
@@ -1472,7 +1533,10 @@ Card
         end
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        if GetTower(0) > GetWall(1) then return AIRemoveEnemyTower(8) end
+        return AIDamageEnemy(8)
+    end;
 }
 
 Card 
@@ -1493,7 +1557,9 @@ Card
         AddBricks(0, 6)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(13)+AIAddRecruits(6)+AIAddBricks(6)
+    end;
 }
 
 Card 
