@@ -327,6 +327,11 @@ auto InitLuaFunctions()
     end");
     
     lua.doString(
+    "function AIAddEnemyFacility(Amount, Facilities, Resources, OtherResourcesA, OtherResourcesB)
+        return AIRemoveFacility(Amount, Facilities, Resources, OtherResourcesA, OtherResourcesB)
+    end");
+    
+    lua.doString(
     "function AIRemoveFacility(Amount, Facilities, Resources, OtherResourcesA, OtherResourcesB)
         local Priority = Amount*(-0.25)
         if Facilities <= 1 then return 0 end
@@ -356,6 +361,11 @@ auto InitLuaFunctions()
     end");
     
     lua.doString(
+    "function AIAddEnemyQuarry(Amount)
+        return AIAddEnemyFacility(Amount, GetQuarry(1), GetBricks(1), GetGems(1), GetRecruits(1))
+    end");
+    
+    lua.doString(
     "function AIRemoveQuarry(Amount)
         return AIRemoveFacility(Amount, GetQuarry(0), GetBricks(0), GetGems(0), GetRecruits(0))
     end");
@@ -366,23 +376,13 @@ auto InitLuaFunctions()
     end");
     
     lua.doString(
-    "function AIAddDungeon(Amount)
-        return AIAddFacility(Amount, GetDungeon(0), GetRecruits(0), GetGems(0), GetBricks(0))
-    end");
-    
-    lua.doString(
-    "function AIRemoveDungeon(Amount)
-        return AIRemoveFacility(Amount, GetDungeon(0), GetRecruits(0), GetGems(0), GetBricks(0))
-    end");
-    
-    lua.doString(
-    "function AIRemoveEnemyDungeon(Amount)
-        return AIRemoveEnemyFacility(Amount, GetDungeon(1), GetRecruits(1), GetGems(1), GetBricks(1))
-    end");
-    
-    lua.doString(
     "function AIAddMagic(Amount)
         return AIAddFacility(Amount, GetMagic(0), GetGems(0), GetRecruits(0), GetBricks(0))
+    end");
+    
+    lua.doString(
+    "function AIAddEnemyMagic(Amount)
+        return AIAddEnemyFacility(Amount, GetMagic(1), GetGems(1), GetRecruits(1), GetBricks(1))
     end");
     
     lua.doString(
@@ -393,6 +393,26 @@ auto InitLuaFunctions()
     lua.doString(
     "function AIRemoveEnemyMagic(Amount)
         return AIRemoveEnemyFacility(Amount, GetMagic(1), GetGems(1), GetRecruits(1), GetBricks(1))
+    end");
+    
+    lua.doString(
+    "function AIAddDungeon(Amount)
+        return AIAddFacility(Amount, GetDungeon(0), GetRecruits(0), GetGems(0), GetBricks(0))
+    end");
+    
+    lua.doString(
+    "function AIAddEnemyDungeon(Amount)
+        return AIAddEnemyFacility(Amount, GetDungeon(1), GetRecruits(1), GetGems(1), GetBricks(1))
+    end");
+    
+    lua.doString(
+    "function AIRemoveDungeon(Amount)
+        return AIRemoveFacility(Amount, GetDungeon(0), GetRecruits(0), GetGems(0), GetBricks(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyDungeon(Amount)
+        return AIRemoveEnemyFacility(Amount, GetDungeon(1), GetRecruits(1), GetGems(1), GetBricks(1))
     end");
     
     lua.doString(
@@ -514,6 +534,11 @@ auto InitLuaFunctions()
     lua.doString(
     "function AIDamageEnemy(Amount)
         return AIRemoveEnemyWall(math.min(Amount, GetWall(1))) + AIRemoveEnemyTower(math.max(Amount-GetWall(1), 0))
+    end");
+    
+    lua.doString(
+    "function AIDamage(Amount)
+        return AIRemoveWall(math.min(Amount, GetWall(1))) + AIRemoveTower(math.max(Amount-GetWall(1), 0))
     end");
 }
 
