@@ -424,6 +424,11 @@ auto InitLuaFunctions()
     end");
     
     lua.doString(
+    "function AIAddEnemyResources(Amount, Resources, OtherResourcesA, OtherResourcesB)
+        return AIRemoveResources(Amount, Resources, OtherResourcesA, OtherResourcesB)
+    end");
+    
+    lua.doString(
     "function AIRemoveResources(Amount, Resources, OtherResourcesA, OtherResourcesB)
         local Priority = (Amount-math.min(Resources, Amount))*(-0.01)
         if Resources >= GetResourceVictory() then Priority += 0.01*Amount
@@ -443,6 +448,11 @@ auto InitLuaFunctions()
     end");
     
     lua.doString(
+    "function AIAddEnemyBricks(Amount)
+        return AIAddEnemyResources(Amount, GetBricks(1), GetRecruits(1), GetGems(1))
+    end");
+    
+    lua.doString(
     "function AIRemoveBricks(Amount)
         return AIRemoveResources(Amount, GetBricks(0), GetRecruits(0), GetGems(0))
     end");
@@ -458,13 +468,38 @@ auto InitLuaFunctions()
     end");
     
     lua.doString(
+    "function AIAddEnemyGems(Amount)
+        return AIAddEnemyResources(Amount, GetGems(1), GetRecruits(1), GetBricks(1))
+    end");
+    
+    lua.doString(
+    "function AIRemoveGems(Amount)
+        return AIRemoveResources(Amount, GetGems(0), GetRecruits(0), GetBricks(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyGems(Amount)
+        return AIRemoveEnemyResources(Amount, GetGems(1), GetBricks(1), GetRecruits(1))
+    end");
+    
+    lua.doString(
     "function AIAddRecruits(Amount)
         return AIAddResources(Amount, GetRecruits(0), GetBricks(0), GetGems(0))
     end");
     
     lua.doString(
+    "function AIAddEnemyRecruits(Amount)
+        return AIAddEnemyResources(Amount, GetRecruits(1), GetGems(1), GetBricks(1))
+    end");
+    
+    lua.doString(
     "function AIRemoveRecruits(Amount)
         return AIRemoveResources(Amount, GetRecruits(0), GetBricks(0), GetGems(0))
+    end");
+    
+    lua.doString(
+    "function AIRemoveEnemyRecruits(Amount)
+        return AIRemoveEnemyResources(Amount, GetRecruits(1), GetBricks(1), GetGems(1))
     end");
     
     lua.doString(
