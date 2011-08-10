@@ -6,13 +6,13 @@
  * Authors: GreatEmerald
  */
 
-module arcomage.arco;
+module arco;
 import std.stdio; //GE: Debugging purposes so far.
 import std.conv;
 import std.string;
 import luad.all;
 import luad.c.all;
-import arcomage.cards;
+import cards;
 
 /*struct Coords {
     int X, Y, W, H;
@@ -80,7 +80,7 @@ string[] PoolNames; //GE: Holds the names of each pool. Becareful to align this 
 string[] PrecachePictures;
 //int[] Queue; //GE: This is the list of card IDs in the bank.
 
-struct ConfigOptions {
+struct S_Config {
     bool Fullscreen;
     bool SoundEnabled;
     byte CardTranslucency;
@@ -100,18 +100,20 @@ struct ConfigOptions {
     bool UseOriginalCards;
     bool UseOriginalMenu;
     string OriginalDataDir;
-} Config;
+}
+S_Config Config;
 
 enum SoundTypes {
-    Damage, ResB_Up, ResS_Up, Tower_Up, Wall_Up, ResB_Down, ResS_Down
+    Damage, ResB_Up, ResS_Up, Tower_Up, Wall_Up, ResB_Down, ResS_Down, Shuffle
 }
 
-struct FrontendFunctions {
-    void (*Sound_Play)(SoundTypes);
-    void (*RedrawScreenFull)();
-    void (*PrecacheCard)(const char*, int);
-    void (*PlayCardAnimation)(CardInfo, int);
-};
+struct S_FrontendFunctions {
+    void function(SoundTypes) Sound_Play;
+    void function() RedrawScreenFull;
+    void function(const char*, int) PrecacheCard;
+    void function(CardInfo, int) PlayCardAnimation;
+}
+S_FrontendFunctions FrontendFunctions;
 
 lua_State * L; /// Workaround for SIGSEGV on exit.
 LuaState lua; /// The main Lua state.
@@ -291,16 +293,16 @@ extern(C):
 	return cast(int).CardDB[Pool][Card].Picture.Coordinates.h;
     }
 
-    immutable(char)* D_getLuaFunction(int Pool, int Card)
+    /*immutable(char)* D_getLuaFunction(int Pool, int Card)
     {
-        return toStringz(CardDB[Pool][Card].LuaFunction);
+        return toStringz(CardDB[Pool][Card].PlayFunction);
     }
 
     size_t D_getLuaFunctionSize(int Pool, int Card)
     {
         //writeln("Getting ur pic size for Pool ", Pool, " Card ", Card);
-        return CardDB[Pool][Card].LuaFunction.length+1;
-    }
+        return CardDB[Pool][Card].PlayFunction.length+1;
+    }*/
 
     /*void D_getPrecachePictures()
     {

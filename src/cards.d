@@ -2,9 +2,9 @@
  * Module that handles all the inner mechanics of libarcomage.
  */  
 
-module arcomage.cards;
+module cards;
 import std.stdio;
-import arcomage.arco;
+import arco;
 import std.random;
 import std.algorithm;
 
@@ -30,13 +30,13 @@ int CurrentPosition; /// The current position in the Queue.
 /**
  * Defines functions and sends them over to Lua.
  */ 
-auto InitLuaFunctions()
+void InitLuaFunctions()
 {
     lua["Damage"] = (int Who, int Amount)
     {
         Stats P = Player[GetAbsolutePlayer(Who)];
         
-        if (P >= Amount)
+        if (P.Wall >= Amount)
             P.Wall -= Amount;
         else
         {
@@ -44,161 +44,160 @@ auto InitLuaFunctions()
             P.Wall = 0;
         }
         FrontendFunctions.Sound_Play(SoundTypes.Damage);
-    }
+    };
     
     lua["AddQuarry"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Quarry >= 99)
             return;
         
-        Stats P = Player[GetAbsolutePlayer(Who)];
-        
         P.Quarry += Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
-    }
+    };
     
     lua["AddMagic"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Magic >= 99)
             return;
         
-        Stats P = Player[GetAbsolutePlayer(Who)];
-
         P.Magic += Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
-    }
+    };
     
     lua["AddDungeon"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Dungeon >= 99)
             return;
 
-        Stats P = Player[GetAbsolutePlayer(Who)];
-        
         P.Dungeon += Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
-    }
+    };
     
     lua["AddBricks"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Bricks >= 999)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Bricks += Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResS_Up);
-    }
+    };
     
     lua["AddGems"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Gems >= 999)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Gems += Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResS_Up);
-    }
+    };
     
     lua["AddRecruits"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Recruits >= 999)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Recruits += Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResS_Up);
-    }
+    };
     
     lua["AddTower"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Tower >= Config.TowerVictory)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Tower += Amount;
         FrontendFunctions.Sound_Play(SoundTypes.Tower_Up);
-    }
+    };
     
     lua["AddWall"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Wall >= Config.MaxWall)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Wall += Amount;
         FrontendFunctions.Sound_Play(SoundTypes.Wall_Up);
-    }
+    };
     
     lua["RemoveQuarry"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Quarry <= 1)
             return;
         
-        Stats P = Player[GetAbsolutePlayer(Who)];
-
         P.Quarry -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
-    }
+    };
     
     lua["RemoveMagic"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Magic <= 1)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
-
         P.Magic -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
-    }
+    };
     
     lua["RemoveDungeon"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Dungeon <= 1)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Dungeon -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
-    }
+    };
     
     lua["RemoveBricks"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Bricks <= 0)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Bricks -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResS_Down);
-    }
+    };
     
     lua["RemoveGems"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Gems <= 0)
             return;
         
-        Stats P = Player[GetAbsolutePlayer(Who)];
-
         P.Gems -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResS_Down);
-    }
+    };
     
     lua["RemoveRecruits"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Recruits <= 0)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Recruits -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.ResS_Down);
-    }
+    };
     
     lua["RemoveTower"] = (int Who, int Amount)
     {
@@ -206,109 +205,109 @@ auto InitLuaFunctions()
 
         P.Tower -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.Damage);
-    }
+    };
     
     lua["RemoveWall"] = (int Who, int Amount)
     {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        
         if (P.Wall <= 0)
             return;
-        
-        Stats P = Player[GetAbsolutePlayer(Who)];
 
         P.Wall -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.Damage);
-    }
+    };
     
     lua["GetQuarry"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Quarry;
-    }
+    };
     
     lua["GetMagic"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Magic;
-    }
+    };
     
     lua["GetDungeon"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Dungeon;
-    }
+    };
     
     lua["GetBricks"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Bricks;
-    }
+    };
     
     lua["GetGems"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Gems;
-    }
+    };
     
     lua["GetRecruits"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Recruits;
-    }
+    };
     
     lua["GetTower"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Tower;
-    }
+    };
     
     lua["GetWall"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Wall;
-    }
+    };
     
     lua["GetResourceVictory"] = ()
     {
         return Config.ResourceVictory;
-    }
+    };
     
     lua["GetTowerVictory"] = ()
     {
         return Config.TowerVictory;
-    }
+    };
     
     lua["GetMaxWall"] = ()
     {
         return Config.MaxWall;
-    }
+    };
     
     lua["SetQuarry"] = (int Who, int Amount)
     {
         Stats P = Player[GetAbsolutePlayer(Who)];
 
         if (P.Quarry < Amount)
-            Sound_Play(ResB_Up);
+            FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
         else if (P.Quarry > Amount)
-            Sound_Play(ResB_Down);
+            FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
 
         P.Quarry = Amount;
-    }
+    };
     
     lua["SetMagic"] = (int Who, int Amount)
     {
         Stats P = Player[GetAbsolutePlayer(Who)];
 
         if (P.Magic < Amount)
-            Sound_Play(ResB_Up);
+            FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
         else if (P.Magic > Amount)
-            Sound_Play(ResB_Down);
+            FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
 
         P.Magic = Amount;
-    }
+    };
     
     lua["SetWall"] = (int Who, int Amount)
     {
         Stats P = Player[GetAbsolutePlayer(Who)];
 
         if (P.Wall < Amount)
-            Sound_Play(Wall_Up);
+            FrontendFunctions.Sound_Play(SoundTypes.Wall_Up);
         else if (P.Wall > Amount)
-            Sound_Play(Damage);
+            FrontendFunctions.Sound_Play(SoundTypes.Damage);
 
         P.Wall = Amount;
-    }
+    };
     
     lua["OneResourceVictory"] = Config.OneResourceVictory;
     
@@ -618,11 +617,11 @@ void ShuffleQueue()
     CardInfo t;
     for (int i=0; i<32000; i++) //GE: A ludicrous way to randomise the Queue array.
 	{
-		a=rand()%Queue.length;
-		b=rand()%Queue.length;
+		a=uniform(0, cast(int).Queue.length);
+		b=uniform(0, cast(int).Queue.length);
 		t=Queue[a]; Queue[a]=Queue[b]; Queue[b]=t;
 	}
-	FrontendFunctions.Sound_Play(SHUFFLE);
+	FrontendFunctions.Sound_Play(SoundTypes.Shuffle);
 }
 
 CardInfo GetCard()//GE: Returns next card in the Queue array and moves CurrentPosition up.
@@ -633,7 +632,7 @@ CardInfo GetCard()//GE: Returns next card in the Queue array and moves CurrentPo
 	   CurrentPosition++;
     else
     {
-      ShuffleQ();
+      ShuffleQueue();
       CurrentPosition = 0;
     }
     return CI;
@@ -645,7 +644,7 @@ CardInfo GetCard()//GE: Returns next card in the Queue array and moves CurrentPo
  */ 
 void PutCard(CardInfo CI)
 {
-    CurrentPosition = (CurrentPosition + 1)%Queue.length;
+    CurrentPosition = (CurrentPosition + 1)%cast(int).Queue.length;
     Queue[CurrentPosition] = CI;
 }
 
@@ -678,25 +677,25 @@ void AIPlay()
     
     foreach (int i, CardInfo CI; Player[Turn].Hand)
     {
-        CurrentPriority = CI.AIFunction();
-        CurentPriority = AlterAIPriority(CurrentPriority, CI);
+        CurrentPriority = CI.AIFunction.call!float(); //GE: DMD has no clue what LuaFunction returns, thus we have to tell it that it's a single float.
+        CurrentPriority = AlterAIPriority(CurrentPriority, CI);
         
         if ( (CanAffordCard(CI)) &&                                       //GE: If we can afford the card
             ( (HighestPriority < CurrentPriority) ||                      //GE: And it is more attractive than what we saw before
-            (HighestPriority == CurrentPriority && uniform(0,2) => 1) ) ) //GE: Or it is as attractive (in which case we let luck decide)
+            (HighestPriority == CurrentPriority && uniform(0,2) >= 1) ) ) //GE: Or it is as attractive (in which case we let luck decide)
         {
             HighestPriority = CurrentPriority; //GE: Get the highest priority card
             Favourite = i;
         }
         if ( (!CI.Cursed) &&
             ( (LowestPriority > CurrentPriority) ||
-            (LowestPriority == CurrentPriority && uniform(0,2) => 1) ) )
+            (LowestPriority == CurrentPriority && uniform(0,2) >= 1) ) )
         {
             LowestPriority = CurrentPriority; //GE: Get the lowest priority card
             Worst = i;
         }
     }
-    if (((HighestPriority < 0.f) || ((HighestPriority == 0.f) && (uniform(0,2) => 1))) && !Player[Turn].Hand[Worst].Cursed )
+    if (((HighestPriority < 0.f) || ((HighestPriority == 0.f) && (uniform(0,2) >= 1))) && !Player[Turn].Hand[Worst].Cursed )
     {
         PlayCard(Worst, true); //GE: If we have bad cards, pick the worst one and discard.
         return;
@@ -756,7 +755,7 @@ bool CanPlayCard(CardInfo CI, bool Discarded)
     if (Discarded && CI.Cursed)
         return false;     // Cursed cards like LodeStone can't be discarded
 
-    if (SpecialTurn && !Discarded) //GE: You're trying to play a card during a discard round. Bad.
+    if (DiscardRound && !Discarded) //GE: You're trying to play a card during a discard round. Bad.
        return false;
        
     return true;
@@ -803,7 +802,7 @@ void PlayCard(int CardPlace, bool Discarded)
 
 int ExecuteCard(CardInfo CI)
 {
-    return CI.PlayFunction();
+    return CI.PlayFunction.call!int();
 }
 
 /**
@@ -814,21 +813,29 @@ void GetNextTurn(CardInfo CI, bool Discarded)
 {
     if (Discarded)
     {
-        if (!SpecialTurn)
+        if (!DiscardRound)
             NextTurn = GetEnemy();
         else
         {
             NextTurn = Turn;
-            SpecialTurn = false;
+            DiscardRound = false;
         }
     }
     else
         NextTurn = GetAbsolutePlayer(ExecuteCard(CI)); //GE: This is where we really execute the card.
     if (NextTurn == -1) //GE: If the card inits a discard turn.
     {
-        SpecialTurn = true;
+        DiscardRound = true;
         NextTurn = Turn;
     }
+}
+
+bool CanAffordCard(CardInfo CI)
+{
+    if (CI.BrickCost > Player[Turn].Bricks) return false;
+    if (CI.GemCost > Player[Turn].Gems) return false;
+    if (CI.RecruitCost > Player[Turn].Recruits) return false;
+    return true;
 }
 
 void TakeResources(Stats P, int Bricks, int Gems, int Recruits)
@@ -869,7 +876,7 @@ void Normalise()
 
 int GetEnemy()
 {
-    return (Turn+1)%Player.length;
+    return (Turn+1)%cast(int).Player.length;
 }
 
 int GetAbsolutePlayer(int PlayerNumber)
