@@ -10,6 +10,7 @@ module arco;
 import std.stdio; //GE: Debugging purposes so far.
 import std.conv;
 import std.string;
+import std.file;
 import luad.all;
 import cards;
 
@@ -135,6 +136,11 @@ void initLua()
     lua = new LuaState();
     lua.openLibs();
     
+    if (!exists("lua/Configuration.lua"))
+    {
+        writeln("The configuration file is missing! It must be relatively in lua/Configuration.lua.");
+        return;
+    }
     lua.doFile("lua/Configuration.lua"); //GE: This sets global variables inside Lua. We need to fish them out now.
     Config.Fullscreen = lua.get!bool("Fullscreen"); //GE: Configuration support.
     Config.SoundEnabled = lua.get!bool("SoundEnabled");

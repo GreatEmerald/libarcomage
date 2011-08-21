@@ -323,7 +323,7 @@ void InitLuaFunctions()
         if Facilities >= 10 then Priority -= 0.15*Amount 
         else Priority += 0.1*Amount end
         return math.min(Priority, 0.95)
-    end");
+    end"); writeln("DEBUG: Half of Lua initialisation is complete.");
     
     lua.doString(
     "function AIAddEnemyFacility(Amount, Facilities, Resources, OtherResourcesA, OtherResourcesB)
