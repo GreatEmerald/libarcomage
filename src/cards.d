@@ -677,7 +677,7 @@ void AIPlay()
     
     foreach (int i, CardInfo CI; Player[Turn].Hand)
     {
-        CurrentPriority = CI.AIFunction.call!float(); //GE: DMD has no clue what LuaFunction returns, thus we have to tell it that it's a single float.
+        CurrentPriority = CI.AIFunction();//CI.AIFunction.call!float(); //GE: DMD has no clue what LuaFunction returns, thus we have to tell it that it's a single float.
         CurrentPriority = AlterAIPriority(CurrentPriority, CI);
         
         if ( (CanAffordCard(CI)) &&                                       //GE: If we can afford the card
@@ -802,7 +802,7 @@ void PlayCard(int CardPlace, bool Discarded)
 
 int ExecuteCard(CardInfo CI)
 {
-    return CI.PlayFunction.call!int();
+    return CI.PlayFunction();//CI.PlayFunction.call!int();
 }
 
 /**

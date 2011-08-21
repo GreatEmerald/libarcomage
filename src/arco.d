@@ -11,7 +11,6 @@ import std.stdio; //GE: Debugging purposes so far.
 import std.conv;
 import std.string;
 import luad.all;
-import luad.c.all;
 import cards;
 
 /*struct Coords {
@@ -47,8 +46,8 @@ struct CardInfo { //GE: Holds information about a single card.
     string Colour; //GE: Red, Geen, Blue, Gray/Grey/Black, Brown/White. Rendering purposes, mostly for 0 cost coloured cards
     PictureInfo Picture; //GE: Rendering purposes.
     string Keywords; //GE: Might become an array. These are MArcomage keywords, also used in Lua functions
-    LuaFunction PlayFunction; //GE: This is what we call on playing the card.
-    LuaFunction AIFunction; /// The function that rates the desirability of the card.
+    /*LuaFunction*/ int delegate() PlayFunction; //GE: This is what we call on playing the card.
+    /*LuaFunction*/ float delegate() AIFunction; /// The function that rates the desirability of the card.
     
     /**
      * Creates a function in Lua that adds a card to the card array. The Lua
@@ -115,16 +114,15 @@ struct S_FrontendFunctions {
 }
 S_FrontendFunctions FrontendFunctions;
 
-lua_State * L; /// Workaround for SIGSEGV on exit.
 LuaState lua; /// The main Lua state.
 
-version(linux) //GE: Linux needs an entry point.
+/*version(linux) //GE: Linux needs an entry point.
 {
     int main()
     {
         return 0;
     }
-}
+}*/
 
 /**
  * Lua initialisation. Normally, LuaD handles everything for us - this is just
@@ -134,8 +132,7 @@ version(linux) //GE: Linux needs an entry point.
  */ 
 void initLua()
 {
-    L = luaL_newstate();
-    lua = new LuaState(L);
+    lua = new LuaState();
     lua.openLibs();
     
     lua.doFile("lua/Configuration.lua"); //GE: This sets global variables inside Lua. We need to fish them out now.
@@ -212,8 +209,8 @@ extern(C):
 
     void D_LinuxInit() //GE: Special Linux initialisation.
     {
-        version(linux)
-            main();
+        /*version(linux)
+            main();*/
     }
     
     // GE: GET CODE BEGIN ---------------------------------------
