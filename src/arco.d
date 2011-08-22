@@ -29,17 +29,17 @@ struct Rect {
 struct PictureInfo {
     string File;
     SDL_Rect Coordinates;
-    //int X;
-    //int Y;
-    //int H;
-    //int W;
+    /*int X;
+    int Y;
+    int H;
+    int W;*/
 }
 
 struct CardInfo { //GE: Holds information about a single card.
     //int ID; //GE: Obsolete, use n from CardDB[i][n] instead
-    int Frequency; //GE: This is the number of cards of this type in the deck. 1=Rare, 2=Uncommon, 3=Common
     string Name;
     string Description;
+    int Frequency; //GE: This is the number of cards of this type in the deck. 1=Rare, 2=Uncommon, 3=Common
     int BrickCost; //GE: These three are for rendering purposes, but are used in code as well
     int GemCost;
     int RecruitCost;
@@ -56,14 +56,14 @@ struct CardInfo { //GE: Holds information about a single card.
      * 
      * Authors: GreatEmerald, JakobOvrum
      */ 
-    static CardInfo[] fromFile(string path)
+    static CardInfo[] fromFile(in char[] path)
     {
         CardInfo[] Cards;
 
         lua["Card"] = (CardInfo Card)
         {
             Cards ~= Card;
-        };
+        };writeln("DEBUG: The path is ", path, " and it exists ", exists(path));
 
         lua.doFile(path);
 
@@ -171,10 +171,10 @@ void initLua()
         string Path;
     };
     auto Pools = lua.get!(PoolInfo[])("PoolInfo");
-    foreach (int i, PoolInfo Pool; Pools)
+    foreach (PoolInfo Pool; Pools)
     {
-        PoolNames[i] = Pool.Name; //GE: Put pool names into PoolNames[].
-        CardDB[i] = CardInfo.fromFile(Pool.Path); //GE: Populate the CardDB.
+        PoolNames ~= Pool.Name; //GE: Put pool names into PoolNames[].
+        CardDB ~= CardInfo.fromFile(Pool.Path); //GE: Populate the CardDB.
     }
 }
 

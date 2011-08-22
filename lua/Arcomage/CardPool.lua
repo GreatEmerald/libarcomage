@@ -21,7 +21,6 @@
 -- go; however, it's terribly hard to read and very unsafe, so I wil stick with
 -- this method that has more redundancy, but also more safety.
 -- Be careful not to omit anythying, though! Or else you will crash! :{
-
 bUseOriginalCards = false
 DeckSize = 0
 
@@ -36,12 +35,15 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Black";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () return 1 end;
     AIFunction = function () return 0 end;
 }
 ]]
+
+print("bah");
+--function Card(Things) end
 
 Card 
 {
@@ -53,28 +55,29 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
-        RemoveBricks(0, 8)
+        --[[RemoveBricks(0, 8)
         RemoveBricks(1, 8)
-        return 1
+        return 1]]
     end;
     AIFunction = function ()
-        local Priority = 0.0
-        if GetBricks(0) < 8 then Priority += 0.04 end
-        if GetBricks(1) < 8 then Priority -= 0.04 end
+        --[[local Priority = 0.0
+        if GetBricks(0) < 8 then Priority = Priority+0.04 end
+        if GetBricks(1) < 8 then Priority = Priority-0.04 end
         if GetBricks(1) >= GetResourceVictory()*0.75 then
-            if OneResourceVictory then Priority += 0.08
-            elseif GetGems(1) >= GetResourceVictory() and GetRecruits(1) >= GetResourceVictory() then Priority += 0.08 end
+            if OneResourceVictory then Priority = Priority+0.08
+            elseif GetGems(1) >= GetResourceVictory() and GetRecruits(1) >= GetResourceVictory() then Priority = Priority+0.08 end
         end
-        if GetQuarry(0) > GetQuarry(1) then Priority += 0.04
-        elseif GetQuarry(0) < GetQuarry(1) then Priority -= 0.08 end
-        return Priority
+        if GetQuarry(0) > GetQuarry(1) then Priority = Priority+0.04
+        elseif GetQuarry(0) < GetQuarry(1) then Priority = Priority-0.08 end
+        return Priority]]
     end;
 }
+print("bah!");
 
-Card 
+--[[Card 
 {
     Name = "Lucky Cache";
     Description = "+2 Bricks\n+2 Gems\nPlay again";
@@ -84,7 +87,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddBricks(0, 2)
@@ -104,7 +107,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 1)
@@ -123,7 +126,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddQuarry(0, 1)
@@ -144,7 +147,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetQuarry(0) < GetQuarry(1) then
@@ -170,7 +173,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 4)
@@ -192,7 +195,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 5)
@@ -214,7 +217,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetQuarry(0) < GetQuarry(1) then
@@ -237,7 +240,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 3)
@@ -258,7 +261,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 4)
@@ -279,7 +282,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddQuarry(0, 1)
@@ -306,7 +309,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(0) == 0 then
@@ -332,7 +335,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveWall(1, 5)
@@ -354,7 +357,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function Arcomage_SecretRoom()
         AddMagic(0, 1)
@@ -373,7 +376,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveQuarry(1, 1)
@@ -399,7 +402,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 6)
@@ -420,7 +423,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveQuarry(1, 1)
@@ -441,7 +444,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         AddQuarry(0, 2)
@@ -462,7 +465,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         RemoveQuarry(0, 1)
@@ -485,7 +488,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 8)
@@ -506,7 +509,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 6)
@@ -528,7 +531,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 7)
@@ -550,7 +553,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 6)
@@ -572,7 +575,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 12)
@@ -593,7 +596,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 8)
@@ -615,7 +618,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 15)
@@ -636,7 +639,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 6)
@@ -658,7 +661,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 20)
@@ -680,7 +683,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 9)
@@ -702,7 +705,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 1)
@@ -725,7 +728,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(0) < GetWall(1) then
@@ -753,7 +756,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddRecruits(0, 6)
@@ -779,7 +782,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 7)
@@ -801,7 +804,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         local temp = GetWall(0)
@@ -825,7 +828,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 1)
@@ -844,7 +847,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 1)
@@ -863,7 +866,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 3)
@@ -884,7 +887,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddMagic(0, 1)
@@ -905,7 +908,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         return -1
@@ -925,7 +928,7 @@ Card
     RecruitCost = 0;
     Cursed = true;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 3)
@@ -946,7 +949,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 2)
@@ -968,7 +971,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddMagic(0, 1)
@@ -991,7 +994,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 3)
@@ -1012,7 +1015,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 5)
@@ -1033,7 +1036,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 5)
@@ -1054,7 +1057,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(0, 5)
@@ -1076,7 +1079,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddMagic(0, 1)
@@ -1099,7 +1102,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         local HighestMagic = math.max(GetMagic(0), GetMagic(1))
@@ -1123,7 +1126,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 8)
@@ -1144,7 +1147,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 5)
@@ -1166,7 +1169,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveMagic(0, 1)
@@ -1189,7 +1192,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 5)
@@ -1211,7 +1214,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 11)
@@ -1232,7 +1235,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(0, 7)
@@ -1256,7 +1259,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 6)
@@ -1276,7 +1279,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 7)
@@ -1298,7 +1301,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 8)
@@ -1320,7 +1323,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 8)
@@ -1342,7 +1345,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 15)
@@ -1363,7 +1366,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 10)
@@ -1386,7 +1389,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 12)
@@ -1408,7 +1411,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 20)
@@ -1429,7 +1432,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 11)
@@ -1451,7 +1454,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetTower(0) < GetTower(1) then
@@ -1477,7 +1480,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 1)
@@ -1500,7 +1503,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 4)
@@ -1523,7 +1526,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetTower(0) > GetWall(1) then
@@ -1549,7 +1552,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 13)
@@ -1572,7 +1575,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveRecruits(1, 6)
@@ -1594,7 +1597,7 @@ Card
     RecruitCost = 1;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 2)
@@ -1613,7 +1616,7 @@ Card
     RecruitCost = 1;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 4)
@@ -1635,7 +1638,7 @@ Card
     RecruitCost = 3;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddDungeon(0, 1)
@@ -1656,7 +1659,7 @@ Card
     RecruitCost = 2;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         return -1
@@ -1674,7 +1677,7 @@ Card
     RecruitCost = 3;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 6)
@@ -1696,7 +1699,7 @@ Card
     RecruitCost = 4;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 3)
@@ -1718,7 +1721,7 @@ Card
     RecruitCost = 6;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 2)
@@ -1737,7 +1740,7 @@ Card
     RecruitCost = 3;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 5)
@@ -1758,7 +1761,7 @@ Card
     RecruitCost = 5;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 4)
@@ -1780,7 +1783,7 @@ Card
     RecruitCost = 6;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 4)
@@ -1801,7 +1804,7 @@ Card
     RecruitCost = 7;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddDungeon(0, 2)
@@ -1822,7 +1825,7 @@ Card
     RecruitCost = 8;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 2)
@@ -1845,7 +1848,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         AddDungeon(0, 1)
@@ -1868,7 +1871,7 @@ Card
     RecruitCost = 5;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 6)
@@ -1889,7 +1892,7 @@ Card
     RecruitCost = 6;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 7)
@@ -1910,7 +1913,7 @@ Card
     RecruitCost = 6;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 6)
@@ -1932,7 +1935,7 @@ Card
     RecruitCost = 5;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         Damage(1, 6)
@@ -1959,7 +1962,7 @@ Card
     RecruitCost = 8;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         if GetWall(1) == 0 then
@@ -1985,7 +1988,7 @@ Card
     RecruitCost = 9;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         Damage(1, 9)
@@ -2006,7 +2009,7 @@ Card
     RecruitCost = 11;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(1) > 0 then
@@ -2032,7 +2035,7 @@ Card
     RecruitCost = 9;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetMagic(0) > GetMagic(1) then
@@ -2058,7 +2061,7 @@ Card
     RecruitCost = 10;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(0) > GetWall(1) then
@@ -2084,7 +2087,7 @@ Card
     RecruitCost = 14;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         RemoveTower(1, 5)
@@ -2106,7 +2109,7 @@ Card
     RecruitCost = 11;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 8)
@@ -2128,7 +2131,7 @@ Card
     RecruitCost = 12;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function () 
         if GetGems(1) >= 10 then
@@ -2169,7 +2172,7 @@ Card
     RecruitCost = 15;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 10)
@@ -2191,7 +2194,7 @@ Card
     RecruitCost = 17;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 10)
@@ -2214,7 +2217,7 @@ Card
     RecruitCost = 25;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 20)
@@ -2237,7 +2240,7 @@ Card
     RecruitCost = 2;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(0) > GetWall(1) then
@@ -2263,7 +2266,7 @@ Card
     RecruitCost = 2;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 3)
@@ -2285,7 +2288,7 @@ Card
     RecruitCost = 4;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 8)
@@ -2307,7 +2310,7 @@ Card
     RecruitCost = 13;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 13)
@@ -2329,7 +2332,7 @@ Card
     RecruitCost = 18;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 12)
@@ -2338,4 +2341,4 @@ Card
     AIFunction = function ()
         return AIRemoveEnemyTower(12)
     end;
-}
+}]]

@@ -12,7 +12,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Black";
-    Picture = {File = "", X = 0, Y = 0, W = 0, H = 0};
+    Picture = {File = "", {x = 0, y = 0, w = 0, h = 0}};
     Keywords = "Far sight";
     PlayFunction = function ()
         AddBricks(0, math.floor( math.min(GetLast("BrickCost", 1)/3, 4)+.5 ) )
