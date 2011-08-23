@@ -63,7 +63,7 @@ struct CardInfo { //GE: Holds information about a single card.
         lua["Card"] = (CardInfo Card)
         {
             Cards ~= Card;
-        };writeln("DEBUG: The path is ", path, " and it exists ", exists(path));
+        };
 
         lua.doFile(path);
 
