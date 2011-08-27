@@ -312,7 +312,7 @@ void InitLuaFunctions()
     lua["OneResourceVictory"] = Config.OneResourceVictory;
 }
 
-auto InitGame()
+auto initGame()
 {
     int i, n;
 
@@ -322,6 +322,7 @@ auto InitGame()
     {
         for (n=0; n<Config.CardsInHand; n++)
         {
+            Player.length = i+1;
             Player[i].Hand ~= GetCard();
         }
         
@@ -356,7 +357,7 @@ void ShuffleQueue()
 		a=uniform(0, cast(int).Queue.length);
 		b=uniform(0, cast(int).Queue.length);
 		t=Queue[a]; Queue[a]=Queue[b]; Queue[b]=t;
-	}
+	}writeln("DEBUG: We're debuggin'!");
 	FrontendFunctions.Sound_Play(SoundTypes.Shuffle);
 }
 
