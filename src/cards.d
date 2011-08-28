@@ -357,7 +357,7 @@ void ShuffleQueue()
 		a=uniform(0, cast(int).Queue.length);
 		b=uniform(0, cast(int).Queue.length);
 		t=Queue[a]; Queue[a]=Queue[b]; Queue[b]=t;
-	}writeln("DEBUG: We're debuggin'!");
+	}
 	FrontendFunctions.Sound_Play(SoundTypes.Shuffle);
 }
 
@@ -507,7 +507,7 @@ bool CanPlayCard(CardInfo CI, bool Discarded)
  *     CardPlace = The number of the card in the player's hand.
  *     Discarded = Whether this card is to be discarded.
  */
-void PlayCard(int CardPlace, bool Discarded)
+bool PlayCard(int CardPlace, bool Discarded)
 {
     int i;
     CardInfo CI = Player[Turn].Hand[CardPlace];
@@ -515,7 +515,7 @@ void PlayCard(int CardPlace, bool Discarded)
     //GE: You get resources when you use a card and next up is the enemy's turn.
 
     if (!CanPlayCard(CI, Discarded))
-        return;
+        return false;
     
     FrontendFunctions.PlayCardAnimation(CI, Discarded);
 
@@ -535,6 +535,7 @@ void PlayCard(int CardPlace, bool Discarded)
     Turn = NextTurn;
 
     FrontendFunctions.RedrawScreenFull();
+    return true;
 }
 
 int ExecuteCard(CardInfo CI)
