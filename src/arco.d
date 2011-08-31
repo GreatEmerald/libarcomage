@@ -117,14 +117,6 @@ S_FrontendFunctions FrontendFunctions;
 
 LuaState lua; /// The main Lua state.
 
-/*version(linux) //GE: Linux needs an entry point.
-{
-    int main()
-    {
-        return 0;
-    }
-}*/
-
 /**
  * Lua initialisation. Normally, LuaD handles everything for us - this is just
  * additional content specific to our libary.
@@ -179,13 +171,13 @@ void initLua()
 }
 
 //GE: Make sure the array we have is big enough to use.
-void setBounds(int Pool, int Card)
+/*void setBounds(int Pool, int Card)
 {
     if (Pool >= CardDB.length)
         CardDB.length = Pool+1;
     if (Card >= CardDB[Pool].length)
         CardDB[Pool].length = Card+1;
-}
+}*/
 
 //GE: Declare initialisation and termination of the D runtime.
 extern (C) bool  rt_init( void delegate( Exception ) dg = null );

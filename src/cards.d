@@ -25,7 +25,7 @@ int Turn; /// Number of the player whose turn it is. This is an absolute value.
 int NextTurn; /// Number of the player who will go next.
 int LastTurn; /// Number of the player whose turn ended before.
 CardInfo[] Queue; /// Cards in the bank.
-int CurrentPosition; /// The current position in the Queue.
+int CurrentPosition = 0; /// The current position in the Queue.
 
 /**
  * Defines functions and sends them over to Lua.
@@ -34,7 +34,7 @@ void InitLuaFunctions()
 {
     lua["Damage"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Wall >= Amount)
             P.Wall -= Amount;
@@ -48,7 +48,7 @@ void InitLuaFunctions()
     
     lua["AddQuarry"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Quarry >= 99)
             return;
@@ -59,7 +59,7 @@ void InitLuaFunctions()
     
     lua["AddMagic"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Magic >= 99)
             return;
@@ -70,7 +70,7 @@ void InitLuaFunctions()
     
     lua["AddDungeon"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Dungeon >= 99)
             return;
@@ -81,7 +81,7 @@ void InitLuaFunctions()
     
     lua["AddBricks"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Bricks >= 999)
             return;
@@ -92,7 +92,7 @@ void InitLuaFunctions()
     
     lua["AddGems"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Gems >= 999)
             return;
@@ -103,7 +103,7 @@ void InitLuaFunctions()
     
     lua["AddRecruits"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Recruits >= 999)
             return;
@@ -114,7 +114,7 @@ void InitLuaFunctions()
     
     lua["AddTower"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Tower >= Config.TowerVictory)
             return;
@@ -125,7 +125,7 @@ void InitLuaFunctions()
     
     lua["AddWall"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Wall >= Config.MaxWall)
             return;
@@ -136,7 +136,7 @@ void InitLuaFunctions()
     
     lua["RemoveQuarry"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Quarry <= 1)
             return;
@@ -147,7 +147,7 @@ void InitLuaFunctions()
     
     lua["RemoveMagic"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Magic <= 1)
             return;
@@ -157,7 +157,7 @@ void InitLuaFunctions()
     
     lua["RemoveDungeon"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Dungeon <= 1)
             return;
@@ -168,7 +168,7 @@ void InitLuaFunctions()
     
     lua["RemoveBricks"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Bricks <= 0)
             return;
@@ -179,7 +179,7 @@ void InitLuaFunctions()
     
     lua["RemoveGems"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Gems <= 0)
             return;
@@ -190,7 +190,7 @@ void InitLuaFunctions()
     
     lua["RemoveRecruits"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Recruits <= 0)
             return;
@@ -201,7 +201,7 @@ void InitLuaFunctions()
     
     lua["RemoveTower"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         P.Tower -= Amount;
         FrontendFunctions.Sound_Play(SoundTypes.Damage);
@@ -209,7 +209,7 @@ void InitLuaFunctions()
     
     lua["RemoveWall"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
         
         if (P.Wall <= 0)
             return;
@@ -275,7 +275,7 @@ void InitLuaFunctions()
     
     lua["SetQuarry"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         if (P.Quarry < Amount)
             FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
@@ -287,7 +287,7 @@ void InitLuaFunctions()
     
     lua["SetMagic"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         if (P.Magic < Amount)
             FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
@@ -299,7 +299,7 @@ void InitLuaFunctions()
     
     lua["SetWall"] = (int Who, int Amount)
     {
-        Stats P = Player[GetAbsolutePlayer(Who)];
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         if (P.Wall < Amount)
             FrontendFunctions.Sound_Play(SoundTypes.Wall_Up);
@@ -361,7 +361,10 @@ void ShuffleQueue()
 	FrontendFunctions.Sound_Play(SoundTypes.Shuffle);
 }
 
-CardInfo GetCard()//GE: Returns next card in the Queue array and moves CurrentPosition up.
+/**
+ * Returns the next card in the queue and moves the CurrentPosition up.
+ */ 
+CardInfo GetCard()
 {
     CardInfo CI;
     CI = Queue[CurrentPosition];
@@ -376,13 +379,13 @@ CardInfo GetCard()//GE: Returns next card in the Queue array and moves CurrentPo
 }
 
 /**
- * Moves the CurrentPosition up one notch so that the queue advances and then puts
- * the played card into it. This way we know what has been discarded before etc.
+ * Puts the card to the closest garbage card slot.
+ * This way we know what has been discarded before etc.
  */ 
 void PutCard(CardInfo CI)
 {
-    CurrentPosition = (CurrentPosition + 1)%cast(int).Queue.length;
-    Queue[CurrentPosition] = CI;
+    
+    Queue[((CurrentPosition-Config.CardsInHand*2)+cast(int).Queue.length)%cast(int).Queue.length] = CI;
 }
 
 bool IsVictorious(int PlayerNumber)
@@ -520,7 +523,7 @@ bool PlayCard(int CardPlace, bool Discarded)
     FrontendFunctions.PlayCardAnimation(CI, Discarded);
 
     GetNextTurn(CI, Discarded); //GE: Execute the card and change NextTurn based on it.
-    TakeResources(Player[Turn], CI.BrickCost, CI.GemCost, CI.RecruitCost); //GE: Eat the required resources.
+    TakeResources(&Player[Turn], CI.BrickCost, CI.GemCost, CI.RecruitCost); //GE: Eat the required resources.
     Normalise(); //GE: Make sure we are not out of bounds.
     PutCard(CI); //GE: Put that card back to the queue, like in a real card game.
     
@@ -576,7 +579,7 @@ bool CanAffordCard(CardInfo CI)
     return true;
 }
 
-void TakeResources(Stats P, int Bricks, int Gems, int Recruits)
+void TakeResources(Stats* P, int Bricks, int Gems, int Recruits)
 {
     P.Bricks -= Bricks;
     P.Gems -= Gems;
