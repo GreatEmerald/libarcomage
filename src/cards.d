@@ -592,7 +592,7 @@ void TakeResources(Stats* P, int Bricks, int Gems, int Recruits)
  */ 
 void Normalise()
 {
-    foreach (Stats P; Player)
+    foreach (ref Stats P; Player)
     {
         if (P.Quarry < 1) P.Quarry = 1;
         if (P.Magic < 1) P.Magic = 1;
