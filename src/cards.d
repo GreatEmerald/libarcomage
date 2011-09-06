@@ -435,7 +435,7 @@ void AIPlay()
             Worst = i;
         }
     }
-    if (((HighestPriority < 0.f) || ((HighestPriority == 0.f) && (uniform(0,2) >= 1))) && !Player[Turn].Hand[Worst].Cursed )
+    if ((((HighestPriority < 0.f) || ((HighestPriority == 0.f) && (uniform(0,2) >= 1))) && !Player[Turn].Hand[Worst].Cursed) || DiscardRound )
     {
         PlayCard(Worst, true); //GE: If we have bad cards, pick the worst one and discard.
         return;
