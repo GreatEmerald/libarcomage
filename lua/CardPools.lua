@@ -43,7 +43,7 @@ function AIRemoveEnemyFacility(Amount, Facilities, Resources, OtherResourcesA, O
     if Resources <= math.min(GetResourceVictory()*0.25, 15) then Priority = Priority+(0.15*Amount) end
     if Resources >= GetResourceVictory() then Priority = Priority-(0.15*Amount)
     elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority = Priority+(0.15*Amount) end
-    if Facility >= 10 then Priority = Priority-(0.15*Amount) 
+    if Facilities >= 10 then Priority = Priority-(0.15*Amount) 
     else Priority = Priority+(0.1*Amount) end
     return math.min(Priority, 0.95)
 end

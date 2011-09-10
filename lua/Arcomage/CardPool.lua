@@ -346,7 +346,7 @@ Card
 Card 
 {
     Name = "Secret Room";
-    Description = "+1 Magicl\nPlay again";
+    Description = "+1 Magic\nPlay again";
     Frequency = 1;
     BrickCost = 8;
     GemCost = 0;
@@ -628,7 +628,7 @@ Card
 Card 
 {
     Name = "Rock Launcher";
-    Description = "+6 Wall\n10 Damage\n to enemy";
+    Description = "+6 Wall\n10 Damage\nto enemy";
     Frequency = 1;
     BrickCost = 18;
     GemCost = 0;
@@ -1902,7 +1902,7 @@ Card
 Card 
 {
     Name = "Rabid Sheep";
-    Description = "6 Damage\nEnemy loses\n3recruits";
+    Description = "6 Damage\nEnemy loses\n3 recruits";
     Frequency = 1;
     BrickCost = 0;
     GemCost = 0;
@@ -2050,7 +2050,7 @@ Card
 Card 
 {
     Name = "Elven Archers";
-    Description = "If wall>enemy\wall, 6 damage\nto enemy tower\nelse 6 damage";
+    Description = "If wall>enemy\nwall, 6 damage\nto enemy tower\nelse 6 damage";
     Frequency = 1;
     BrickCost = 0;
     GemCost = 0;
@@ -2091,7 +2091,7 @@ Card
         return 1
     end;
     AIFunction = function ()
-        return AIRemoveenemyTower(5)+AIRemoveEnemyRecruits(8)
+        return AIRemoveEnemyTower(5)+AIRemoveEnemyRecruits(8)
     end;
 }
 
@@ -2154,7 +2154,7 @@ Card
         if GetBricks(1) >= 5 then Priority = Priority+AIRemoveEnemyBricks(5)+AIAddBricks(3)
         else Priority = Priority+AIRemoveEnemyBricks(5)+AIAddBricks(math.ceil(GetBricks(1)/2))
         end
-        return Priority;
+        return Priority
     end;
 }
 
@@ -2222,7 +2222,9 @@ Card
         return 1
     end;
     AIFunction = function ()
-        return AIDamageEnemy(20)+AIRemoveEnemyGems(10)+AIRemoveEnemyDungeon(1)
+        local Priority = AIDamageEnemy(20)
+        if Priority >= 1.0 then return Priority end
+        return math.min(Priority+AIRemoveEnemyGems(10)+AIRemoveEnemyDungeon(1), 0.95)
     end;
 }
 
