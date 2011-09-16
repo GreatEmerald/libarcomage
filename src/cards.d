@@ -417,11 +417,11 @@ void AIPlay()
     
     foreach (int i, CardInfo CI; Player[Turn].Hand)
     {
-        writeln("DEBUG: AI is trying to figure out the priority of ", CI.Name);
+        //writeln("DEBUG: AI is trying to figure out the priority of ", CI.Name);
         CurrentPriority = CI.AIFunction();//CI.AIFunction.call!float(); //GE: DMD has no clue what LuaFunction returns, thus we have to tell it that it's a single float.
-        writeln("DEBUG: Priority ", CurrentPriority);
+        //writeln("DEBUG: Priority ", CurrentPriority);
         CurrentPriority = AlterAIPriority(CurrentPriority, CI);
-        writeln("DEBUG: Priority ", CurrentPriority);
+        //writeln("DEBUG: Priority ", CurrentPriority);
         
         if ( (CanAffordCard(CI)) &&                                       //GE: If we can afford the card
             ( (HighestPriority < CurrentPriority) ||                      //GE: And it is more attractive than what we saw before
@@ -526,7 +526,8 @@ bool PlayCard(int CardPlace, bool Discarded)
     FrontendFunctions.PlayCardAnimation(CI, Discarded);
 
     GetNextTurn(CI, Discarded); //GE: Execute the card and change NextTurn based on it.
-    TakeResources(&Player[Turn], CI.BrickCost, CI.GemCost, CI.RecruitCost); //GE: Eat the required resources.
+    if (!Discarded)
+        TakeResources(&Player[Turn], CI.BrickCost, CI.GemCost, CI.RecruitCost); //GE: Eat the required resources.
     Normalise(); //GE: Make sure we are not out of bounds.
     PutCard(CI); //GE: Put that card back to the queue, like in a real card game.
     

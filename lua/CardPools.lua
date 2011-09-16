@@ -6,7 +6,7 @@
 --dofile('lua/Arcomage/CardPool.lua');
 --dofile('lua/MArcomage/MArcomagePool.lua');
 
-PoolInfo = { {Name = "Arcomage", Path = "lua/Arcomage/CardPool.lua"}, {Name = "MArcomage", Path = "lua/MArcomage/MArcomagePool.lua"} }
+PoolInfo = { {Name = "Arcomage", Path = "lua/Arcomage/CardPool.lua"} }--, {Name = "MArcomage", Path = "lua/MArcomage/MArcomagePool.lua"} } --GE: Temporary until we can implement working MArcomage cards.
 --PoolSize = #PoolInfo
 
 -- GE: Below are global AI functions. If you change those, the AI in the whole game will change.
