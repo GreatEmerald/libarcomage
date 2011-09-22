@@ -183,12 +183,7 @@ void initLua()
 extern (C) bool  rt_init( void delegate( Exception ) dg = null );
 extern (C) bool  rt_term( void delegate( Exception ) dg = null );
 
-/*
- * GE: C code sends us the information it's gathering from Lua. We are here to
- * build a CardDB. C is aware of the pool it's accessing and of which card it's
- * looking at, so it sends us the information.
- * Might need to make a struct which would hold the name of the pool.   
- */
+version (linux) version (clibrary) void main(){} //GE: Workaround for a bug in Phobos.
 
 extern(C):
 
@@ -202,13 +197,14 @@ extern(C):
      */
     void InitArcomage()
     {
+        D_LinuxInit();
         initLua();
     }
 
     void D_LinuxInit() //GE: Special Linux initialisation.
     {
-        /*version(linux)
-            main();*/
+        version (linux) version (clibrary) //GE: Only enabled on Linux and when using the -version=clibrary compiler option, because it's a workaround that shouldn't normally be here.
+            main();
     }
     
     // GE: GET CODE BEGIN ---------------------------------------
