@@ -18,10 +18,10 @@ struct Stats
     CardInfo[] Hand;
 };
 
-Stats[] Player; /// Players. Supports more than 2. TODO to implement it.
+shared Stats[] Player; /// Players. Supports more than 2. TODO to implement it.
 bool DiscardRound; /// Whether this turn is discard only.
 bool InitComplete; /// Indicates whether the Queue is set up already.
-int Turn; /// Number of the player whose turn it is. This is an absolute value.
+shared int Turn; /// Number of the player whose turn it is. This is an absolute value.
 int NextTurn; /// Number of the player who will go next.
 int LastTurn; /// Number of the player whose turn ended before.
 CardInfo[] Queue; /// Cards in the bank.
@@ -619,7 +619,7 @@ void Normalise()
     }
 }
 
-int GetEnemy()
+extern(C) int GetEnemy()
 {
     return (Turn+1)%cast(int).Player.length;
 }

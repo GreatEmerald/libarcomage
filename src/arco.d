@@ -198,6 +198,10 @@ extern(C):
     void InitArcomage()
     {
         D_LinuxInit();
+        FrontendFunctions.Sound_Play = function(SoundTypes){}; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
+        FrontendFunctions.RedrawScreenFull = function(){};
+        FrontendFunctions.PrecacheCard = function(const char*, int){};
+        FrontendFunctions.PlayCardAnimation = function(CardInfo CI, int Discarded){};
         initLua();
     }
 
