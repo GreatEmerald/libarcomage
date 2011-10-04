@@ -99,7 +99,7 @@ struct S_Config {
     bool OneResourceVictory;
     bool UseOriginalCards;
     bool UseOriginalMenu;
-    string OriginalDataDir;
+    string DataDir;
 }
 S_Config Config;
 
@@ -152,7 +152,9 @@ void initLua()
     Config.OneResourceVictory = lua.get!bool("OneResourceVictory");
     Config.UseOriginalMenu = lua.get!bool("UseOriginalMenu");
     Config.UseOriginalCards = lua.get!bool("UseOriginalCards");
-    Config.OriginalDataDir = lua.get!string("OriginalDataDir");
+    Config.DataDir = lua.get!string("DataDir");
+    if (Config.DataDir == "")
+        Config.DataDir = "../data/";
     
     InitLuaFunctions();
     

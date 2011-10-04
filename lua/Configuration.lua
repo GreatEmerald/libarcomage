@@ -27,4 +27,5 @@ OneResourceVictory = false -- Whether to allow victory for getting only one of t
 
 UseOriginalMenu = false -- Whether to use the original Arcomage menu appearance. You need to own the original Arcomage for this.
 UseOriginalCards = false -- Whether to use the original Arcomage card appearance. You need to own the original Arcomage or one of the Might and Magic games for this.
-OriginalDataDir = "" -- Path to the original Arcomage data directory. This is relative to the path of the frontend executable. Only needed if you use one of the options above.
+
+DataDir = "" -- Path to the Arcomage image and sound data directory. This is relative to the path of the frontend executable. If empty, assumed '../data/'. Only relevant to GUIs.

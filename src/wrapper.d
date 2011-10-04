@@ -11,8 +11,15 @@ import arco;
 import cards;
 import std.stdio:writeln;
 import std.conv;
+import std.string;
+import std.array;
 
 extern(C):
+
+//------------------------------------------------------------------------------
+// Useful functions. These are not a wrapper, but are only used in C to make it
+// easier for those writing frontends, so this is kept in wrapper.d.
+//------------------------------------------------------------------------------
 
 void SetPlayerInfo(int PlayerNum, char* Name, bool AI)
 {
@@ -45,4 +52,9 @@ int GetConfig(int Type)
         case 16: return cast(int)Config.UseOriginalMenu;
         default: return 0;
     }
+}
+
+immutable(char)* GetFilePath(char* FileName)
+{
+    return toStringz(join(Config.DataDir, [to!string(Second)]));
 }
