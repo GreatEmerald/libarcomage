@@ -25,8 +25,6 @@ void SetPlayerInfo(int PlayerNum, char* Name, bool AI)
 {
     Player[PlayerNum].AI = AI;
     Player[PlayerNum].Name = to!string(Name);
-    foreach (int i, Stats P; Player)
-        writeln("Player No. ", i, " is known as ", P.Name, " and is an AI ", P.AI);
 }
 
 int GetConfig(int Type)
@@ -56,5 +54,5 @@ int GetConfig(int Type)
 
 immutable(char)* GetFilePath(char* FileName)
 {
-    return toStringz(join(Config.DataDir, [to!string(Second)]));
+    return toStringz(join([Config.DataDir, to!string(FileName)]));
 }
