@@ -48,6 +48,8 @@ int GetConfig(int Type)
         case 14: return cast(int)Config.OneResourceVictory;
         case 15: return cast(int)Config.UseOriginalCards;
         case 16: return cast(int)Config.UseOriginalMenu;
+        case 17: return 640; //FIXME - Needs to be configurable
+        case 18: return 480;
         default: return 0;
     }
 }
