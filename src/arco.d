@@ -113,7 +113,7 @@ struct S_FrontendFunctions {
     void function(const char*, int) PrecacheCard;
     void function(CardInfo, int) PlayCardAnimation;
 }
-S_FrontendFunctions FrontendFunctions;
+shared S_FrontendFunctions FrontendFunctions;
 
 LuaState lua; /// The main Lua state.
 
