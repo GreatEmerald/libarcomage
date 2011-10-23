@@ -108,12 +108,11 @@ enum SoundTypes {
 }
 
 struct S_FrontendFunctions {
-    void function(SoundTypes) Sound_Play;
-    void function() RedrawScreenFull;
-    void function(const char*, int) PrecacheCard;
+    void function(int) SoundPlay;
+    void function() RedrawScreen;
     void function(CardInfo, int) PlayCardAnimation;
 }
-shared S_FrontendFunctions FrontendFunctions;
+S_FrontendFunctions FrontendFunctions;
 
 LuaState lua; /// The main Lua state.
 
@@ -172,15 +171,6 @@ void initLua()
     }
 }
 
-//GE: Make sure the array we have is big enough to use.
-/*void setBounds(int Pool, int Card)
-{
-    if (Pool >= CardDB.length)
-        CardDB.length = Pool+1;
-    if (Card >= CardDB[Pool].length)
-        CardDB[Pool].length = Card+1;
-}*/
-
 //GE: Declare initialisation and termination of the D runtime.
 extern (C) bool  rt_init( void delegate( Exception ) dg = null );
 extern (C) bool  rt_term( void delegate( Exception ) dg = null );
@@ -201,9 +191,8 @@ extern(C):
     {
         
         D_LinuxInit();
-        FrontendFunctions.Sound_Play = function(SoundTypes){}; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
-        FrontendFunctions.RedrawScreenFull = function(){};
-        FrontendFunctions.PrecacheCard = function(const char*, int){};
+        FrontendFunctions.SoundPlay = function(SoundTypes){}; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
+        FrontendFunctions.RedrawScreen = function(){};
         FrontendFunctions.PlayCardAnimation = function(CardInfo CI, int Discarded){};
         initLua();
     }
@@ -212,128 +201,4 @@ extern(C):
     {
         version (linux) version (clibrary) //GE: Only enabled on Linux and when using the -version=clibrary compiler option, because it's a workaround that shouldn't normally be here.
             main();
-    }
-    
-    // GE: GET CODE BEGIN ---------------------------------------
-
-    int D_getFrequency(int Pool, int Card)
-    {
-        return CardDB[Pool][Card].Frequency;
-    }
-
-    int D_getBrickCost(int Pool, int Card)
-    {
-        return CardDB[Pool][Card].BrickCost;
-    }
-
-    int D_getGemCost(int Pool, int Card)
-    {
-        return CardDB[Pool][Card].GemCost;
-    }
-
-    int D_getRecruitCost(int Pool, int Card)
-    {
-        return CardDB[Pool][Card].RecruitCost;
-    }
-
-    int D_getCursed(int Pool, int Card) //GE: No, I'm not telling you to get cursed!
-    {
-        //writeln("Cursed: ", cast(int)CardDB[Pool][Card].Cursed);
-	return cast(int)CardDB[Pool][Card].Cursed;
-    }
-
-    immutable(char)* D_getPictureFile(int Pool, int Card)
-    {
-        return toStringz(CardDB[Pool][Card].Picture.File);
-    }
-
-    size_t D_getPictureFileSize(int Pool, int Card)
-    {
-        //writeln("Getting ur pic size for Pool ", Pool, " Card ", Card);
-        return CardDB[Pool][Card].Picture.File.length+1;
-    }
-
-    SDL_Rect D_getPictureCoords(int Pool, int Card)
-    {
-        //writeln("Getting ur pic coords for Pool ", Pool, " Card ", Card);
-        //writeln("We have CardDB.pool? ", CardDB[Pool].length);
-        //writeln("We have Picture? ", CardDB[Pool][Card].Picture.sizeof);
-        //writeln("We have Coordinates? ", CardDB[Pool][Card].Picture.Coordinates.sizeof);
-        //writeln("Picture: ", CardDB[Pool][Card].Picture);
-        //writeln("One coordinate is: ", CardDB[Pool][Card].Picture.Coordinates.x);
-        //writeln("Returning ", CardDB[Pool][Card].Picture.Coordinates.x, ":", CardDB[Pool][Card].Picture.Coordinates.y, "; ", CardDB[Pool][Card].Picture.Coordinates.w, ":", CardDB[Pool][Card].Picture.Coordinates.h);
-        return CardDB[Pool][Card].Picture.Coordinates;
-    }
-
-    int D_getPictureCoordX(int Pool, int Card)
-    {
-	writeln("Warning: using a workaround for sharing coordinates for Pool ", Pool, " Card ", Card);
-	//writeln("On this D platform, int size is ", int.sizeof);
-	//writeln("On this D platform, short size is ", short.sizeof);
-	return cast(int).CardDB[Pool][Card].Picture.Coordinates.x;
-    }
-
-    int D_getPictureCoordY(int Pool, int Card)
-    {
-	writeln("Warning: using a workaround for sharing coordinates for Pool ", Pool, " Card ", Card);
-	return cast(int).CardDB[Pool][Card].Picture.Coordinates.y;
-    }
-
-    int D_getPictureCoordW(int Pool, int Card)
-    {
-	writeln("Warning: using a workaround for sharing coordinates for Pool ", Pool, " Card ", Card);
-	return cast(int).CardDB[Pool][Card].Picture.Coordinates.w;
-    }
-
-    int D_getPictureCoordH(int Pool, int Card)
-    {
-	writeln("Warning: using a workaround for sharing coordinates for Pool ", Pool, " Card ", Card);
-	return cast(int).CardDB[Pool][Card].Picture.Coordinates.h;
-    }
-
-    /*immutable(char)* D_getLuaFunction(int Pool, int Card)
-    {
-        return toStringz(CardDB[Pool][Card].PlayFunction);
-    }
-
-    size_t D_getLuaFunctionSize(int Pool, int Card)
-    {
-        //writeln("Getting ur pic size for Pool ", Pool, " Card ", Card);
-        return CardDB[Pool][Card].PlayFunction.length+1;
-    }*/
-
-    /*void D_getPrecachePictures()
-    {
-        bool bAlreadyListed;
-        
-        for (int Pool=0; Pool < CardDB.length; Pool++)
-        {
-            for (int Card=0; Card < CardDB[Pool].length; Card++)
-            {
-                //GE: See if we have it listed already and filter out empty entries (it shouldn't happen!).
-                for (int i=0; i < PrecachePictures.length; i++)
-                {
-                    if (PrecachePictures[i] == CardDB[Pool][Card].Picture.File || CardDB[Pool][Card].Picture.File == "")
-                        bAlreadyListed = True;
-                }
-                if (!bAlreadyListed)
-                {
-                    PrecachePictures.length += 1;
-                    PrecachePictures[PrecachePictures.length] = CardDB[Pool][Card].Picture.File;
-                }
-                bAlreadyListed = False;
-            }
-        }
-    } */
-
-    void D_printCardDB()
-    {
-	  writeln("Warning: Debugging is activated.");
-      /*for (int Pool=0; Pool < CardDB.length; Pool++)
-        {
-            for (int Card=0; Card < CardDB[Pool].length; Card++)
-            {
-                writeln("CardDB[", Pool, "][", Card, "] = ", CardDB[Pool][Card]);
-            }
-        }*/
     }

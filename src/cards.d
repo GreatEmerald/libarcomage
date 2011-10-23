@@ -43,7 +43,7 @@ void InitLuaFunctions()
             P.Tower -= (Amount - P.Wall);
             P.Wall = 0;
         }
-        FrontendFunctions.Sound_Play(SoundTypes.Damage);
+        FrontendFunctions.SoundPlay(SoundTypes.Damage);
     };
     
     lua["AddQuarry"] = (int Who, int Amount)
@@ -54,7 +54,7 @@ void InitLuaFunctions()
             return;
         
         P.Quarry += Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
+        FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
     };
     
     lua["AddMagic"] = (int Who, int Amount)
@@ -65,7 +65,7 @@ void InitLuaFunctions()
             return;
         
         P.Magic += Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
+        FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
     };
     
     lua["AddDungeon"] = (int Who, int Amount)
@@ -76,7 +76,7 @@ void InitLuaFunctions()
             return;
 
         P.Dungeon += Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
+        FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
     };
     
     lua["AddBricks"] = (int Who, int Amount)
@@ -87,7 +87,7 @@ void InitLuaFunctions()
             return;
 
         P.Bricks += Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResS_Up);
+        FrontendFunctions.SoundPlay(SoundTypes.ResS_Up);
     };
     
     lua["AddGems"] = (int Who, int Amount)
@@ -98,7 +98,7 @@ void InitLuaFunctions()
             return;
 
         P.Gems += Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResS_Up);
+        FrontendFunctions.SoundPlay(SoundTypes.ResS_Up);
     };
     
     lua["AddRecruits"] = (int Who, int Amount)
@@ -109,7 +109,7 @@ void InitLuaFunctions()
             return;
 
         P.Recruits += Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResS_Up);
+        FrontendFunctions.SoundPlay(SoundTypes.ResS_Up);
     };
     
     lua["AddTower"] = (int Who, int Amount)
@@ -120,7 +120,7 @@ void InitLuaFunctions()
             return;
 
         P.Tower += Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.Tower_Up);
+        FrontendFunctions.SoundPlay(SoundTypes.Tower_Up);
     };
     
     lua["AddWall"] = (int Who, int Amount)
@@ -131,7 +131,7 @@ void InitLuaFunctions()
             return;
 
         P.Wall += Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.Wall_Up);
+        FrontendFunctions.SoundPlay(SoundTypes.Wall_Up);
     };
     
     lua["RemoveQuarry"] = (int Who, int Amount)
@@ -142,7 +142,7 @@ void InitLuaFunctions()
             return;
         
         P.Quarry -= Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
+        FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
     };
     
     lua["RemoveMagic"] = (int Who, int Amount)
@@ -152,7 +152,7 @@ void InitLuaFunctions()
         if (P.Magic <= 1)
             return;
         P.Magic -= Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
+        FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
     };
     
     lua["RemoveDungeon"] = (int Who, int Amount)
@@ -163,7 +163,7 @@ void InitLuaFunctions()
             return;
 
         P.Dungeon -= Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
+        FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
     };
     
     lua["RemoveBricks"] = (int Who, int Amount)
@@ -174,7 +174,7 @@ void InitLuaFunctions()
             return;
 
         P.Bricks -= Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResS_Down);
+        FrontendFunctions.SoundPlay(SoundTypes.ResS_Down);
     };
     
     lua["RemoveGems"] = (int Who, int Amount)
@@ -185,7 +185,7 @@ void InitLuaFunctions()
             return;
         
         P.Gems -= Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResS_Down);
+        FrontendFunctions.SoundPlay(SoundTypes.ResS_Down);
     };
     
     lua["RemoveRecruits"] = (int Who, int Amount)
@@ -196,7 +196,7 @@ void InitLuaFunctions()
             return;
 
         P.Recruits -= Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.ResS_Down);
+        FrontendFunctions.SoundPlay(SoundTypes.ResS_Down);
     };
     
     lua["RemoveTower"] = (int Who, int Amount)
@@ -204,7 +204,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         P.Tower -= Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.Damage);
+        FrontendFunctions.SoundPlay(SoundTypes.Damage);
     };
     
     lua["RemoveWall"] = (int Who, int Amount)
@@ -215,7 +215,7 @@ void InitLuaFunctions()
             return;
 
         P.Wall -= Amount;
-        FrontendFunctions.Sound_Play(SoundTypes.Damage);
+        FrontendFunctions.SoundPlay(SoundTypes.Damage);
     };
     
     lua["GetQuarry"] = (int Who)
@@ -278,9 +278,9 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         if (P.Quarry < Amount)
-            FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
+            FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
         else if (P.Quarry > Amount)
-            FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
+            FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
 
         P.Quarry = Amount;
     };
@@ -290,9 +290,9 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         if (P.Magic < Amount)
-            FrontendFunctions.Sound_Play(SoundTypes.ResB_Up);
+            FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
         else if (P.Magic > Amount)
-            FrontendFunctions.Sound_Play(SoundTypes.ResB_Down);
+            FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
 
         P.Magic = Amount;
     };
@@ -302,9 +302,9 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         if (P.Wall < Amount)
-            FrontendFunctions.Sound_Play(SoundTypes.Wall_Up);
+            FrontendFunctions.SoundPlay(SoundTypes.Wall_Up);
         else if (P.Wall > Amount)
-            FrontendFunctions.Sound_Play(SoundTypes.Damage);
+            FrontendFunctions.SoundPlay(SoundTypes.Damage);
 
         P.Wall = Amount;
     };
@@ -358,7 +358,7 @@ void ShuffleQueue()
 		b=uniform(0, cast(int).Queue.length);
 		t=Queue[a]; Queue[a]=Queue[b]; Queue[b]=t;
 	}
-	FrontendFunctions.Sound_Play(SoundTypes.Shuffle);
+	FrontendFunctions.SoundPlay(SoundTypes.Shuffle);
 }
 
 /**
@@ -541,7 +541,7 @@ bool PlayCard(int CardPlace, bool Discarded)
     LastTurn = Turn;
     Turn = NextTurn;
 
-    FrontendFunctions.RedrawScreenFull();
+    FrontendFunctions.RedrawScreen();
     return true;
 }
 

@@ -27,6 +27,21 @@ void SetPlayerInfo(int PlayerNum, char* Name, bool AI)
     Player[PlayerNum].Name = to!string(Name);
 }
 
+void SetSoundPlay(void function(int) SoundPlay)
+{
+    FrontendFunctions.SoundPlay = SoundPlay;
+}
+
+void SetRedrawScreen(void function() RedrawScreen)
+{
+    FrontendFunctions.RedrawScreen = RedrawScreen;
+}
+
+void SetPlayCardAnimation(void function(CardInfo, int) PlayCardAnimation)
+{
+    FrontendFunctions.PlayCardAnimation = PlayCardAnimation;
+}
+
 int GetConfig(int Type)
 {
     switch (Type)
@@ -45,11 +60,12 @@ int GetConfig(int Type)
         case 11: return Config.RecruitQuantities;
         case 12: return Config.MaxWall;
         case 13: return Config.ResourceVictory;
-        case 14: return cast(int)Config.OneResourceVictory;
-        case 15: return cast(int)Config.UseOriginalCards;
-        case 16: return cast(int)Config.UseOriginalMenu;
-        case 17: return 640; //FIXME - Needs to be configurable
-        case 18: return 480;
+        case 14: return Config.TowerVictory;
+        case 15: return cast(int)Config.OneResourceVictory;
+        case 16: return cast(int)Config.UseOriginalCards;
+        case 17: return cast(int)Config.UseOriginalMenu;
+        case 18: return 800; //FIXME - Needs to be configurable
+        case 19: return 600;
         default: return 0;
     }
 }
