@@ -16,11 +16,6 @@ import std.array;
 
 extern(C):
 
-//------------------------------------------------------------------------------
-// Useful functions. These are not a wrapper, but are only used in C to make it
-// easier for those writing frontends, so this is kept in wrapper.d.
-//------------------------------------------------------------------------------
-
 void SetPlayerInfo(int PlayerNum, char* Name, bool AI)
 {
     Player[PlayerNum].AI = AI;
@@ -69,6 +64,24 @@ int GetConfig(int Type)
         default: return 0;
     }
 }
+
+//GE: Get a colour number from the number of the card in hand.
+int GetColourType(byte PlayerNum, byte CardNum)
+{
+	switch (Player[PlayerNum].Hand[CardNum].Colour)
+	{
+		case "Red": return 0; //GE: Make sure adapter is in sync!
+		case "Blue": return 1;
+		case "Green": return 2;
+		case "White": case "Brown": return 3;
+		default: return 4;
+	}
+}
+
+//------------------------------------------------------------------------------
+// Useful functions. These are not a wrapper, but are only used in C to make it
+// easier for those writing frontends, so this is kept in wrapper.d.
+//------------------------------------------------------------------------------
 
 immutable(char)* GetFilePath(char* FileName)
 {
