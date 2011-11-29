@@ -1,0 +1,3 @@
+[submodule "include/LuaD"]
+	path = include/LuaD
+	url = git://github.com/JakobOvrum/LuaD.git

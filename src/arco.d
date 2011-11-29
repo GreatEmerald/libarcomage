@@ -108,9 +108,9 @@ enum SoundTypes {
 }
 
 struct S_FrontendFunctions {
-    void function(int) SoundPlay;
-    void function() RedrawScreen;
-    void function(CardInfo, int) PlayCardAnimation;
+    extern (C) void function(int) SoundPlay;
+    extern (C) void function() RedrawScreen;
+    extern (C) void function(CardInfo, int) PlayCardAnimation;
 }
 S_FrontendFunctions FrontendFunctions;
 
@@ -171,6 +171,11 @@ void initLua()
     }
 }
 
+void initFrontend()
+{
+    
+}
+
 //GE: Declare initialisation and termination of the D runtime.
 extern (C) bool  rt_init( void delegate( Exception ) dg = null );
 extern (C) bool  rt_term( void delegate( Exception ) dg = null );
@@ -191,9 +196,10 @@ extern(C):
     {
         
         D_LinuxInit();
-        FrontendFunctions.SoundPlay = function(SoundTypes){}; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
-        FrontendFunctions.RedrawScreen = function(){};
-        FrontendFunctions.PlayCardAnimation = function(CardInfo CI, int Discarded){};
+        initFrontend();
+        FrontendFunctions.SoundPlay = function(int){}; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
+    FrontendFunctions.RedrawScreen = function(){};
+    FrontendFunctions.PlayCardAnimation = function(CardInfo CI, int Discarded){};
         initLua();
     }
 
