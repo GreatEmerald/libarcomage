@@ -1,0 +1,26 @@
+Credits for libarcomage backend
+
+This file will contain all of the credits that have to or should be given to
+third parties for the creation of this library. It might be used later on as a
+basis for a credit printing function.
+
+Library author:
+GreatEmerald
+
+Original program author:
+STiCK
+
+Based on:
+Arcomage,
+New World Computing,
+The 3DO Company
+(see the original credits for Arcomage)
+
+Libraries used:
+LuaD
+Lua 5.1
+Phobos 2
+
+Programming tips:
+D mailing list participants (Jacob Carlborg, pelle.mansson, Andrew Wiley, Nick
+Sabalausky, Daniel Green, Jesse Phillips)

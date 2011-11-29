@@ -171,11 +171,6 @@ void initLua()
     }
 }
 
-void initFrontend()
-{
-    
-}
-
 //GE: Declare initialisation and termination of the D runtime.
 extern (C) bool  rt_init( void delegate( Exception ) dg = null );
 extern (C) bool  rt_term( void delegate( Exception ) dg = null );
@@ -183,6 +178,21 @@ extern (C) bool  rt_term( void delegate( Exception ) dg = null );
 version (linux) version (clibrary) void main(){} //GE: Workaround for a bug in Phobos.
 
 extern(C):
+
+    /**
+     * Dummy functions for initialising the frontend function struct.
+     */ 
+    void DummySoundPlay(int Type)
+    {
+    }
+    
+    void DummyRedrawScreen()
+    {
+    }
+    
+    void DummyPlayCardAnimation(CardInfo CI, int Discarded)
+    {
+    }
 
     /**
      * The main initialisation function. This needs to be called from the
@@ -196,10 +206,9 @@ extern(C):
     {
         
         D_LinuxInit();
-        initFrontend();
-        FrontendFunctions.SoundPlay = function(int){}; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
-    FrontendFunctions.RedrawScreen = function(){};
-    FrontendFunctions.PlayCardAnimation = function(CardInfo CI, int Discarded){};
+        FrontendFunctions.SoundPlay = &DummySoundPlay; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
+        FrontendFunctions.RedrawScreen = &DummyRedrawScreen;
+        FrontendFunctions.PlayCardAnimation = &DummyPlayCardAnimation;
         initLua();
     }
 

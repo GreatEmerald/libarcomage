@@ -87,3 +87,36 @@ immutable(char)* GetFilePath(char* FileName)
 {
     return toStringz(join([Config.DataDir, to!string(FileName)]));
 }
+
+immutable(char)*** GetCardDescriptionWords(int* NumSentences, int** NumWords)
+{
+    string[][] Words;
+    int WordsLength, a;
+    string ReadableDescription;
+    immutable(char)*** Result;
+    
+    
+    for (a=0; a<CardDB.length; a++)
+        WordsLength += CardDB[a].length;
+    Words.length = WordsLength;
+    a=0;
+    
+    foreach (CardInfo[] Cards; CardDB)
+    {
+        foreach (CardInfo CurrentCard; Cards)
+        {
+            ReadableDescription = replace(CurrentCard.Description, "\n", " ");
+            Words[a] = split(ReadableDescription);
+            a++;
+        }
+    }
+    
+    *NumSentences = cast(int)(Words.length);
+    foreach (int b, string[] Sentence; Words)
+    {
+        *NumWords[b] = cast(int)(Sentence.length);
+        foreach (int c, string Word; Sentence)
+            Result[c][b] = toStringz(Word);
+    }
+    return Result;
+}
