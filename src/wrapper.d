@@ -13,6 +13,7 @@ import std.stdio:writeln;
 import std.conv;
 import std.string;
 import std.array;
+import std.c.stdlib;
 
 extern(C):
 
@@ -111,12 +112,16 @@ immutable(char)*** GetCardDescriptionWords(int* NumSentences, int** NumWords)
         }
     }
     
+    
     *NumSentences = cast(int)(Words.length);
+    Result = cast(immutable(char)***) malloc(Words.length * (immutable(char)***).sizeof);
+    *NumWords = cast(int*) malloc((*NumSentences) * int.sizeof);
     foreach (int b, string[] Sentence; Words)
     {
-        *NumWords[b] = cast(int)(Sentence.length);
+        (*NumWords)[b] = cast(int)(Sentence.length);
+        Result[b] = cast(immutable(char)**) malloc(Sentence.length * (immutable(char)**).sizeof);
         foreach (int c, string Word; Sentence)
-            Result[c][b] = toStringz(Word);
+            Result[b][c] = toStringz(Word);
     }
     return Result;
 }
