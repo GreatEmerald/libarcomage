@@ -106,7 +106,8 @@ immutable(char)*** GetCardDescriptionWords(int* NumSentences, int** NumWords)
     {
         foreach (CardInfo CurrentCard; Cards)
         {
-            ReadableDescription = replace(CurrentCard.Description, "\n", " ");
+            ReadableDescription = replace(CurrentCard.Description, "-\n", "");
+            ReadableDescription = replace(ReadableDescription, "\n", " ");
             Words[a] = split(ReadableDescription);
             a++;
         }
