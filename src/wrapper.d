@@ -79,6 +79,16 @@ int GetColourType(byte PlayerNum, byte CardNum)
 	}
 }
 
+void GetCardDBSize(int* NumPools, int** NumCards)
+{
+    int x;
+    
+    *NumPools = cast(int)CardDB.length;
+    *NumCards = cast(int*) malloc((*NumPools) * int.sizeof);
+    for (x=0; x<*NumPools; x++)
+        *NumCards[x] = cast(int)CardDB[x].length;
+}
+
 //------------------------------------------------------------------------------
 // Useful functions. These are not a wrapper, but are only used in C to make it
 // easier for those writing frontends, so this is kept in wrapper.d.
@@ -89,40 +99,37 @@ immutable(char)* GetFilePath(char* FileName)
     return toStringz(join([Config.DataDir, to!string(FileName)]));
 }
 
-immutable(char)*** GetCardDescriptionWords(int* NumSentences, int** NumWords)
+immutable(char)***** GetCardDescriptionWords(int* NumPools, int** NumSentences, int*** NumLines, int**** NumWords)
 {
-    string[][] Words;
-    int WordsLength, a;
-    string ReadableDescription;
-    immutable(char)*** Result;
+    string[] SplitLines, SplitWords;
+    immutable(char)***** Result;
     
-    
-    for (a=0; a<CardDB.length; a++)
-        WordsLength += CardDB[a].length;
-    Words.length = WordsLength;
-    a=0;
-    
-    foreach (CardInfo[] Cards; CardDB)
+    *NumPools = cast(int)CardDB.length;
+    *NumSentences = cast(int*) malloc((*NumPools) * int.sizeof);
+    *NumLines = cast(int**) malloc((*NumPools) * (int*).sizeof);
+    *NumWords = cast(int***) malloc((*NumPools) * (int**).sizeof);
+    Result = cast(immutable(char)*****) malloc((*NumPools) * (immutable(char)****).sizeof);
+    foreach (int Pools, CardInfo[] Cards; CardDB)
     {
-        foreach (CardInfo CurrentCard; Cards)
+        (*NumSentences)[Pools] = cast(int)CardDB[Pools].length;
+        (*NumLines)[Pools] = cast(int*) malloc((*NumSentences)[Pools] * int.sizeof);
+        (*NumWords)[Pools] = cast(int**) malloc((*NumSentences)[Pools] * (int*).sizeof);
+        Result[Pools] = cast(immutable(char)****) malloc((*NumSentences)[Pools] * (immutable(char)***).sizeof);
+        foreach (int Sentences, CardInfo CurrentCard; Cards)
         {
-            ReadableDescription = replace(CurrentCard.Description, "-\n", "");
-            ReadableDescription = replace(ReadableDescription, "\n", " ");
-            Words[a] = split(ReadableDescription);
-            a++;
+            SplitLines = split(CurrentCard.Description, "\n");
+            (*NumLines)[Pools][Sentences] = cast(int)SplitLines.length;
+            (*NumWords)[Pools][Sentences] = cast(int*) malloc((*NumLines)[Pools][Sentences] * int.sizeof);
+            Result[Pools][Sentences] = cast(immutable(char)***) malloc((*NumLines)[Pools][Sentences] * (immutable(char)**).sizeof);
+            foreach (int Lines, string Line; SplitLines)
+            {
+                SplitWords = split(Line);
+                (*NumWords)[Pools][Sentences][Lines] = cast(int)(SplitWords.length);
+                Result[Pools][Sentences][Lines] = cast(immutable(char)**) malloc((*NumLines)[Pools][Sentences][Lines] * (immutable(char)*).sizeof);
+                foreach (int Words, string Word; SplitWords)
+                    Result[Pools][Sentences][Lines][Words] = toStringz(Word);
+            }
         }
-    }
-    
-    
-    *NumSentences = cast(int)(Words.length);
-    Result = cast(immutable(char)***) malloc(Words.length * (immutable(char)***).sizeof);
-    *NumWords = cast(int*) malloc((*NumSentences) * int.sizeof);
-    foreach (int b, string[] Sentence; Words)
-    {
-        (*NumWords)[b] = cast(int)(Sentence.length);
-        Result[b] = cast(immutable(char)**) malloc(Sentence.length * (immutable(char)**).sizeof);
-        foreach (int c, string Word; Sentence)
-            Result[b][c] = toStringz(Word);
     }
     return Result;
 }
