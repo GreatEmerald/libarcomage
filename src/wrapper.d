@@ -89,14 +89,21 @@ void GetCardDBSize(int* NumPools, int** NumCards)
         *NumCards[x] = cast(int)CardDB[x].length;
 }
 
-//------------------------------------------------------------------------------
-// Useful functions. These are not a wrapper, but are only used in C to make it
-// easier for those writing frontends, so this is kept in wrapper.d.
-//------------------------------------------------------------------------------
-
-immutable(char)* GetFilePath(char* FileName)
+//GEm: It's best to use handles in code - should save both memory and processor time!
+void GetCardHandle(byte PlayerNum, byte PositionInHand, int* Pool, int* Card)
 {
-    return toStringz(join([Config.DataDir, to!string(FileName)]));
+    foreach (int a, CardInfo[] Cards; CardDB)
+    {
+        foreach (int b, CardInfo CI; Cards)
+        {
+            if (CI == Player[PlayerNum].Hand[PositionInHand]) //GEm: Thank goodness D allows this!
+            {
+                *Pool = a;
+                *Card = b;
+                return;
+            }
+        }
+    }
 }
 
 immutable(char)***** GetCardDescriptionWords(int* NumPools, int** NumSentences, int*** NumLines, int**** NumWords)
@@ -125,11 +132,42 @@ immutable(char)***** GetCardDescriptionWords(int* NumPools, int** NumSentences, 
             {
                 SplitWords = split(Line);
                 (*NumWords)[Pools][Sentences][Lines] = cast(int)(SplitWords.length);
-                Result[Pools][Sentences][Lines] = cast(immutable(char)**) malloc((*NumLines)[Pools][Sentences][Lines] * (immutable(char)*).sizeof);
+                Result[Pools][Sentences][Lines] = cast(immutable(char)**) malloc((*NumWords)[Pools][Sentences][Lines] * (immutable(char)*).sizeof);
                 foreach (int Words, string Word; SplitWords)
                     Result[Pools][Sentences][Lines][Words] = toStringz(Word);
             }
         }
     }
     return Result;
+}
+
+immutable(char)*** GetCardTitleWords()
+{
+    immutable(char)*** Result;
+    
+    Result = cast(immutable(char)***) malloc(cast(int)CardDB.length * (immutable(char)**).sizeof);
+    foreach (int Pools, CardInfo[] Cards; CardDB)
+    {
+        Result[Pools] = cast(immutable(char)**) malloc(cast(int)Cards.length * (immutable(char)*).sizeof);
+        foreach (int CardNum, CardInfo Card; Cards)
+            Result[Pools][CardNum] = toStringz(CardDB[Pools][CardNum].Name);
+    }
+    return Result;
+}
+
+void GetCardPrice(int Pool, int Card, int* Bricks, int* Gems, int* Recruits)
+{
+    *Bricks = CardDB[Pool][Card].BrickCost;
+    *Gems = CardDB[Pool][Card].GemCost;
+    *Recruits = CardDB[Pool][Card].RecruitCost;
+}
+
+//------------------------------------------------------------------------------
+// Useful functions. These are not a wrapper, but are only used in C to make it
+// easier for those writing frontends, so this is kept in wrapper.d.
+//------------------------------------------------------------------------------
+
+immutable(char)* GetFilePath(char* FileName)
+{
+    return toStringz(join([Config.DataDir, to!string(FileName)]));
 }
