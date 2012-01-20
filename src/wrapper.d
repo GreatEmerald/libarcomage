@@ -66,6 +66,11 @@ int GetConfig(int Type)
     }
 }
 
+immutable(char)* GetPlayerName(int Who)
+{
+    return toStringz(Player[Who].Name);
+}
+
 //GE: Get a colour number from the number of the card in hand.
 int GetColourType(byte PlayerNum, byte CardNum)
 {
@@ -160,6 +165,46 @@ void GetCardPrice(int Pool, int Card, int* Bricks, int* Gems, int* Recruits)
     *Bricks = CardDB[Pool][Card].BrickCost;
     *Gems = CardDB[Pool][Card].GemCost;
     *Recruits = CardDB[Pool][Card].RecruitCost;
+}
+
+int GetCurrentQuarry(int PlayerNum)
+{
+    return Player[PlayerNum].Quarry;
+}
+
+int GetCurrentMagic(int PlayerNum)
+{
+    return Player[PlayerNum].Magic;
+}
+
+int GetCurrentDungeon(int PlayerNum)
+{
+    return Player[PlayerNum].Dungeon;
+}
+
+int GetCurrentBricks(int PlayerNum)
+{
+    return Player[PlayerNum].Bricks;
+}
+
+int GetCurrentGems(int PlayerNum)
+{
+    return Player[PlayerNum].Gems;
+}
+
+int GetCurrentRecruits(int PlayerNum)
+{
+    return Player[PlayerNum].Recruits;
+}
+
+int GetCurrentTower(int PlayerNum)
+{
+    return Player[PlayerNum].Tower;
+}
+
+int GetCurrentWall(int PlayerNum)
+{
+    return Player[PlayerNum].Wall;
 }
 
 //------------------------------------------------------------------------------
