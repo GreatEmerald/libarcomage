@@ -52,7 +52,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 0, y = 0, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveBricks(0, 8)
@@ -83,7 +83,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88, y = 0, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddBricks(0, 2)
@@ -103,7 +103,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 0, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 1)
@@ -122,7 +122,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 0, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddQuarry(0, 1)
@@ -143,7 +143,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 0, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetQuarry(0) < GetQuarry(1) then
@@ -169,7 +169,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 0, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 4)
@@ -191,7 +191,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 0, y = 52, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 5)
@@ -213,7 +213,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88, y = 52, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetQuarry(0) < GetQuarry(1) then
@@ -236,7 +236,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 3)
@@ -257,7 +257,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 4)
@@ -278,7 +278,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddQuarry(0, 1)
@@ -305,7 +305,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(0) == 0 then
@@ -331,7 +331,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 0, y = 52*2, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveWall(1, 5)
@@ -353,7 +353,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88, y = 52*2, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddMagic(0, 1)
@@ -372,7 +372,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*2, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveQuarry(1, 1)
@@ -398,7 +398,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*2, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 6)
@@ -419,7 +419,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*2, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveQuarry(1, 1)
@@ -440,7 +440,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*2, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         AddQuarry(0, 2)
@@ -461,7 +461,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 0, y = 52*3, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         RemoveQuarry(0, 1)
@@ -484,7 +484,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88, y = 52*3, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 8)
@@ -505,7 +505,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*3, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 6)
@@ -527,7 +527,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*3, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 7)
@@ -549,7 +549,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*3, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 6)
@@ -571,7 +571,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*3, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 12)
@@ -592,7 +592,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*4, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         AddWall(0, 8)
@@ -614,7 +614,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*4, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 15)
@@ -635,7 +635,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*4, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 6)
@@ -657,7 +657,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*4, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 20)
@@ -679,7 +679,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*4, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 9)
@@ -701,7 +701,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*4, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 1)
@@ -724,7 +724,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*5, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(0) < GetWall(1) then
@@ -752,7 +752,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*5, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddRecruits(0, 6)
@@ -778,7 +778,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*5, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddWall(0, 7)
@@ -800,7 +800,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*5, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         local temp = GetWall(0)
@@ -824,7 +824,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*5, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 1)
@@ -843,7 +843,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*5, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 1)
@@ -862,7 +862,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*6, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 3)
@@ -883,7 +883,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*6, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddMagic(0, 1)
@@ -904,7 +904,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*6, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         return -1
@@ -924,7 +924,7 @@ Card
     RecruitCost = 0;
     Cursed = true;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*6, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 3)
@@ -945,7 +945,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*6, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 2)
@@ -967,7 +967,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*6, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddMagic(0, 1)
@@ -990,7 +990,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*7, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 3)
@@ -1011,7 +1011,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*7, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 5)
@@ -1032,7 +1032,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*7, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 5)
@@ -1053,7 +1053,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*7, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(0, 5)
@@ -1075,7 +1075,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*7, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddMagic(0, 1)
@@ -1098,7 +1098,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*7, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         local HighestMagic = math.max(GetMagic(0), GetMagic(1))
@@ -1122,7 +1122,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*8, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 8)
@@ -1143,7 +1143,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*8, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 5)
@@ -1165,7 +1165,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*8, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveMagic(0, 1)
@@ -1188,7 +1188,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*8, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 5)
@@ -1210,7 +1210,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*8, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 11)
@@ -1231,7 +1231,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*8, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(0, 7)
@@ -1255,7 +1255,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*9, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 6)
@@ -1275,7 +1275,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*9, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 7)
@@ -1297,7 +1297,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*9, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 8)
@@ -1319,7 +1319,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*9, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 8)
@@ -1341,7 +1341,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*9, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 15)
@@ -1362,7 +1362,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*9, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 10)
@@ -1385,7 +1385,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*10, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 12)
@@ -1407,7 +1407,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*10, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 20)
@@ -1428,7 +1428,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*10, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 11)
@@ -1450,7 +1450,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*10, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetTower(0) < GetTower(1) then
@@ -1476,7 +1476,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*10, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 1)
@@ -1499,7 +1499,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*10, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 4)
@@ -1522,7 +1522,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*11, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetTower(0) > GetWall(1) then
@@ -1548,7 +1548,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*11, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddTower(0, 13)
@@ -1571,7 +1571,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*11, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveRecruits(1, 6)
@@ -1593,7 +1593,7 @@ Card
     RecruitCost = 1;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*11, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 2)
@@ -1612,7 +1612,7 @@ Card
     RecruitCost = 1;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*11, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 4)
@@ -1634,7 +1634,7 @@ Card
     RecruitCost = 3;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*11, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddDungeon(0, 1)
@@ -1655,7 +1655,7 @@ Card
     RecruitCost = 2;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*12, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         return -1
@@ -1673,7 +1673,7 @@ Card
     RecruitCost = 3;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*12, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 6)
@@ -1695,7 +1695,7 @@ Card
     RecruitCost = 4;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*12, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 3)
@@ -1717,7 +1717,7 @@ Card
     RecruitCost = 6;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*12, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 2)
@@ -1736,7 +1736,7 @@ Card
     RecruitCost = 3;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*12, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 5)
@@ -1757,7 +1757,7 @@ Card
     RecruitCost = 5;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*12, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 4)
@@ -1779,7 +1779,7 @@ Card
     RecruitCost = 6;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*13, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 4)
@@ -1800,7 +1800,7 @@ Card
     RecruitCost = 7;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*13, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddDungeon(0, 2)
@@ -1821,7 +1821,7 @@ Card
     RecruitCost = 8;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*13, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 2)
@@ -1844,7 +1844,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*13, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         AddDungeon(0, 1)
@@ -1867,7 +1867,7 @@ Card
     RecruitCost = 5;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*13, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 6)
@@ -1888,7 +1888,7 @@ Card
     RecruitCost = 6;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*13, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 7)
@@ -1909,7 +1909,7 @@ Card
     RecruitCost = 6;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*14, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 6)
@@ -1931,7 +1931,7 @@ Card
     RecruitCost = 5;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*14, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         Damage(1, 6)
@@ -1958,7 +1958,7 @@ Card
     RecruitCost = 8;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*14, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         if GetWall(1) == 0 then
@@ -1984,7 +1984,7 @@ Card
     RecruitCost = 9;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*14, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         Damage(1, 9)
@@ -2005,7 +2005,7 @@ Card
     RecruitCost = 11;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*14, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(1) > 0 then
@@ -2031,7 +2031,7 @@ Card
     RecruitCost = 9;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*14, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetMagic(0) > GetMagic(1) then
@@ -2057,7 +2057,7 @@ Card
     RecruitCost = 10;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*15, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(0) > GetWall(1) then
@@ -2083,7 +2083,7 @@ Card
     RecruitCost = 14;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*15, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         RemoveTower(1, 5)
@@ -2105,7 +2105,7 @@ Card
     RecruitCost = 11;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*15, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 8)
@@ -2127,7 +2127,7 @@ Card
     RecruitCost = 12;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*15, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function () 
         if GetGems(1) >= 10 then
@@ -2168,7 +2168,7 @@ Card
     RecruitCost = 15;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*15, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 10)
@@ -2190,7 +2190,7 @@ Card
     RecruitCost = 17;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*15, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 10)
@@ -2213,7 +2213,7 @@ Card
     RecruitCost = 25;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*16, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 20)
@@ -2238,7 +2238,7 @@ Card
     RecruitCost = 2;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*16, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         if GetWall(0) > GetWall(1) then
@@ -2264,7 +2264,7 @@ Card
     RecruitCost = 2;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*16, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 3)
@@ -2286,7 +2286,7 @@ Card
     RecruitCost = 4;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*16, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 8)
@@ -2308,7 +2308,7 @@ Card
     RecruitCost = 13;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*16, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 13)
@@ -2330,7 +2330,7 @@ Card
     RecruitCost = 18;
     Cursed = false;
     Colour = "Green";
-    Picture = {File = "", Coordinates = {x = 0, y = 0, w = 0, h = 0}};
+    Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*16, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
         RemoveTower(1, 12)

@@ -167,44 +167,48 @@ void GetCardPrice(int Pool, int Card, int* Bricks, int* Gems, int* Recruits)
     *Recruits = CardDB[Pool][Card].RecruitCost;
 }
 
-int GetCurrentQuarry(int PlayerNum)
+immutable(char)*** GetCardPicturePaths()
 {
-    return Player[PlayerNum].Quarry;
+    immutable(char)*** Result;
+    
+    Result = cast(immutable(char)***) malloc(cast(int)CardDB.length * (immutable(char)**).sizeof);
+    foreach (int Pools, CardInfo[] Cards; CardDB)
+    {
+        Result[Pools] = cast(immutable(char)**) malloc(cast(int)Cards.length * (immutable(char)*).sizeof);
+        foreach (int CardNum, CardInfo Card; Cards)
+            Result[Pools][CardNum] = toStringz(join(["lua/", PoolNames[Pools], "/", CardDB[Pools][CardNum].Picture.File]));
+    }
+    return Result;
 }
 
-int GetCurrentMagic(int PlayerNum)
+SDL_Rect** GetCardPictureCoords()
 {
-    return Player[PlayerNum].Magic;
+    SDL_Rect** Result;
+    
+    Result = cast(SDL_Rect**) malloc(cast(int)CardDB.length * (SDL_Rect*).sizeof);
+    foreach (int Pools, CardInfo[] Cards; CardDB)
+    {
+        Result[Pools] = cast(SDL_Rect*) malloc(cast(int)Cards.length * SDL_Rect.sizeof);
+        foreach (int CardNum, CardInfo Card; Cards)
+            Result[Pools][CardNum] = CardDB[Pools][CardNum].Picture.Coordinates;
+    }
+    return Result;
 }
 
-int GetCurrentDungeon(int PlayerNum)
+int GetResource(int PlayerNum, int Type)
 {
-    return Player[PlayerNum].Dungeon;
-}
-
-int GetCurrentBricks(int PlayerNum)
-{
-    return Player[PlayerNum].Bricks;
-}
-
-int GetCurrentGems(int PlayerNum)
-{
-    return Player[PlayerNum].Gems;
-}
-
-int GetCurrentRecruits(int PlayerNum)
-{
-    return Player[PlayerNum].Recruits;
-}
-
-int GetCurrentTower(int PlayerNum)
-{
-    return Player[PlayerNum].Tower;
-}
-
-int GetCurrentWall(int PlayerNum)
-{
-    return Player[PlayerNum].Wall;
+    switch (Type)
+    {
+        case 0: return Player[PlayerNum].Quarry;
+        case 1: return Player[PlayerNum].Magic;
+        case 2: return Player[PlayerNum].Dungeon;
+        case 3: return Player[PlayerNum].Bricks;
+        case 4: return Player[PlayerNum].Gems;
+        case 5: return Player[PlayerNum].Recruits;
+        case 6: return Player[PlayerNum].Tower;
+        case 7: return Player[PlayerNum].Wall;
+        default: writeln("Warning: GetResource: Invalid type specified!"); return 0;
+    }
 }
 
 //------------------------------------------------------------------------------
