@@ -71,6 +71,11 @@ immutable(char)* GetPlayerName(int Who)
     return toStringz(Player[Who].Name);
 }
 
+char GetIsAI(int Who)
+{
+    return (char)Player[Who].AI;
+}
+
 //GE: Get a colour number from the number of the card in hand.
 int GetColourType(byte PlayerNum, byte CardNum)
 {

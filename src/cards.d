@@ -21,7 +21,7 @@ struct Stats
 Stats[] Player; /// Players. Supports more than 2. TODO to implement it.
 bool DiscardRound; /// Whether this turn is discard only.
 bool InitComplete; /// Indicates whether the Queue is set up already.
-/*shared*/ int Turn; /// Number of the player whose turn it is. This is an absolute value.
+shared int Turn; /// Number of the player whose turn it is. This is an absolute value.
 int NextTurn; /// Number of the player who will go next.
 int LastTurn; /// Number of the player whose turn ended before.
 CardInfo[] Queue; /// Cards in the bank.
@@ -388,7 +388,7 @@ void PutCard(CardInfo CI)
     Queue[((CurrentPosition-Config.CardsInHand*2)+cast(int).Queue.length)%cast(int).Queue.length] = CI;
 }
 
-bool IsVictorious(int PlayerNumber)
+extern (C) bool IsVictorious(int PlayerNumber)
 {
     foreach (int i, Stats P; Player) //GE: Check if we are the last man standing.
     {
@@ -410,7 +410,7 @@ bool IsVictorious(int PlayerNumber)
             (Player[PlayerNumber].Recruits >= Config.ResourceVictory));
 }
 
-void AIPlay()
+extern (C) void AIPlay()
 {
     float HighestPriority=-1.f, CurrentPriority, LowestPriority=0.f;
     int Favourite, Worst;
