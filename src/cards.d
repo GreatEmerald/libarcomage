@@ -523,7 +523,7 @@ bool PlayCard(int CardPlace, bool Discarded)
     if (!CanPlayCard(CI, Discarded))
         return false;
     
-    FrontendFunctions.PlayCardAnimation(CI, Discarded);
+    FrontendFunctions.PlayCardAnimation(CardPlace, Discarded);
 
     GetNextTurn(CI, Discarded); //GE: Execute the card and change NextTurn based on it.
     if (!Discarded)

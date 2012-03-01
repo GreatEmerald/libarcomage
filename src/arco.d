@@ -110,7 +110,7 @@ enum SoundTypes {
 struct S_FrontendFunctions {
     extern (C) void function(int) SoundPlay;
     extern (C) void function() RedrawScreen;
-    extern (C) void function(CardInfo, int) PlayCardAnimation;
+    extern (C) void function(int, int) PlayCardAnimation;
 }
 S_FrontendFunctions FrontendFunctions;
 
@@ -190,7 +190,7 @@ extern(C):
     {
     }
     
-    void DummyPlayCardAnimation(CardInfo CI, int Discarded)
+    void DummyPlayCardAnimation(int CardPlace, int Discarded)
     {
     }
 

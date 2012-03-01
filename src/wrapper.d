@@ -14,6 +14,8 @@ import std.conv;
 import std.string;
 import std.array;
 import std.c.stdlib;
+import std.random;
+import std.datetime;
 
 extern(C):
 
@@ -33,7 +35,7 @@ void SetRedrawScreen(void function() RedrawScreen)
     FrontendFunctions.RedrawScreen = RedrawScreen;
 }
 
-void SetPlayCardAnimation(void function(CardInfo, int) PlayCardAnimation)
+void SetPlayCardAnimation(void function(int, int) PlayCardAnimation)
 {
     FrontendFunctions.PlayCardAnimation = PlayCardAnimation;
 }
@@ -74,6 +76,11 @@ immutable(char)* GetPlayerName(int Who)
 char GetIsAI(int Who)
 {
     return (char)Player[Who].AI;
+}
+
+char GetCanPlayCard(int Who, char CardNum, char bDiscarded)
+{
+    return CanPlayCard(Player[Who].Hand[CardNum], bDiscarded);
 }
 
 //GE: Get a colour number from the number of the card in hand.
@@ -224,4 +231,15 @@ int GetResource(int PlayerNum, int Type)
 immutable(char)* GetFilePath(char* FileName)
 {
     return toStringz(join([Config.DataDir, to!string(FileName)]));
+}
+
+float FRand()
+{
+    return uniform(0.0, 1.0);
+}
+
+long GetCurrentTime()
+{
+    auto Result = Clock.currTime;
+    return Result.stdTime;
 }
