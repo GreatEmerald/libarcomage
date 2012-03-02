@@ -84,9 +84,9 @@ char GetCanPlayCard(int Who, char CardNum, char bDiscarded)
 }
 
 //GE: Get a colour number from the number of the card in hand.
-int GetColourType(byte PlayerNum, byte CardNum)
+int GetColourType(int Pool, int Card)
 {
-	switch (Player[PlayerNum].Hand[CardNum].Colour)
+	switch (CardDB[Pool][Card].Colour)
 	{
 		case "Red": return 0; //GE: Make sure adapter is in sync!
 		case "Blue": return 1;
