@@ -75,12 +75,12 @@ immutable(char)* GetPlayerName(int Who)
 
 char GetIsAI(int Who)
 {
-    return (char)Player[Who].AI;
+    return cast(char)Player[Who].AI;
 }
 
 char GetCanPlayCard(int Who, char CardNum, char bDiscarded)
 {
-    return CanPlayCard(Player[Who].Hand[CardNum], bDiscarded);
+    return CanPlayCard(Player[Who].Hand[CardNum], cast(bool)bDiscarded);
 }
 
 //GE: Get a colour number from the number of the card in hand.
@@ -221,6 +221,11 @@ int GetResource(int PlayerNum, int Type)
         case 7: return Player[PlayerNum].Wall;
         default: writeln("Warning: GetResource: Invalid type specified!"); return 0;
     }
+}
+
+char ExecutePlayCard(int CardPlace, char bDiscarded)
+{
+    return cast(char)PlayCard(CardPlace, cast(bool)bDiscarded);
 }
 
 //------------------------------------------------------------------------------

@@ -542,7 +542,6 @@ bool PlayCard(int CardPlace, bool Discarded)
     LastTurn = Turn;
     Turn = NextTurn;
 
-    FrontendFunctions.RedrawScreen();
     return true;
 }
 
