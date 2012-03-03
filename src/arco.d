@@ -109,8 +109,8 @@ enum SoundTypes {
 
 struct S_FrontendFunctions {
     extern (C) void function(int) SoundPlay;
-    extern (C) void function() RedrawScreen;
-    extern (C) void function(int, int) PlayCardAnimation;
+    extern (C) void function(int) PlayCardPostAnimation;
+    extern (C) void function(int, char, char) PlayCardAnimation;
 }
 S_FrontendFunctions FrontendFunctions;
 
@@ -186,11 +186,11 @@ extern(C):
     {
     }
     
-    void DummyRedrawScreen()
+    void DummyPlayCardPostAnimation(int CardPlace)
     {
     }
     
-    void DummyPlayCardAnimation(int CardPlace, int Discarded)
+    void DummyPlayCardAnimation(int CardPlace, char bDiscarded, char bSameTurn)
     {
     }
 
@@ -207,7 +207,7 @@ extern(C):
         
         D_LinuxInit();
         FrontendFunctions.SoundPlay = &DummySoundPlay; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
-        FrontendFunctions.RedrawScreen = &DummyRedrawScreen;
+        FrontendFunctions.PlayCardPostAnimation = &DummyPlayCardPostAnimation;
         FrontendFunctions.PlayCardAnimation = &DummyPlayCardAnimation;
         initLua();
     }

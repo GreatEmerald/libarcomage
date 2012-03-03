@@ -30,12 +30,12 @@ void SetSoundPlay(void function(int) SoundPlay)
     FrontendFunctions.SoundPlay = SoundPlay;
 }
 
-void SetRedrawScreen(void function() RedrawScreen)
+void SetPlayCardPostAnimation(void function(int) PlayCardPostAnimation)
 {
-    FrontendFunctions.RedrawScreen = RedrawScreen;
+    FrontendFunctions.PlayCardPostAnimation = PlayCardPostAnimation;
 }
 
-void SetPlayCardAnimation(void function(int, int) PlayCardAnimation)
+void SetPlayCardAnimation(void function(int, char, char) PlayCardAnimation)
 {
     FrontendFunctions.PlayCardAnimation = PlayCardAnimation;
 }

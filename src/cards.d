@@ -523,7 +523,7 @@ bool PlayCard(int CardPlace, bool Discarded)
     if (!CanPlayCard(CI, Discarded))
         return false;
     
-    FrontendFunctions.PlayCardAnimation(CardPlace, Discarded);
+    FrontendFunctions.PlayCardAnimation(CardPlace, Discarded, LastTurn == Turn);
 
     GetNextTurn(CI, Discarded); //GE: Execute the card and change NextTurn based on it.
     if (!Discarded)
@@ -537,6 +537,7 @@ bool PlayCard(int CardPlace, bool Discarded)
         Player[NextTurn].Gems += Player[NextTurn].Magic;
         Player[NextTurn].Recruits += Player[NextTurn].Dungeon;
     }
+    FrontendFunctions.PlayCardPostAnimation(CardPlace);
     Player[Turn].Hand[CardPlace] = GetCard();
     LastTurn = Turn;
     Turn = NextTurn;
