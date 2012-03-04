@@ -21,7 +21,7 @@ struct Stats
 Stats[] Player; /// Players. Supports more than 2. TODO to implement it.
 bool DiscardRound; /// Whether this turn is discard only.
 bool InitComplete; /// Indicates whether the Queue is set up already.
-shared int Turn; /// Number of the player whose turn it is. This is an absolute value.
+extern(C) shared int Turn; /// Number of the player whose turn it is. This is an absolute value.
 int NextTurn; /// Number of the player who will go next.
 int LastTurn; /// Number of the player whose turn ended before.
 CardInfo[] Queue; /// Cards in the bank.
@@ -520,7 +520,7 @@ bool PlayCard(int CardPlace, bool Discarded)
 
     //GE: You get resources when you use a card and next up is the enemy's turn.
 
-    if (!CanPlayCard(CI, Discarded))
+    if (!CanPlayCard(CI, Discarded) || (!Discarded && !CanAffordCard(CI)))
         return false;
     
     FrontendFunctions.PlayCardAnimation(CardPlace, Discarded, LastTurn == Turn);
