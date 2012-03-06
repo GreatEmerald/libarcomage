@@ -423,7 +423,7 @@ extern (C) void AIPlay()
         CurrentPriority = AlterAIPriority(CurrentPriority, CI);
         //writeln("DEBUG: Priority ", CurrentPriority);
         
-        if ( (CanAffordCard(CI)) &&                                       //GE: If we can afford the card
+        if ( (CanAffordCard(CI, Turn)) &&                                       //GE: If we can afford the card
             ( (HighestPriority < CurrentPriority) ||                      //GE: And it is more attractive than what we saw before
             (HighestPriority == CurrentPriority && uniform(0,2) >= 1) ) ) //GE: Or it is as attractive (in which case we let luck decide)
         {
@@ -520,7 +520,7 @@ bool PlayCard(int CardPlace, bool Discarded)
 
     //GE: You get resources when you use a card and next up is the enemy's turn.
 
-    if (!CanPlayCard(CI, Discarded) || (!Discarded && !CanAffordCard(CI)))
+    if (!CanPlayCard(CI, Discarded) || (!Discarded && !CanAffordCard(CI, Turn)))
         return false;
     
     FrontendFunctions.PlayCardAnimation(CardPlace, Discarded, LastTurn == Turn);
@@ -575,11 +575,11 @@ void GetNextTurn(CardInfo CI, bool Discarded)
     }
 }
 
-bool CanAffordCard(CardInfo CI)
+bool CanAffordCard(CardInfo CI, int PlayerNum)
 {
-    if (CI.BrickCost > Player[Turn].Bricks) return false;
-    if (CI.GemCost > Player[Turn].Gems) return false;
-    if (CI.RecruitCost > Player[Turn].Recruits) return false;
+    if (CI.BrickCost > Player[PlayerNum].Bricks) return false;
+    if (CI.GemCost > Player[PlayerNum].Gems) return false;
+    if (CI.RecruitCost > Player[PlayerNum].Recruits) return false;
     return true;
 }
 

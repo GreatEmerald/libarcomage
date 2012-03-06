@@ -83,6 +83,11 @@ char GetCanPlayCard(int Who, char CardNum, char bDiscarded)
     return CanPlayCard(Player[Who].Hand[CardNum], cast(bool)bDiscarded);
 }
 
+char GetCanAffordCard(int Who, char CardNum)
+{
+    return CanAffordCard(Player[Who].Hand[CardNum], Who);
+}
+
 //GE: Get a colour number from the number of the card in hand.
 int GetColourType(int Pool, int Card)
 {
