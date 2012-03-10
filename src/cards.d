@@ -412,7 +412,7 @@ extern (C) bool IsVictorious(int PlayerNumber)
 
 extern (C) void AIPlay()
 {
-    float HighestPriority=-1.f, CurrentPriority, LowestPriority=0.f;
+    float HighestPriority=-1.0, CurrentPriority, LowestPriority=0.0;
     int Favourite, Worst;
     
     foreach (int i, CardInfo CI; Player[Turn].Hand)
@@ -438,7 +438,7 @@ extern (C) void AIPlay()
             Worst = i;
         }
     }
-    if ((((HighestPriority < 0.f) || ((HighestPriority == 0.f) && (uniform(0,2) >= 1))) && !Player[Turn].Hand[Worst].Cursed) || DiscardRound )
+    if ((((HighestPriority < 0.0) || ((HighestPriority == 0.0) && (uniform(0,2) >= 1))) && !Player[Turn].Hand[Worst].Cursed) || DiscardRound )
     {
         PlayCard(Worst, true); //GE: If we have bad cards, pick the worst one and discard.
         return;
