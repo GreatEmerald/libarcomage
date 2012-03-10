@@ -248,7 +248,7 @@ float FRand()
     return uniform(0.0, 1.0);
 }
 
-long GetCurrentTime()
+long GetCurrentTimeD()
 {
     auto Result = Clock.currTime;
     return Result.stdTime;
