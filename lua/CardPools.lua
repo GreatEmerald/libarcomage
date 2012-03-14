@@ -210,7 +210,7 @@ function AIAddEnemyTower(Amount)
 end
 
 function AIRemoveTower(Amount)
-    if GetTower(0) - Amount < 0 then return -1 end
+    if GetTower(0) - Amount <= 0 then return -1 end
     local Priority = Amount*(-0.02)
     if GetTower(0) <= GetTowerVictory()*0.25 or GetTower(0) >= GetTowerVictory()*0.75 then Priority = Priority+(Amount*(-0.02)) end
     return math.max(Priority, -0.95)
