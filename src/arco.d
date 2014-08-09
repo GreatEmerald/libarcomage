@@ -2,7 +2,7 @@
  * The main module of libarcomage.
  * Initialisation, configuration, contact with frontends and other important
  * functions are here. Most code is in arcomage.cards though.
- * 
+ *
  * Authors: GreatEmerald
  */
 
@@ -49,13 +49,13 @@ struct CardInfo { //GE: Holds information about a single card.
     string Keywords; //GE: Might become an array. These are MArcomage keywords, also used in Lua functions
     /*LuaFunction*/ int delegate() PlayFunction; //GE: This is what we call on playing the card.
     /*LuaFunction*/ float delegate() AIFunction; /// The function that rates the desirability of the card.
-    
+
     /**
      * Creates a function in Lua that adds a card to the card array. The Lua
      * code only contains calls to this function.
-     * 
+     *
      * Authors: GreatEmerald, JakobOvrum
-     */ 
+     */
     static CardInfo[] fromFile(in char[] path)
     {
         CardInfo[] Cards;
@@ -82,6 +82,8 @@ string[] PrecachePictures;
 
 struct S_Config {
     bool Fullscreen;
+    int ResolutionX;
+    int ResolutionY;
     bool SoundEnabled;
     byte CardTranslucency;
     byte CardsInHand;
@@ -119,14 +121,14 @@ LuaState lua; /// The main Lua state.
 /**
  * Lua initialisation. Normally, LuaD handles everything for us - this is just
  * additional content specific to our libary.
- * 
+ *
  * Authors: GreatEmerald
- */ 
+ */
 void initLua()
 {
     lua = new LuaState();
     lua.openLibs();
-    
+
     if (!exists("lua/Configuration.lua"))
     {
         writeln("The configuration file is missing! It must be relatively in lua/Configuration.lua.");
@@ -134,6 +136,8 @@ void initLua()
     }
     lua.doFile("lua/Configuration.lua"); //GE: This sets global variables inside Lua. We need to fish them out now.
     Config.Fullscreen = lua.get!bool("Fullscreen"); //GE: Configuration support.
+    Config.ResolutionX = lua.get!int("ResolutionX");
+    Config.ResolutionY = lua.get!int("ResolutionY");
     Config.SoundEnabled = lua.get!bool("SoundEnabled");
     Config.CardTranslucency = lua.get!byte("CardTranslucency");
     Config.CardsInHand = lua.get!byte("CardsInHand");
@@ -154,9 +158,9 @@ void initLua()
     Config.DataDir = lua.get!string("DataDir");
     if (Config.DataDir == "")
         Config.DataDir = "../data/";
-    
+
     InitLuaFunctions();
-    
+
     lua.doFile("lua/CardPools.lua"); //GE: Execute the CardPools file. Here we get to know what pools there are on the system.
     struct PoolInfo                  //GE: Thanks to JakobOvrum for a nice way to fill PoolNames and CardDB!
     {
@@ -181,15 +185,15 @@ extern(C):
 
     /**
      * Dummy functions for initialising the frontend function struct.
-     */ 
+     */
     void DummySoundPlay(int Type)
     {
     }
-    
+
     void DummyPlayCardPostAnimation(int CardPlace)
     {
     }
-    
+
     void DummyPlayCardAnimation(int CardPlace, char bDiscarded, char bSameTurn)
     {
     }
@@ -197,14 +201,13 @@ extern(C):
     /**
      * The main initialisation function. This needs to be called from the
      * frontend to initialise the game.
-     * 
-     * Note: Do not forget to call rt_init() and D_LinuxInit() as well.
-     * 
+     *
+     * Note: Do not forget to call rt_init() if interfacing from C.
+     *
      * Authors: GreatEmerald
      */
     void InitArcomage()
     {
-        
         D_LinuxInit();
         FrontendFunctions.SoundPlay = &DummySoundPlay; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
         FrontendFunctions.PlayCardPostAnimation = &DummyPlayCardPostAnimation;
