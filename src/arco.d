@@ -17,7 +17,7 @@ import cards;
 /*struct Coords {
     int X, Y, W, H;
 } */
-struct SDL_Rect {
+struct SDLRect {
 	short x, y;
 	ushort w, h;
 };
@@ -28,7 +28,7 @@ struct Rect {
 
 struct PictureInfo {
     string File;
-    SDL_Rect Coordinates;
+    SDLRect Coordinates;
     /*int X;
     int Y;
     int H;

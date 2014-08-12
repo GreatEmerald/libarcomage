@@ -104,7 +104,7 @@ int GetColourType(int Pool, int Card)
 void GetCardDBSize(int* NumPools, int** NumCards)
 {
     int x;
-    
+
     *NumPools = cast(int)CardDB.length;
     *NumCards = cast(int*) malloc((*NumPools) * int.sizeof);
     for (x=0; x<*NumPools; x++)
@@ -132,7 +132,7 @@ immutable(char)***** GetCardDescriptionWords(int* NumPools, int** NumSentences, 
 {
     string[] SplitLines, SplitWords;
     immutable(char)***** Result;
-    
+
     *NumPools = cast(int)CardDB.length;
     *NumSentences = cast(int*) malloc((*NumPools) * int.sizeof);
     *NumLines = cast(int**) malloc((*NumPools) * (int*).sizeof);
@@ -166,7 +166,7 @@ immutable(char)***** GetCardDescriptionWords(int* NumPools, int** NumSentences, 
 immutable(char)*** GetCardTitleWords()
 {
     immutable(char)*** Result;
-    
+
     Result = cast(immutable(char)***) malloc(cast(int)CardDB.length * (immutable(char)**).sizeof);
     foreach (int Pools, CardInfo[] Cards; CardDB)
     {
@@ -187,7 +187,7 @@ void GetCardPrice(int Pool, int Card, int* Bricks, int* Gems, int* Recruits)
 immutable(char)*** GetCardPicturePaths()
 {
     immutable(char)*** Result;
-    
+
     Result = cast(immutable(char)***) malloc(cast(int)CardDB.length * (immutable(char)**).sizeof);
     foreach (int Pools, CardInfo[] Cards; CardDB)
     {
@@ -198,14 +198,14 @@ immutable(char)*** GetCardPicturePaths()
     return Result;
 }
 
-SDL_Rect** GetCardPictureCoords()
+SDLRect** GetCardPictureCoords()
 {
-    SDL_Rect** Result;
-    
-    Result = cast(SDL_Rect**) malloc(cast(int)CardDB.length * (SDL_Rect*).sizeof);
+    SDLRect** Result;
+
+    Result = cast(SDLRect**) malloc(cast(int)CardDB.length * (SDLRect*).sizeof);
     foreach (int Pools, CardInfo[] Cards; CardDB)
     {
-        Result[Pools] = cast(SDL_Rect*) malloc(cast(int)Cards.length * SDL_Rect.sizeof);
+        Result[Pools] = cast(SDLRect*) malloc(cast(int)Cards.length * SDLRect.sizeof);
         foreach (int CardNum, CardInfo Card; Cards)
             Result[Pools][CardNum] = CardDB[Pools][CardNum].Picture.Coordinates;
     }
