@@ -79,7 +79,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "eosd-21.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Picture = {File = "icicle.png", Coordinates = {x = 0, y = 0, w = 264, h = 156}};
     Keywords = "";
     PlayFunction = function ()
       RemoveGems(0, 1)
@@ -311,5 +311,402 @@ Card
     end;
     AIFunction = function ()
       return AIDamageEnemy(5)+AIAddGems(5)
+    end;
+}
+
+Card 
+{
+    Name = "Agni Shine";
+    Description = "3 damage, +3 tower";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 4;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-401.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 3)
+      AddTower(0, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(3)+AIAddTower(3)
+    end;
+}
+
+Card 
+{
+    Name = "Princess Undine";
+    Description = "+5 wall, +1 tower";
+    Frequency = 3;
+    BrickCost = 5;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-402.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      AddWall(0, 5)
+      AddTower(0, 1)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIAddWall(5)+AIAddTower(1)
+    end;
+}
+
+Card 
+{
+    Name = "Sylphae Horn";
+    Description = "3 damage, +3 recruits";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 4;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "eosd-403.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 3)
+      AddRecruits(0, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(3)+AIAddRecruits(3)
+    end;
+}
+
+Card 
+{
+    Name = "Rage Trilithon";
+    Description = "3 damage, +3 wall";
+    Frequency = 3;
+    BrickCost = 4;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-404.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 3)
+      AddWall(0, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(3)+AIAddWall(3)
+    end;
+}
+
+Card 
+{
+    Name = "Metal Fatigue";
+    Description = "6 damage to enemy tower, you lose 3 wall";
+    Frequency = 3;
+    BrickCost = 6;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-405.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      RemoveTower(1, 6)
+      RemoveWall(0, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIRemoveEnemyTower(6)+AIRemoveWall(3)
+    end;
+}
+
+Card 
+{
+    Name = "Agni Shine HL"; -- Agni Shine High Level
+    Description = "6 damage, +6 tower";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 12;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-406.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 6)
+      AddTower(0, 6)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(6)+AIAddTower(6)
+    end;
+}
+
+Card 
+{
+    Name = "Sylphae Horn HL"; -- Sylphae Horn High Level
+    Description = "6 damage, +6 recruits";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 11;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "eosd-407.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 6)
+      AddRecruits(0, 6)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(6)+AIAddRecruits(6)
+    end;
+}
+
+Card 
+{
+    Name = "Rage Trilithon HL"; -- Rage Trilithon High Level
+    Description = "6 damage, +6 wall";
+    Frequency = 2;
+    BrickCost = 11;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-408.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 6)
+      AddWall(0, 6)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(6)+AIAddWall(6)
+    end;
+}
+
+Card 
+{
+    Name = "Agni Radiance";
+    Description = "6 damage to enemy wall, 6 damage";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 14;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-409.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      RemoveWall(1, 6)
+      Damage(1, 6)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIRemoveEnemyWall(6)+AIDamageEnemy(6)
+    end;
+}
+
+Card 
+{
+    Name = "Bury In Lake";
+    Description = "+10 wall, +2 tower";
+    Frequency = 2;
+    BrickCost = 14;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-410.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      AddWall(0, 10)
+      AddTower(0, 2)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIAddWall(10)+AIAddTower(2)
+    end;
+}
+
+Card 
+{
+    Name = "Green Storm";
+    Description = "9 damage, take 3 damage";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 6;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "eosd-411.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 9)
+      Damage(0, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(9)+AIDamage(3)
+    end;
+}
+
+Card 
+{
+    Name = "Trilithon Shake";
+    Description = "6 damage to enemy tower, +1 quarry";
+    Frequency = 2;
+    BrickCost = 12;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-412.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      RemoveTower(1, 6)
+      AddQuarry(0, 1)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIRemoveEnemyTower(6)+AIAddQuarry(6)
+    end;
+}
+
+Card 
+{
+    Name = "Silver Dragon";
+    Description = "6 damage to enemy tower, +3 wall";
+    Frequency = 2;
+    BrickCost = 8;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-413.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      RemoveTower(1, 6)
+      AddWall(0, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIRemoveEnemyTower(6)+AIAddWall(3)
+    end;
+}
+
+Card 
+{
+    Name = "Lava Cromlech";
+    Description = "6 damage, +3 tower, +3 wall";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 11;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-414.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 6)
+      AddTower(0, 3)
+      AddWall(0, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(6)+AIAddTower(3)+AIAddWall(3)
+    end;
+}
+
+Card 
+{
+    Name = "Forest Blaze";
+    Description = "3 damage, enemy loses 3 recruits";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 4;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-415.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      Damage(1, 3)
+      RemoveRecruits(1, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(3)+AIRemoveEnemyRecruits(3)
+    end;
+}
+
+Card 
+{
+    Name = "Water Elf";
+    Description = "+3 tower, +3 recruits";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 4;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "eosd-416.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      AddTower(0, 3)
+      AddRecruits(0, 3)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIAddTower(3)+AIAddRecruits(3)
+    end;
+}
+
+Card 
+{
+    Name = "Mercury Poison";
+    Description = "6 damage to enemy tower, -1 enemy dungeon";
+    Frequency = 2;
+    BrickCost = 11;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-417.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      RemoveTower(1, 6)
+      RemoveDungeon(1, 1)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIRemoveEnemyTower(6)+AIRemoveEnemyDungeon(1)
+    end;
+}
+
+Card 
+{
+    Name = "Emerald Megalith";
+    Description = "+6 tower, +6 wall";
+    Frequency = 2;
+    BrickCost = 13;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-418.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      AddTower(0, 6)
+      AddWall(0, 6)
+      return 1
+    end;
+    AIFunction = function ()
+      return AIAddTower(6)+AIAddWall(6)
     end;
 }

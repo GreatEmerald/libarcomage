@@ -7,6 +7,7 @@
 --dofile('lua/MArcomage/MArcomagePool.lua');
 
 PoolInfo = { {Name = "Arcomage", Path = "lua/Arcomage/CardPool.lua"} }--, {Name = "MArcomage", Path = "lua/MArcomage/MArcomagePool.lua"} } --GE: Temporary until we can implement working MArcomage cards.
+--PoolInfo = { {Name = "Touhou", Path = "lua/Touhou/TouhouPool.lua"} }
 --PoolSize = #PoolInfo
 
 -- GE: Below are global AI functions. If you change those, the AI in the whole game will change.
@@ -228,5 +229,5 @@ function AIDamageEnemy(Amount)
 end
 
 function AIDamage(Amount)
-    return AIRemoveWall(math.min(Amount, GetWall(1))) + AIRemoveTower(math.max(Amount-GetWall(1), 0))
+    return AIRemoveWall(math.min(Amount, GetWall(0))) + AIRemoveTower(math.max(Amount-GetWall(0), 0))
 end
