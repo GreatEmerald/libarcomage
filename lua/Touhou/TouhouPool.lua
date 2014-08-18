@@ -710,3 +710,189 @@ Card
       return AIAddTower(6)+AIAddWall(6)
     end;
 }
+
+Card 
+{
+    Name = "Misdirection";
+    Description = "If enemy tower < enemy wall, 6 damage to enemy tower\nElse 6 damage";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 10;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-51.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      if GetTower(1) < GetWall(1) then
+        RemoveTower(1, 6)
+      else
+        Damage(1, 6)
+      end
+      return 1
+    end;
+    AIFunction = function ()
+      if GetTower(1) < GetWall(1) then return AIRemoveEnemyTower(6) end
+      return AIDamageEnemy(6)
+    end;
+}
+
+Card 
+{
+    Name = "Illusion Misdirection"; --Illusional Misdirection
+    Description = "If enemy tower > enemy wall, 6 damage to enemy tower\nElse 6 damage";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 10;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-52.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      if GetTower(1) > GetWall(1) then
+        RemoveTower(1, 6)
+      else
+        Damage(1, 6)
+      end
+      return 1
+    end;
+    AIFunction = function ()
+      if GetTower(1) > GetWall(1) then return AIRemoveEnemyTower(6) end
+      return AIDamageEnemy(6)
+    end;
+}
+
+Card 
+{
+    Name = "Clock Corpse";
+    Description = "+5 tower, play again";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 8;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-53.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      AddTower(0, 5)
+      return 0
+    end;
+    AIFunction = function ()
+      return AIAddTower(5)
+    end;
+}
+
+Card 
+{
+    Name = "Luna Clock";
+    Description = "+1 magic, play again";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 8;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-54.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      AddMagic(0, 1)
+      return 0
+    end;
+    AIFunction = function ()
+      return AIAddMagic(1)
+    end;
+}
+
+Card 
+{
+    Name = "Marionette";
+    Description = "50% chance to do 10 damage, play again";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 4;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-55.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      if math.random() > 0.5 then
+        Damage(1, 10)
+      end
+      return 0
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(10)/2
+    end;
+}
+
+Card 
+{
+    Name = "Jack the Ludo Bile";
+    Description = "+10 wall, play again";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 13;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-56.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      AddWall(0, 10)
+      return 0
+    end;
+    AIFunction = function ()
+      return AIAddWall(10)
+    end;
+}
+
+Card 
+{
+    Name = "The World";
+    Description = "Get wall opposite your tower height% up to 20\nPlay again";
+    Frequency = 2;
+    BrickCost = 11;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "eosd-57.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      local TowerRatio = GetTower(0)/GetTowerVictory()
+      AddWall(0, (1-TowerRatio)*20)
+      return 0
+    end;
+    AIFunction = function ()
+      local TowerRatio = GetTower(0)/GetTowerVictory()
+      return math.min(AIAddWall((1-TowerRatio)*20), 0.95)
+    end;
+}
+
+Card 
+{
+    Name = "Killing Doll";
+    Description = "10 damage or +10 tower, play again";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 11;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "eosd-58.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Keywords = "";
+    PlayFunction = function ()
+      if math.random() > 0.5 then
+        Damage(1, 10)
+      else
+        AddTower(0, 10)
+      end
+      return 0
+    end;
+    AIFunction = function ()
+      return AIDamageEnemy(10)/2 + AIAddTower(10)/2
+    end;
+}
