@@ -309,6 +309,18 @@ void InitLuaFunctions()
         P.Magic = Amount;
     };
 
+    lua["SetDungeon"] = (int Who, int Amount)
+    {
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
+
+        if (P.Dungeon < Amount)
+            FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
+        else if (P.Dungeon > Amount)
+            FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
+
+        P.Dungeon = Amount;
+    };
+
     lua["SetWall"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
@@ -319,6 +331,18 @@ void InitLuaFunctions()
             FrontendFunctions.SoundPlay(SoundTypes.Damage);
 
         P.Wall = Amount;
+    };
+
+    lua["SetTower"] = (int Who, int Amount)
+    {
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
+
+        if (P.Tower < Amount)
+            FrontendFunctions.SoundPlay(SoundTypes.Tower_Up);
+        else if (P.Tower > Amount)
+            FrontendFunctions.SoundPlay(SoundTypes.Damage);
+
+        P.Tower = Amount;
     };
 
     lua["OneResourceVictory"] = Config.OneResourceVictory;
