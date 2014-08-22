@@ -79,7 +79,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Red";
-    Picture = {File = "icicle.png", Coordinates = {x = 0, y = 0, w = 264, h = 156}};
+    Picture = {File = "eosd-21.png", Coordinates = {x = 0, y = 0, w = 264, h = 156}};
     Keywords = "";
     PlayFunction = function ()
       RemoveGems(0, 1)
