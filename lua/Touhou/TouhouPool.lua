@@ -1443,7 +1443,7 @@ Card
     Description = "+10 of all resources, +10 castle or nothing";
     Frequency = 1;
     BrickCost = 0;
-    GemCost = 19;
+    GemCost = 13;
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";

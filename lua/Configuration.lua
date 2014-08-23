@@ -8,7 +8,7 @@ Fullscreen = false -- Whether the program is running in fullscreen or windowed m
 ResolutionX = 800 -- Window resolution. Relevant only to graphical frontends.
 ResolutionY = 600 -- Window resolution. Relevant only to graphical frontends.
 SoundEnabled = true -- Whether the sound system is enabled. This might not be relevant to certain frontends.
-CardTranslucency = 64 -- The amount of translucency applied to inactive cards. The range is 0-255.
+CardTranslucency = 96 -- The amount of translucency applied to inactive cards. The range is 0-255.
 CardsInHand = 6 -- The amount of cards each player gets at the start of the game. The range is 4-10.
 
 TowerLevels = 20 -- The height of the tower and wall that the players start out with.
