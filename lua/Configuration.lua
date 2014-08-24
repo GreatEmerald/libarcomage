@@ -4,6 +4,8 @@
      Arcomage Clone Git repository or the binary release.
 --]]
 
+math.randomseed( os.time() ) -- Keep this line if you want to use math.random()
+
 Fullscreen = false -- Whether the program is running in fullscreen or windowed mode.
 ResolutionX = 800 -- Window resolution. Relevant only to graphical frontends.
 ResolutionY = 600 -- Window resolution. Relevant only to graphical frontends.
@@ -11,23 +13,23 @@ SoundEnabled = true -- Whether the sound system is enabled. This might not be re
 CardTranslucency = 96 -- The amount of translucency applied to inactive cards. The range is 0-255.
 CardsInHand = 6 -- The amount of cards each player gets at the start of the game. The range is 4-10.
 
-TowerLevels = 20 -- The height of the tower and wall that the players start out with.
-WallLevels = 10
+TowerLevels = math.random(10, 50) -- The height of the tower and wall that the players start out with.
+WallLevels = math.random(5, 50)
 
-QuarryLevels = 1 -- The amount of facilities that the players start out with.
-MagicLevels = 1
-DungeonLevels = 1
+QuarryLevels = math.random(1, 5) -- The amount of facilities that the players start out with.
+MagicLevels = math.random(1, 5)
+DungeonLevels = math.random(1, 5)
 
-BrickQuantities = 15 -- The amount of resources that the players start out with.
-GemQuantities = 15
-RecruitQuantities = 15
+BrickQuantities = math.random(5, 25) -- The amount of resources that the players start out with.
+GemQuantities = math.random(5, 25)
+RecruitQuantities = math.random(5, 25)
 
 MaxWall = 200 -- The maximum allowed wall height.
-TowerVictory = 200 -- The height of the tower a player must reach to win.
-ResourceVictory = 500 -- The amount of resources a player must gather to win.
+TowerVictory = math.random(30, 200) -- The height of the tower a player must reach to win.
+ResourceVictory = math.random(100, 500) -- The amount of resources a player must gather to win.
 OneResourceVictory = false -- Whether to allow victory for getting only one of the resources to the amount indicated above.
 
 UseOriginalMenu = false -- Whether to use the original Arcomage menu appearance. You need to own the original Arcomage for this.
-UseOriginalCards = true -- Whether to use the original Arcomage card appearance. You need to own the original Arcomage or one of the Might and Magic games for this.
+UseOriginalCards = false -- Whether to use the original Arcomage card appearance. You need to own the original Arcomage or one of the Might and Magic games for this.
 
 DataDir = "" -- Path to the Arcomage image and sound data directory. This is relative to the path of the frontend executable. If empty, assumed '../data/'. Only relevant to GUIs.
