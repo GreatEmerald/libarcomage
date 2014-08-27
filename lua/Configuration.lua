@@ -11,7 +11,8 @@ ResolutionX = 800 -- Window resolution. Relevant only to graphical frontends.
 ResolutionY = 600 -- Window resolution. Relevant only to graphical frontends.
 SoundEnabled = true -- Whether the sound system is enabled. This might not be relevant to certain frontends.
 CardTranslucency = 96 -- The amount of translucency applied to inactive cards. The range is 0-255.
-CardsInHand = 6 -- The amount of cards each player gets at the start of the game. The range is 4-10.
+CardsInHand = 6 -- The amount of cards each player gets at the start of the game. The sane range is 4-8 (more works, but may not fit).
+HiddenCards = true -- Whether the opponent cards should be visible or not.
 
 TowerLevels = math.random(10, 50) -- The height of the tower and wall that the players start out with.
 WallLevels = math.random(5, 50)

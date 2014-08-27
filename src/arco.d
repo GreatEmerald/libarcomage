@@ -87,6 +87,7 @@ struct S_Config {
     bool SoundEnabled;
     byte CardTranslucency;
     byte CardsInHand;
+    bool HiddenCards;
     int TowerLevels;
     int WallLevels;
     int QuarryLevels;
@@ -141,6 +142,7 @@ void initLua()
     Config.SoundEnabled = lua.get!bool("SoundEnabled");
     Config.CardTranslucency = lua.get!byte("CardTranslucency");
     Config.CardsInHand = lua.get!byte("CardsInHand");
+    Config.HiddenCards = lua.get!bool("HiddenCards");
     Config.TowerLevels = lua.get!int("TowerLevels");
     Config.WallLevels = lua.get!int("WallLevels");
     Config.QuarryLevels = lua.get!int("QuarryLevels");
