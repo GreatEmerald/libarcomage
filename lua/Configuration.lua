@@ -26,7 +26,7 @@ GemQuantities = math.random(5, 25)
 RecruitQuantities = math.random(5, 25)
 
 MaxWall = 200 -- The maximum allowed wall height.
-TowerVictory = math.random(30, 200) -- The height of the tower a player must reach to win.
+TowerVictory = math.max(TowerLevels+10, math.random(30, 200)) -- The height of the tower a player must reach to win.
 ResourceVictory = math.random(100, 500) -- The amount of resources a player must gather to win.
 OneResourceVictory = false -- Whether to allow victory for getting only one of the resources to the amount indicated above.
 

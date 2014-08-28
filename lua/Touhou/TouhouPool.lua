@@ -1245,7 +1245,7 @@ Card
 
 Card
 {
-    Name = "Laevateinn";
+    Name = "Lævateinn";
     Description = "If wall > enemy tower, -30 enemy tower, else wall";
     Frequency = 1;
     BrickCost = 0;
