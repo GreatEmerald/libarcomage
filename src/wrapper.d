@@ -25,9 +25,9 @@ void SetPlayerInfo(int PlayerNum, char* Name, bool AI)
     Player[PlayerNum].Name = to!string(Name);
 }
 
-void SetSoundPlay(void function(int) SoundPlay)
+void SetEffectNotify(void function(int, int) EffectNotify)
 {
-    FrontendFunctions.SoundPlay = SoundPlay;
+    FrontendFunctions.EffectNotify = EffectNotify;
 }
 
 void SetPlayCardPostAnimation(void function(int) PlayCardPostAnimation)

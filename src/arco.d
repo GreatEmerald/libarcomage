@@ -106,12 +106,29 @@ struct S_Config {
 }
 S_Config Config;
 
-enum SoundTypes {
-    Damage, ResB_Up, ResS_Up, Tower_Up, Wall_Up, ResB_Down, ResS_Down, Shuffle
+enum EffectType
+{
+    DamageWall,
+    QuarryUp,
+    BricksUp,
+    TowerUp,
+    WallUp,
+    QuarryDown,
+    BricksDown,
+    CardShuffle,
+    DamageTower,
+    MagicUp,
+    MagicDown,
+    GemsUp,
+    GemsDown,
+    DungeonUp,
+    DungeonDown,
+    RecruitsUp,
+    RecruitsDown
 }
 
 struct S_FrontendFunctions {
-    extern (C) void function(int) SoundPlay;
+    extern (C) void function(int, int) EffectNotify;
     extern (C) void function(int) PlayCardPostAnimation;
     extern (C) void function(int, char, char) PlayCardAnimation;
 }
@@ -188,7 +205,7 @@ extern(C):
     /**
      * Dummy functions for initialising the frontend function struct.
      */
-    void DummySoundPlay(int Type)
+    void DummyEffectNotify(int Who, int Type)
     {
     }
 
@@ -211,7 +228,7 @@ extern(C):
     void InitArcomage()
     {
         D_LinuxInit();
-        FrontendFunctions.SoundPlay = &DummySoundPlay; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
+        FrontendFunctions.EffectNotify = &DummyEffectNotify; //GE: Init all the frontend functions to empty ones. Frontends may overwrite later.
         FrontendFunctions.PlayCardPostAnimation = &DummyPlayCardPostAnimation;
         FrontendFunctions.PlayCardAnimation = &DummyPlayCardAnimation;
         initLua();

@@ -47,15 +47,28 @@ void InitLuaFunctions()
     lua["Damage"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldWall;
+
+        if (Amount <= 0)
+            return;
 
         if (P.Wall >= Amount)
+        {
             P.Wall -= Amount;
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall);
+        }
         else
         {
-            P.Tower -= (Amount - P.Wall);
-            P.Wall = 0;
+            OldWall = P.Wall;
+            if (P.Wall > 0)
+            {
+                P.Wall = 0;
+                FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall);
+            }
+            P.Tower -= (Amount - OldWall);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower);
         }
-        FrontendFunctions.SoundPlay(SoundTypes.Damage);
+
     };
 
     lua["AddQuarry"] = (int Who, int Amount)
@@ -66,7 +79,7 @@ void InitLuaFunctions()
             return;
 
         P.Quarry += Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryUp);
     };
 
     lua["AddMagic"] = (int Who, int Amount)
@@ -77,7 +90,7 @@ void InitLuaFunctions()
             return;
 
         P.Magic += Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicUp);
     };
 
     lua["AddDungeon"] = (int Who, int Amount)
@@ -88,7 +101,7 @@ void InitLuaFunctions()
             return;
 
         P.Dungeon += Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp);
     };
 
     lua["AddBricks"] = (int Who, int Amount)
@@ -99,7 +112,7 @@ void InitLuaFunctions()
             return;
 
         P.Bricks += Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResS_Up);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksUp);
     };
 
     lua["AddGems"] = (int Who, int Amount)
@@ -110,7 +123,7 @@ void InitLuaFunctions()
             return;
 
         P.Gems += Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResS_Up);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsUp);
     };
 
     lua["AddRecruits"] = (int Who, int Amount)
@@ -121,7 +134,7 @@ void InitLuaFunctions()
             return;
 
         P.Recruits += Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResS_Up);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsUp);
     };
 
     lua["AddTower"] = (int Who, int Amount)
@@ -132,7 +145,7 @@ void InitLuaFunctions()
             return;
 
         P.Tower += Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.Tower_Up);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.TowerUp);
     };
 
     lua["AddWall"] = (int Who, int Amount)
@@ -143,7 +156,7 @@ void InitLuaFunctions()
             return;
 
         P.Wall += Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.Wall_Up);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.WallUp);
     };
 
     lua["RemoveQuarry"] = (int Who, int Amount)
@@ -154,7 +167,7 @@ void InitLuaFunctions()
             return;
 
         P.Quarry -= Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryDown);
     };
 
     lua["RemoveMagic"] = (int Who, int Amount)
@@ -164,7 +177,7 @@ void InitLuaFunctions()
         if (P.Magic <= 1)
             return;
         P.Magic -= Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicDown);
     };
 
     lua["RemoveDungeon"] = (int Who, int Amount)
@@ -175,7 +188,7 @@ void InitLuaFunctions()
             return;
 
         P.Dungeon -= Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown);
     };
 
     lua["RemoveBricks"] = (int Who, int Amount)
@@ -186,7 +199,7 @@ void InitLuaFunctions()
             return;
 
         P.Bricks -= Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResS_Down);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksDown);
     };
 
     lua["RemoveGems"] = (int Who, int Amount)
@@ -197,7 +210,7 @@ void InitLuaFunctions()
             return;
 
         P.Gems -= Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResS_Down);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsDown);
     };
 
     lua["RemoveRecruits"] = (int Who, int Amount)
@@ -208,7 +221,7 @@ void InitLuaFunctions()
             return;
 
         P.Recruits -= Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.ResS_Down);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsDown);
     };
 
     lua["RemoveTower"] = (int Who, int Amount)
@@ -216,7 +229,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         P.Tower -= Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.Damage);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower);
     };
 
     lua["RemoveWall"] = (int Who, int Amount)
@@ -227,7 +240,7 @@ void InitLuaFunctions()
             return;
 
         P.Wall -= Amount;
-        FrontendFunctions.SoundPlay(SoundTypes.Damage);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall);
     };
 
     lua["GetQuarry"] = (int Who)
@@ -288,61 +301,66 @@ void InitLuaFunctions()
     lua["SetQuarry"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
-
-        if (P.Quarry < Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
-        else if (P.Quarry > Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
+        int OldQuarry = P.Quarry;
 
         P.Quarry = Amount;
+
+        if (OldQuarry < Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryUp);
+        else if (OldQuarry > Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryDown);
     };
 
     lua["SetMagic"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
-
-        if (P.Magic < Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
-        else if (P.Magic > Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
+        int OldMagic = P.Magic;
 
         P.Magic = Amount;
+
+        if (OldMagic < Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicUp);
+        else if (OldMagic > Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicDown);
     };
 
     lua["SetDungeon"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
-
-        if (P.Dungeon < Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.ResB_Up);
-        else if (P.Dungeon > Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.ResB_Down);
+        int OldDungeon = P.Dungeon;
 
         P.Dungeon = Amount;
+
+        if (OldDungeon < Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp);
+        else if (OldDungeon > Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown);
     };
 
     lua["SetWall"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
-
-        if (P.Wall < Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.Wall_Up);
-        else if (P.Wall > Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.Damage);
+        int OldWall = P.Wall;
 
         P.Wall = Amount;
+
+        if (OldWall < Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.WallUp);
+        else if (OldWall > Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall);
     };
 
     lua["SetTower"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
-
-        if (P.Tower < Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.Tower_Up);
-        else if (P.Tower > Amount)
-            FrontendFunctions.SoundPlay(SoundTypes.Damage);
+        int OldTower = P.Tower;
 
         P.Tower = Amount;
+
+        if (OldTower < Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.TowerUp);
+        else if (OldTower > Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower);
     };
 
     lua["OneResourceVictory"] = Config.OneResourceVictory;
@@ -389,12 +407,12 @@ void ShuffleQueue()
     int a, b;
     CardInfo t;
     for (int i=0; i<32000; i++) //GE: A ludicrous way to randomise the Queue array.
-	{
-		a=uniform(0, cast(int).Queue.length);
-		b=uniform(0, cast(int).Queue.length);
-		t=Queue[a]; Queue[a]=Queue[b]; Queue[b]=t;
-	}
-	FrontendFunctions.SoundPlay(SoundTypes.Shuffle);
+    {
+        a=uniform(0, cast(int).Queue.length);
+        b=uniform(0, cast(int).Queue.length);
+        t=Queue[a]; Queue[a]=Queue[b]; Queue[b]=t;
+    }
+    FrontendFunctions.EffectNotify(0, EffectType.CardShuffle);
 }
 
 /**
@@ -573,13 +591,16 @@ bool PlayCard(int CardPlace, bool Discarded)
 
     FrontendFunctions.PlayCardAnimation(CardPlace, Discarded, LastTurn == Turn);
 
+    if (!Discarded)
+        TakeResources(&Player[Turn], CI.BrickCost, CI.GemCost, CI.RecruitCost); //GE: Eat the required resources.
+
     StatHistory ~= Player; // GEm: Save the pre-play stats into the history.
     GetNextTurn(CI, Discarded); //GE: Execute the card and change NextTurn based on it.
     SaveStatChanges(CI, Discarded);
-    if (!Discarded)
-        TakeResources(&Player[Turn], CI.BrickCost, CI.GemCost, CI.RecruitCost); //GE: Eat the required resources.
+
     Normalise(); //GE: Make sure we are not out of bounds.
     PutCard(CI); //GE: Put that card back to the queue, like in a real card game.
+    FrontendFunctions.PlayCardPostAnimation(CardPlace);
 
     if (Turn != NextTurn) //GE: if you didn't put a play again card or you have discarded
     {
@@ -587,7 +608,6 @@ bool PlayCard(int CardPlace, bool Discarded)
         Player[NextTurn].Gems += Player[NextTurn].Magic;
         Player[NextTurn].Recruits += Player[NextTurn].Dungeon;
     }
-    FrontendFunctions.PlayCardPostAnimation(CardPlace);
     Player[Turn].Hand[CardPlace] = GetCard();
     LastTurn = Turn;
     Turn = NextTurn;
