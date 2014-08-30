@@ -66,6 +66,7 @@ void InitLuaFunctions()
                 FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall);
             }
             P.Tower -= (Amount - OldWall);
+            Normalise();
             FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower);
         }
 
@@ -79,6 +80,7 @@ void InitLuaFunctions()
             return;
 
         P.Quarry += Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryUp);
     };
 
@@ -90,6 +92,7 @@ void InitLuaFunctions()
             return;
 
         P.Magic += Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicUp);
     };
 
@@ -101,6 +104,7 @@ void InitLuaFunctions()
             return;
 
         P.Dungeon += Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp);
     };
 
@@ -112,6 +116,7 @@ void InitLuaFunctions()
             return;
 
         P.Bricks += Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksUp);
     };
 
@@ -123,6 +128,7 @@ void InitLuaFunctions()
             return;
 
         P.Gems += Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsUp);
     };
 
@@ -134,6 +140,7 @@ void InitLuaFunctions()
             return;
 
         P.Recruits += Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsUp);
     };
 
@@ -145,6 +152,7 @@ void InitLuaFunctions()
             return;
 
         P.Tower += Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.TowerUp);
     };
 
@@ -156,6 +164,7 @@ void InitLuaFunctions()
             return;
 
         P.Wall += Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.WallUp);
     };
 
@@ -167,6 +176,7 @@ void InitLuaFunctions()
             return;
 
         P.Quarry -= Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryDown);
     };
 
@@ -177,6 +187,7 @@ void InitLuaFunctions()
         if (P.Magic <= 1)
             return;
         P.Magic -= Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicDown);
     };
 
@@ -188,6 +199,7 @@ void InitLuaFunctions()
             return;
 
         P.Dungeon -= Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown);
     };
 
@@ -199,6 +211,7 @@ void InitLuaFunctions()
             return;
 
         P.Bricks -= Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksDown);
     };
 
@@ -210,6 +223,7 @@ void InitLuaFunctions()
             return;
 
         P.Gems -= Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsDown);
     };
 
@@ -221,6 +235,7 @@ void InitLuaFunctions()
             return;
 
         P.Recruits -= Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsDown);
     };
 
@@ -229,6 +244,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
 
         P.Tower -= Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower);
     };
 
@@ -240,6 +256,7 @@ void InitLuaFunctions()
             return;
 
         P.Wall -= Amount;
+        Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall);
     };
 
@@ -304,6 +321,7 @@ void InitLuaFunctions()
         int OldQuarry = P.Quarry;
 
         P.Quarry = Amount;
+        Normalise();
 
         if (OldQuarry < Amount)
             FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryUp);
@@ -317,6 +335,7 @@ void InitLuaFunctions()
         int OldMagic = P.Magic;
 
         P.Magic = Amount;
+        Normalise();
 
         if (OldMagic < Amount)
             FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicUp);
@@ -330,6 +349,7 @@ void InitLuaFunctions()
         int OldDungeon = P.Dungeon;
 
         P.Dungeon = Amount;
+        Normalise();
 
         if (OldDungeon < Amount)
             FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp);
@@ -343,6 +363,7 @@ void InitLuaFunctions()
         int OldWall = P.Wall;
 
         P.Wall = Amount;
+        Normalise();
 
         if (OldWall < Amount)
             FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.WallUp);
@@ -356,6 +377,7 @@ void InitLuaFunctions()
         int OldTower = P.Tower;
 
         P.Tower = Amount;
+        Normalise();
 
         if (OldTower < Amount)
             FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.TowerUp);
@@ -598,7 +620,6 @@ bool PlayCard(int CardPlace, bool Discarded)
     GetNextTurn(CI, Discarded); //GE: Execute the card and change NextTurn based on it.
     SaveStatChanges(CI, Discarded);
 
-    Normalise(); //GE: Make sure we are not out of bounds.
     PutCard(CI); //GE: Put that card back to the queue, like in a real card game.
     FrontendFunctions.PlayCardPostAnimation(CardPlace);
 
