@@ -910,7 +910,7 @@ Card
         return -1
     end;
     AIFunction = function ()
-        return 0.01
+        return 0.05
     end;
 }
 
@@ -1660,7 +1660,7 @@ Card
     PlayFunction = function ()
         return -1
     end;
-    AIFunction = function () return 0.01 end;
+    AIFunction = function () return 0.05 end;
 }
 
 Card 

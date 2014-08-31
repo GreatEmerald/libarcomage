@@ -1021,7 +1021,7 @@ Card
     RecruitCost = 0;
     Cursed = false;
     Colour = "Blue";
-    Picture = {File = "eosd-605.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
+    Picture = {File = "eosd-606.png", Coordinates = {x = 0, y = 0, w = 384, h = 226}};
     Keywords = "";
     PlayFunction = function ()
         Damage(1, 10)
