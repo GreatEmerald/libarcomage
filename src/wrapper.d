@@ -25,7 +25,7 @@ void SetPlayerInfo(int PlayerNum, char* Name, bool AI)
     Player[PlayerNum].Name = to!string(Name);
 }
 
-void SetEffectNotify(void function(int, int) EffectNotify)
+void SetEffectNotify(void function(int, int, int) EffectNotify)
 {
     FrontendFunctions.EffectNotify = EffectNotify;
 }

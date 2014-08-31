@@ -128,7 +128,7 @@ enum EffectType
 }
 
 struct S_FrontendFunctions {
-    extern (C) void function(int, int) EffectNotify;
+    extern (C) void function(int, int, int) EffectNotify;
     extern (C) void function(int) PlayCardPostAnimation;
     extern (C) void function(int, char, char) PlayCardAnimation;
 }
@@ -205,7 +205,7 @@ extern(C):
     /**
      * Dummy functions for initialising the frontend function struct.
      */
-    void DummyEffectNotify(int Who, int Type)
+    void DummyEffectNotify(int Who, int Type, int Power)
     {
     }
 
