@@ -629,6 +629,7 @@ bool PlayCard(int CardPlace, bool Discarded)
         Player[NextTurn].Gems += Player[NextTurn].Magic;
         Player[NextTurn].Recruits += Player[NextTurn].Dungeon;
     }
+    Normalise();
     Player[Turn].Hand[CardPlace] = GetCard();
     LastTurn = Turn;
     Turn = NextTurn;
