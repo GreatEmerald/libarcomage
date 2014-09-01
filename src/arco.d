@@ -77,7 +77,7 @@ struct CardInfo { //GE: Holds information about a single card.
 } */
 CardInfo[][] CardDB; //GE: Holds information about all the different loaded Card Pools.
 string[] PoolNames; //GE: Holds the names of each pool. Becareful to align this to CardDB.
-string[] PrecachePictures;
+//string[] PrecachePictures;
 //int[] Queue; //GE: This is the list of card IDs in the bank.
 
 struct S_Config {
@@ -192,6 +192,19 @@ void initLua()
         PoolNames ~= Pool.Name; //GE: Put pool names into PoolNames[].
         CardDB ~= CardInfo.fromFile(Pool.Path); //GE: Populate the CardDB.
     }
+}
+
+void BackendReset()
+{
+    StatChanges = StatChanges.init;
+    StatHistory = StatHistory.init;
+    Queue = Queue.init;
+    InitComplete = false;
+    Player = Player.init;
+    CardDB = CardDB.init;
+    PoolNames = PoolNames.init;
+    Turn = NextTurn = LastTurn = CurrentPosition = 0;
+    initLua();
 }
 
 //GE: Declare initialisation and termination of the D runtime.
