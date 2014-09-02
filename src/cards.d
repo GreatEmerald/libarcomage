@@ -47,7 +47,7 @@ void InitLuaFunctions()
     lua["Damage"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
-        int OldWall;
+        int OldWall, OldTower;
 
         if (Amount <= 0)
             return;
@@ -55,19 +55,20 @@ void InitLuaFunctions()
         if (P.Wall >= Amount)
         {
             P.Wall -= Amount;
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall, Amount);
         }
         else
         {
             OldWall = P.Wall;
+            OldTower = P.Tower;
             if (P.Wall > 0)
             {
                 P.Wall = 0;
-                FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall, 0);
+                FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall, OldWall);
             }
             P.Tower -= (Amount - OldWall);
             Normalise();
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower, OldTower - P.Tower);
         }
 
     };
@@ -75,189 +76,205 @@ void InitLuaFunctions()
     lua["AddQuarry"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldQuarry = P.Quarry;
 
         if (P.Quarry >= 99)
             return;
 
         P.Quarry += Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryUp, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryUp, P.Quarry - OldQuarry);
     };
 
     lua["AddMagic"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldMagic = P.Magic;
 
         if (P.Magic >= 99)
             return;
 
         P.Magic += Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicUp, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicUp, P.Magic - OldMagic);
     };
 
     lua["AddDungeon"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldDungeon = P.Dungeon;
 
         if (P.Dungeon >= 99)
             return;
 
         P.Dungeon += Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp, P.Dungeon - OldDungeon);
     };
 
     lua["AddBricks"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldBricks = P.Bricks;
 
         if (P.Bricks >= 999)
             return;
 
         P.Bricks += Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksUp, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksUp, P.Bricks - OldBricks);
     };
 
     lua["AddGems"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldGems = P.Gems;
 
         if (P.Gems >= 999)
             return;
 
         P.Gems += Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsUp, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsUp, P.Gems - OldGems);
     };
 
     lua["AddRecruits"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldRecruits = P.Recruits;
 
         if (P.Recruits >= 999)
             return;
 
         P.Recruits += Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsUp, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsUp, P.Recruits - OldRecruits);
     };
 
     lua["AddTower"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldTower = P.Tower;
 
         if (P.Tower >= Config.TowerVictory)
             return;
 
         P.Tower += Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.TowerUp, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.TowerUp, P.Tower - OldTower);
     };
 
     lua["AddWall"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldWall = P.Wall;
 
         if (P.Wall >= Config.MaxWall)
             return;
 
         P.Wall += Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.WallUp, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.WallUp, P.Wall - OldWall);
     };
 
     lua["RemoveQuarry"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldQuarry = P.Quarry;
 
         if (P.Quarry <= 1)
             return;
 
         P.Quarry -= Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryDown, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryDown, OldQuarry - P.Quarry);
     };
 
     lua["RemoveMagic"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldMagic = P.Magic;
 
         if (P.Magic <= 1)
             return;
         P.Magic -= Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicDown, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicDown, OldMagic - P.Magic);
     };
 
     lua["RemoveDungeon"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldDungeon = P.Dungeon;
 
         if (P.Dungeon <= 1)
             return;
 
         P.Dungeon -= Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown, OldDungeon - P.Dungeon);
     };
 
     lua["RemoveBricks"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldBricks = P.Bricks;
 
         if (P.Bricks <= 0)
             return;
 
         P.Bricks -= Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksDown, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksDown, OldBricks - P.Bricks);
     };
 
     lua["RemoveGems"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldGems = P.Gems;
 
         if (P.Gems <= 0)
             return;
 
         P.Gems -= Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsDown, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsDown, OldGems - P.Gems);
     };
 
     lua["RemoveRecruits"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldRecruits = P.Recruits;
 
         if (P.Recruits <= 0)
             return;
 
         P.Recruits -= Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsDown, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsDown, OldRecruits - P.Recruits);
     };
 
     lua["RemoveTower"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldTower = P.Tower;
 
         P.Tower -= Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower, OldTower - P.Tower);
     };
 
     lua["RemoveWall"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldWall = P.Wall;
 
         if (P.Wall <= 0)
             return;
 
         P.Wall -= Amount;
         Normalise();
-        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall, 0);
+        FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall, OldWall - P.Wall);
     };
 
     lua["GetQuarry"] = (int Who)
@@ -324,9 +341,9 @@ void InitLuaFunctions()
         Normalise();
 
         if (OldQuarry < Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryUp, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryUp, P.Quarry - OldQuarry);
         else if (OldQuarry > Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryDown, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.QuarryDown, OldQuarry - P.Quarry);
     };
 
     lua["SetMagic"] = (int Who, int Amount)
@@ -338,9 +355,9 @@ void InitLuaFunctions()
         Normalise();
 
         if (OldMagic < Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicUp, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicUp, P.Magic - OldMagic);
         else if (OldMagic > Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicDown, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.MagicDown, OldMagic - P.Magic);
     };
 
     lua["SetDungeon"] = (int Who, int Amount)
@@ -352,9 +369,9 @@ void InitLuaFunctions()
         Normalise();
 
         if (OldDungeon < Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp, P.Dungeon - OldDungeon);
         else if (OldDungeon > Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown, OldDungeon - P.Dungeon);
     };
 
     lua["SetWall"] = (int Who, int Amount)
@@ -366,9 +383,9 @@ void InitLuaFunctions()
         Normalise();
 
         if (OldWall < Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.WallUp, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.WallUp, P.Wall - OldWall);
         else if (OldWall > Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageWall, OldWall - P.Wall);
     };
 
     lua["SetTower"] = (int Who, int Amount)
@@ -380,9 +397,9 @@ void InitLuaFunctions()
         Normalise();
 
         if (OldTower < Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.TowerUp, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.TowerUp, P.Tower - OldTower);
         else if (OldTower > Amount)
-            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower, 0);
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower, OldTower - P.Tower);
     };
 
     lua["OneResourceVictory"] = Config.OneResourceVictory;
