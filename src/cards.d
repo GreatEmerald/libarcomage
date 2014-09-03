@@ -4,9 +4,11 @@
 
 module cards;
 import std.stdio;
+import std.conv;
 import arco;
 import std.random;
 import std.algorithm;
+import luad.lfunction;
 
 struct Stats
 {
@@ -78,7 +80,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldQuarry = P.Quarry;
 
-        if (P.Quarry >= 99)
+        if (P.Quarry >= 99 || Amount <= 0)
             return;
 
         P.Quarry += Amount;
@@ -91,7 +93,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldMagic = P.Magic;
 
-        if (P.Magic >= 99)
+        if (P.Magic >= 99 || Amount <= 0)
             return;
 
         P.Magic += Amount;
@@ -104,7 +106,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldDungeon = P.Dungeon;
 
-        if (P.Dungeon >= 99)
+        if (P.Dungeon >= 99 || Amount <= 0)
             return;
 
         P.Dungeon += Amount;
@@ -112,12 +114,31 @@ void InitLuaFunctions()
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp, P.Dungeon - OldDungeon);
     };
 
+    lua["AddHighestFacility"] = (int Who, int Amount)
+    {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        LuaFunction FacilityFunction;
+        string[] FacilityName;
+
+        int FacilityMax = max(P.Quarry, P.Magic, P.Dungeon);
+        if (FacilityMax == P.Quarry)
+            FacilityName ~= "AddQuarry";
+        if (FacilityMax == P.Magic)
+            FacilityName ~= "AddMagic";
+        if (FacilityMax == P.Dungeon)
+            FacilityName ~= "AddDungeon";
+
+        auto Facility = uniform(0, FacilityName.length);
+        FacilityFunction = lua.get!LuaFunction(FacilityName[Facility]);
+        FacilityFunction.call!void(Who, Amount);
+    };
+
     lua["AddBricks"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldBricks = P.Bricks;
 
-        if (P.Bricks >= 999)
+        if (P.Bricks >= 999 || Amount <= 0)
             return;
 
         P.Bricks += Amount;
@@ -130,7 +151,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldGems = P.Gems;
 
-        if (P.Gems >= 999)
+        if (P.Gems >= 999 || Amount <= 0)
             return;
 
         P.Gems += Amount;
@@ -143,7 +164,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldRecruits = P.Recruits;
 
-        if (P.Recruits >= 999)
+        if (P.Recruits >= 999 || Amount <= 0)
             return;
 
         P.Recruits += Amount;
@@ -156,7 +177,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldTower = P.Tower;
 
-        if (P.Tower >= Config.TowerVictory)
+        if (P.Tower >= Config.TowerVictory || Amount <= 0)
             return;
 
         P.Tower += Amount;
@@ -169,7 +190,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldWall = P.Wall;
 
-        if (P.Wall >= Config.MaxWall)
+        if (P.Wall >= Config.MaxWall || Amount <= 0)
             return;
 
         P.Wall += Amount;
@@ -182,7 +203,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldQuarry = P.Quarry;
 
-        if (P.Quarry <= 1)
+        if (P.Quarry <= 1 || Amount <= 0)
             return;
 
         P.Quarry -= Amount;
@@ -195,7 +216,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldMagic = P.Magic;
 
-        if (P.Magic <= 1)
+        if (P.Magic <= 1 || Amount <= 0)
             return;
         P.Magic -= Amount;
         Normalise();
@@ -207,7 +228,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldDungeon = P.Dungeon;
 
-        if (P.Dungeon <= 1)
+        if (P.Dungeon <= 1 || Amount <= 0)
             return;
 
         P.Dungeon -= Amount;
@@ -215,12 +236,31 @@ void InitLuaFunctions()
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown, OldDungeon - P.Dungeon);
     };
 
+    lua["RemoveHighestFacility"] = (int Who, int Amount)
+    {
+        Stats P = Player[GetAbsolutePlayer(Who)];
+        LuaFunction FacilityFunction;
+        string[] FacilityName;
+
+        int FacilityMax = max(P.Quarry, P.Magic, P.Dungeon);
+        if (FacilityMax == P.Quarry)
+            FacilityName ~= "RemoveQuarry";
+        if (FacilityMax == P.Magic)
+            FacilityName ~= "RemoveMagic";
+        if (FacilityMax == P.Dungeon)
+            FacilityName ~= "RemoveDungeon";
+
+        auto Facility = uniform(0, FacilityName.length);
+        FacilityFunction = lua.get!LuaFunction(FacilityName[Facility]);
+        FacilityFunction.call!void(Who, Amount);
+    };
+
     lua["RemoveBricks"] = (int Who, int Amount)
     {
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldBricks = P.Bricks;
 
-        if (P.Bricks <= 0)
+        if (P.Bricks <= 0 || Amount <= 0)
             return;
 
         P.Bricks -= Amount;
@@ -233,7 +273,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldGems = P.Gems;
 
-        if (P.Gems <= 0)
+        if (P.Gems <= 0 || Amount <= 0)
             return;
 
         P.Gems -= Amount;
@@ -246,7 +286,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldRecruits = P.Recruits;
 
-        if (P.Recruits <= 0)
+        if (P.Recruits <= 0 || Amount <= 0)
             return;
 
         P.Recruits -= Amount;
@@ -259,6 +299,9 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldTower = P.Tower;
 
+        if (Amount <= 0)
+            return;
+
         P.Tower -= Amount;
         Normalise();
         FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DamageTower, OldTower - P.Tower);
@@ -269,7 +312,7 @@ void InitLuaFunctions()
         Stats* P = &Player[GetAbsolutePlayer(Who)];
         int OldWall = P.Wall;
 
-        if (P.Wall <= 0)
+        if (P.Wall <= 0 || Amount <= 0)
             return;
 
         P.Wall -= Amount;
@@ -315,6 +358,27 @@ void InitLuaFunctions()
     lua["GetWall"] = (int Who)
     {
         return Player[GetAbsolutePlayer(Who)].Wall;
+    };
+
+    lua["GetLastCard"] = (int Who, string Query)
+    {
+        ulong i;
+
+        if (StatChanges.length == 0)
+            return 0;
+
+        CardInfo LastCard = StatChanges[StatChanges.length-1][GetAbsolutePlayer(Who)].PlayedCard;
+        for (i = StatChanges.length-1; LastCard.Name == ""; i--)
+            LastCard = StatChanges[i][GetAbsolutePlayer(Who)].PlayedCard;
+        writeln("Debug: cards: GetLastCard: Last card was: "~LastCard.Name);
+
+        switch (Query)
+        {
+            case "BrickCost": return LastCard.BrickCost;
+            case "GemCost": return LastCard.GemCost;
+            case "RecruitCost": return LastCard.RecruitCost;
+            default: return 0;
+        }
     };
 
     lua["GetResourceVictory"] = ()

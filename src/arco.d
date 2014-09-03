@@ -145,6 +145,7 @@ LuaState lua; /// The main Lua state.
 void initLua()
 {
     lua = new LuaState();
+    lua.setPanicHandler(&LuaProtectionFault);
     lua.openLibs();
 
     if (!exists("lua/Configuration.lua"))
@@ -193,6 +194,12 @@ void initLua()
         CardDB ~= CardInfo.fromFile(Pool.Path); //GE: Populate the CardDB.
     }
 }
+
+static void LuaProtectionFault(LuaState lua, in char[] error)
+{
+    throw new Exception(error.idup); // GEm: If things go badly, throw a stringified exception
+}
+
 
 void BackendReset()
 {

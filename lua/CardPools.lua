@@ -1,14 +1,11 @@
 -- CardPools
 -- This is the index file that points to the different card pools a user can have
--- GreatEmerald, 2011
+-- Also contains internal functions, do not touch those if you don't know what you're doing
+-- GreatEmerald, 2011, 2014
 
--- GE: Mods will have more folders. To activate them, add a line like these pointing to their CardPools.
---dofile('lua/Arcomage/CardPool.lua');
---dofile('lua/MArcomage/MArcomagePool.lua');
-
-PoolInfo = { {Name = "Arcomage", Path = "lua/Arcomage/CardPool.lua"} }--, {Name = "MArcomage", Path = "lua/MArcomage/MArcomagePool.lua"} } --GE: Temporary until we can implement working MArcomage cards.
+-- GEm: Insert things into PoolInfo to add more pools. Cards from all pools will be added to the game.
+PoolInfo = { {Name = "Arcomage", Path = "lua/Arcomage/CardPool.lua"}, {Name = "MArcomage", Path = "lua/MArcomage/MArcomagePool.lua"} } --GE: Temporary until we can implement working MArcomage cards.
 --PoolInfo = { {Name = "Touhou", Path = "lua/Touhou/TouhouPool.lua"} }
---PoolSize = #PoolInfo
 
 -- GE: Below are global AI functions. If you change those, the AI in the whole game will change.
 
@@ -18,7 +15,7 @@ function AIAddFacility(Amount, Facilities, Resources, OtherResourcesA, OtherReso
     if Resources <= math.min(GetResourceVictory()*0.25, 15) then Priority = Priority+(0.15*Amount) end
     if Resources >= GetResourceVictory() then Priority = Priority-(0.15*Amount)
     elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority = Priority+(0.15*Amount) end
-    if Facilities >= 10 then Priority = Priority-(0.15*Amount) 
+    if Facilities >= 10 then Priority = Priority-(0.15*Amount)
     else Priority = Priority+(0.1*Amount) end
     return math.min(Priority, 0.95)
 end
@@ -33,7 +30,7 @@ function AIRemoveFacility(Amount, Facilities, Resources, OtherResourcesA, OtherR
     if Resources <= math.min(GetResourceVictory()*0.25, 15) then Priority = Priority-(0.15*Amount) end
     if Resources >= GetResourceVictory() then Priority = Priority+(0.15*Amount)
     elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority = Priority-(0.15*Amount) end
-    if Facilities >= 10 then Priority = Priority+(0.15*Amount) 
+    if Facilities >= 10 then Priority = Priority+(0.15*Amount)
     else Priority = Priority-(0.1*Amount) end
     return math.min(Priority, 0.95)
 end
@@ -44,7 +41,7 @@ function AIRemoveEnemyFacility(Amount, Facilities, Resources, OtherResourcesA, O
     if Resources <= math.min(GetResourceVictory()*0.25, 15) then Priority = Priority+(0.15*Amount) end
     if Resources >= GetResourceVictory() then Priority = Priority-(0.15*Amount)
     elseif Resources >= GetResourceVictory()*0.75 and (OneResourceVictory or (OtherResourcesA >= GetResourceVictory() and OtherResourcesB >= GetResourceVictory())) then Priority = Priority+(0.15*Amount) end
-    if Facilities >= 10 then Priority = Priority-(0.15*Amount) 
+    if Facilities >= 10 then Priority = Priority-(0.15*Amount)
     else Priority = Priority+(0.1*Amount) end
     return math.min(Priority, 0.95)
 end
