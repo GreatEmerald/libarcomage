@@ -367,10 +367,13 @@ void InitLuaFunctions()
         if (StatChanges.length == 0)
             return 0;
 
-        CardInfo LastCard = StatChanges[StatChanges.length-1][GetAbsolutePlayer(Who)].PlayedCard;
-        for (i = StatChanges.length-1; LastCard.Name == ""; i--)
-            LastCard = StatChanges[i][GetAbsolutePlayer(Who)].PlayedCard;
-        writeln("Debug: cards: GetLastCard: Last card was: "~LastCard.Name);
+        ChangeInfo LastTurn = StatChanges[StatChanges.length-1][GetAbsolutePlayer(Who)];
+        for (i = StatChanges.length-1; LastTurn.PlayedCard.Name == ""; i--)
+            LastTurn = StatChanges[i][GetAbsolutePlayer(Who)];
+
+        if (LastTurn.bDiscarded)
+            return 0;
+        CardInfo LastCard = LastTurn.PlayedCard;
 
         switch (Query)
         {
@@ -436,6 +439,48 @@ void InitLuaFunctions()
             FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonUp, P.Dungeon - OldDungeon);
         else if (OldDungeon > Amount)
             FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.DungeonDown, OldDungeon - P.Dungeon);
+    };
+
+    lua["SetBricks"] = (int Who, int Amount)
+    {
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldBricks = P.Bricks;
+
+        P.Bricks = Amount;
+        Normalise();
+
+        if (OldBricks < Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksUp, P.Bricks - OldBricks);
+        else if (OldBricks > Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.BricksDown, OldBricks - P.Bricks);
+    };
+
+    lua["SetGems"] = (int Who, int Amount)
+    {
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldGems = P.Gems;
+
+        P.Gems = Amount;
+        Normalise();
+
+        if (OldGems < Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsUp, P.Gems - OldGems);
+        else if (OldGems > Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.GemsDown, OldGems - P.Gems);
+    };
+
+    lua["SetRecruits"] = (int Who, int Amount)
+    {
+        Stats* P = &Player[GetAbsolutePlayer(Who)];
+        int OldRecruits = P.Recruits;
+
+        P.Recruits = Amount;
+        Normalise();
+
+        if (OldRecruits < Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsUp, P.Recruits - OldRecruits);
+        else if (OldRecruits > Amount)
+            FrontendFunctions.EffectNotify(GetAbsolutePlayer(Who), EffectType.RecruitsDown, OldRecruits - P.Recruits);
     };
 
     lua["SetWall"] = (int Who, int Amount)
