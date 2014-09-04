@@ -293,3 +293,68 @@ Card
         return AIDamageEnemy(GetQuarry(0)+GetMagic(0)+GetDungeon(0))+AIRemoveBricks(2)+AIRemoveGems(2)+AIRemoveRecruits(2)
     end;
 }
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Anomaly sphere";
+    Description = "Negates the positive effect of opponent's last round on his tower, wall, facilities and stock";
+    Frequency = 1;
+    BrickCost = 0;
+    GemCost = 10;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "card_390f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Illusion";
+    PlayFunction = function ()
+        RemoveTower(1, GetLastRoundChanges(1, "Tower"))
+        RemoveWall(1, GetLastRoundChanges(1, "Wall"))
+        RemoveQuarry(1, GetLastRoundChanges(1, "Quarry"))
+        RemoveMagic(1, GetLastRoundChanges(1, "Magic"))
+        RemoveDungeon(1, GetLastRoundChanges(1, "Dungeon"))
+        RemoveBricks(1, GetLastRoundChanges(1, "Bricks"))
+        RemoveGems(1, GetLastRoundChanges(1, "Gems"))
+        RemoveRecruits(1, GetLastRoundChanges(1, "Recruits"))
+        return 1
+    end;
+    AIFunction = function ()
+        Priority = AIRemoveEnemyTower(GetLastRoundChanges(1, "Tower"))
+        Priority = Priority + AIRemoveEnemyWall(GetLastRoundChanges(1, "Wall"))
+        Priority = Priority + AIRemoveEnemyQuarry(GetLastRoundChanges(1, "Quarry"))
+        Priority = Priority + AIRemoveEnemyMagic(GetLastRoundChanges(1, "Magic"))
+        Priority = Priority + AIRemoveEnemyDungeon(GetLastRoundChanges(1, "Dungeon"))
+        Priority = Priority + AIRemoveEnemyBricks(GetLastRoundChanges(1, "Bricks"))
+        Priority = Priority + AIRemoveEnemyGems(GetLastRoundChanges(1, "Gems"))
+        Priority = Priority + AIRemoveEnemyRecruits(GetLastRoundChanges(1, "Recruits"))
+        return math.min(Priority, 0.95)
+    end;
+}
+
+-- GEm: Requires keyword, perhaps production override support
+Card
+{
+    Name = "Dark pegasus";
+    Description = "If Wall > Enemy wall\nEnemy tower: -8\nelse\nGems prod x2";
+    Frequency = 2;
+    BrickCost = 0;
+    GemCost = 13;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "card_491.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Swift\nAria";
+    PlayFunction = function ()
+        if GetWall(0) > GetWall(1) then
+            RemoveTower(1, 8)
+        else
+            AddGems(0, GetMagic(0))
+        end
+        return 0
+    end;
+    AIFunction = function ()
+        if GetWall(0) > GetWall(1) then
+            return AIRemoveEnemyTower(8) end
+        return AIAddGems(GetMagic(0))
+    end;
+}

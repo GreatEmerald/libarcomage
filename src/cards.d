@@ -384,6 +384,64 @@ void InitLuaFunctions()
         }
     };
 
+    lua["GetLastRoundChanges"] = (int Who, string Query)
+    {
+        ulong i;
+
+        if (StatChanges.length == 0)
+            return 0;
+
+        writeln("Debug: cards: GetLastRoundChanges called");
+        ChangeInfo[] RoundChanges;
+        ChangeInfo LastTurn = StatChanges[StatChanges.length-1][GetAbsolutePlayer(Who)];
+        writeln("Debug: cards: GetLastRoundChanges: Got Last Turn");
+        for (i = StatChanges.length-1; LastTurn.PlayedCard.Name == ""; i--)
+            LastTurn = StatChanges[i][GetAbsolutePlayer(Who)];
+        //writeln("Debug: cards: GetLastRoundChanges: Found a round where something was played");
+        //RoundChanges ~= LastTurn;
+        writeln("Debug: cards: GetLastRoundChanges: Write to RoundChanges");
+        // GEm: Find all subsequent rounds where PlayedCard was of the same player.
+        for (; LastTurn.PlayedCard.Name != ""; i--)
+        {
+            writeln("Debug: cards: GetLastRoundChanges: Finding subsequent cards in round, i="~to!string(i));
+            LastTurn = StatChanges[i][GetAbsolutePlayer(Who)];
+            RoundChanges ~= LastTurn;
+            writeln("Debug: cards: GetLastRoundChanges: Wrote "~RoundChanges[RoundChanges.length-1].PlayedCard.Name);
+            if (i == 0)
+                break;
+        }
+
+        ChangeInfo CumulativeChanges;
+        writeln("Debug: cards: GetLastRoundChanges: Writing cumulative changes");
+        foreach (ChangeInfo CI; RoundChanges)
+        {
+            CumulativeChanges.Bricks += CI.Bricks;
+            CumulativeChanges.Gems += CI.Gems;
+            CumulativeChanges.Recruits += CI.Recruits;
+            CumulativeChanges.Quarry += CI.Quarry;
+            CumulativeChanges.Magic += CI.Magic;
+            CumulativeChanges.Dungeon += CI.Dungeon;
+            CumulativeChanges.Tower += CI.Tower;
+            CumulativeChanges.Wall += CI.Wall;
+            writeln("Debug: cards: GetLastRoundChanges: Wrote a change: "~to!string(CI.Bricks)~"/"~to!string(CI.Gems)~"/"~to!string(CI.Recruits));
+            writeln("Debug: cards: GetLastRoundChanges: Cumulative so far: "~to!string(CumulativeChanges.Bricks)~"/"~to!string(CumulativeChanges.Gems)~"/"~to!string(CumulativeChanges.Recruits));
+        }
+        writeln("Debug: cards: GetLastRoundChanges finished");
+
+        switch (Query)
+        {
+            case "Bricks": return CumulativeChanges.Bricks;
+            case "Gems": return CumulativeChanges.Gems;
+            case "Recruits": return CumulativeChanges.Recruits;
+            case "Quarry": return CumulativeChanges.Quarry;
+            case "Magic": return CumulativeChanges.Magic;
+            case "Dungeon": return CumulativeChanges.Dungeon;
+            case "Tower": return CumulativeChanges.Tower;
+            case "Wall": return CumulativeChanges.Wall;
+            default: return 0;
+        }
+    };
+
     lua["GetResourceVictory"] = ()
     {
         return Config.ResourceVictory;
@@ -532,6 +590,7 @@ extern(C) void initGame()
         Player[i].Quarry = Config.QuarryLevels; Player[i].Magic = Config.MagicLevels; Player[i].Dungeon = Config.DungeonLevels;
         Player[i].Tower = Config.TowerLevels; Player[i].Wall = Config.WallLevels;
     }
+    StatHistory ~= Player.dup; // GEm: Make sure to save initial history as well
 }
 
 void InitDeck()
@@ -742,7 +801,7 @@ bool PlayCard(int CardPlace, bool Discarded)
     if (!Discarded)
         TakeResources(&Player[Turn], CI.BrickCost, CI.GemCost, CI.RecruitCost); //GE: Eat the required resources.
 
-    StatHistory ~= Player; // GEm: Save the pre-play stats into the history.
+    StatHistory ~= Player.dup; // GEm: Save the pre-play stats into the history.
     GetNextTurn(CI, Discarded); //GE: Execute the card and change NextTurn based on it.
     SaveStatChanges(CI, Discarded);
 
