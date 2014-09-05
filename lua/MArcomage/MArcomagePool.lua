@@ -7,7 +7,7 @@ Card
 {
     Name = "Absorption";
     Description = "Recruits: +4\nEnemy recruits: -4";
-    Frequency = 3;
+    Frequency = 13;
     BrickCost = 0;
     GemCost = 4;
     RecruitCost = 0;
@@ -30,7 +30,7 @@ Card
 {
     Name = "Abyssal Scavenger";
     Description = "Returns 1/3 of cost of opponent's last card (max 4)";
-    Frequency = 3;
+    Frequency = 13;
     BrickCost = 0;
     GemCost = 0;
     RecruitCost = 0;
@@ -117,7 +117,7 @@ Card
 {
     Name = "Air elemental";
     Description = "Enemy tower: -9";
-    Frequency = 2;
+    Frequency = 6;
     BrickCost = 0;
     GemCost = 10;
     RecruitCost = 0;
@@ -187,7 +187,7 @@ Card
 {
     Name = "Alchemy";
     Description = "Bricks: +2\nRecruits: +2";
-    Frequency = 2;
+    Frequency = 6;
     BrickCost = 0;
     GemCost = 1;
     RecruitCost = 0;
@@ -214,7 +214,7 @@ Card
 {
     Name = "Amazon warrior";
     Description = "If Enemy wall > 30\nEnemy wall: -10\nAlways:\nAttack: 7";
-    Frequency = 3;
+    Frequency = 13;
     BrickCost = 0;
     GemCost = 0;
     RecruitCost = 6;
@@ -246,7 +246,7 @@ Card
 {
     Name = "Ancient ruins";
     Description = "Bricks: +5\nGems: +2\nRecruits: +1";
-    Frequency = 2;
+    Frequency = 13;
     BrickCost = 0;
     GemCost = 0;
     RecruitCost = 0;
@@ -274,7 +274,7 @@ Card
 {
     Name = "Angry mob";
     Description = "Attack: #Facilities\nStock: -2";
-    Frequency = 3;
+    Frequency = 13;
     BrickCost = 0;
     GemCost = 0;
     RecruitCost = 0;
@@ -336,7 +336,7 @@ Card
 {
     Name = "Dark pegasus";
     Description = "If Wall > Enemy wall\nEnemy tower: -8\nelse\nGems prod x2";
-    Frequency = 2;
+    Frequency = 6;
     BrickCost = 0;
     GemCost = 13;
     RecruitCost = 0;
@@ -356,5 +356,136 @@ Card
         if GetWall(0) > GetWall(1) then
             return AIRemoveEnemyTower(8) end
         return AIAddGems(GetMagic(0))
+    end;
+}
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Apocalyptic rain";
+    Description = "Attack: N * M / 3\nN = #Bricks\nM = #Magic\nBricks: = 0";
+    Frequency = 1;
+    BrickCost = 0;
+    GemCost = 34;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "card_229f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Destruction\nNature";
+    PlayFunction = function ()
+        Damage(1, GetBricks(0)*GetMagic(0)/3)
+        SetBricks(0, 0)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(GetBricks(0)*GetMagic(0)/3)+AIRemoveBricks(GetBricks(0))
+    end;
+}
+
+-- GEm: Apostate: requires summoning
+-- GEm: Apprentice: requires cyan cards
+-- GEm: Arcane Bolt: requires keywords
+-- GEm: Arcane tome: requires summoning
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Archangel";
+    Description = "Tower: +15\nWall: +15\nStock: +15";
+    Frequency = 1;
+    BrickCost = 0;
+    GemCost = 40;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "card_125f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Restoration\nFar sight";
+    PlayFunction = function ()
+        AddTower(0, 15)
+        AddWall(0, 15)
+        AddBricks(0, 15)
+        AddGems(0, 15)
+        AddRecruits(0, 15)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(15)+AIAddWall(15)+AIAddBricks(15)+AIAddGems(15)+AIAddRecruits(15)
+    end;
+}
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Archer";
+    Description = "Enemy tower: -3";
+    Frequency = 13;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 2;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_95f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Soldier";
+    PlayFunction = function ()
+        RemoveTower(1, 3)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIRemoveEnemyTower(2)
+    end;
+}
+
+-- GEm: Architect: requires magenta card support
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Architect academy";
+    Description = "Tower: +15\nQuarry: +1";
+    Frequency = 1;
+    BrickCost = 30;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "card_235.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Durable";
+    PlayFunction = function ()
+        AddTower(0, 15)
+        AddQuarry(0, 1)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(15)+AIAddQuarry(1)
+    end;
+}
+
+-- GEm: Architectural improvement: requires summoning
+-- GEm: Archmage: requires summoning
+-- GEm: Army of darkness: requires keyword counts
+-- GEm: Arthoria the Saber: requires summoning
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Assassins";
+    Description = "Enemy tower: -5\nEnemy stock: -2";
+    Frequency = 6;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 7;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_244.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Brigand";
+    PlayFunction = function ()
+        RemoveTower(1, 5)
+        RemoveBricks(1, 2)
+        RemoveGems(1, 2)
+        RemoveRecruits(1, 2)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIRemoveEnemyTower(5)+AIRemoveEnemyBricks(2)+AIRemoveEnemyGems(2)+AIRemoveEnemyRecruits(2)
     end;
 }

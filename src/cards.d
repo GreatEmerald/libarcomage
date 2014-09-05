@@ -391,28 +391,20 @@ void InitLuaFunctions()
         if (StatChanges.length == 0)
             return 0;
 
-        writeln("Debug: cards: GetLastRoundChanges called");
         ChangeInfo[] RoundChanges;
         ChangeInfo LastTurn = StatChanges[StatChanges.length-1][GetAbsolutePlayer(Who)];
-        writeln("Debug: cards: GetLastRoundChanges: Got Last Turn");
         for (i = StatChanges.length-1; LastTurn.PlayedCard.Name == ""; i--)
             LastTurn = StatChanges[i][GetAbsolutePlayer(Who)];
-        //writeln("Debug: cards: GetLastRoundChanges: Found a round where something was played");
-        //RoundChanges ~= LastTurn;
-        writeln("Debug: cards: GetLastRoundChanges: Write to RoundChanges");
         // GEm: Find all subsequent rounds where PlayedCard was of the same player.
         for (; LastTurn.PlayedCard.Name != ""; i--)
         {
-            writeln("Debug: cards: GetLastRoundChanges: Finding subsequent cards in round, i="~to!string(i));
             LastTurn = StatChanges[i][GetAbsolutePlayer(Who)];
             RoundChanges ~= LastTurn;
-            writeln("Debug: cards: GetLastRoundChanges: Wrote "~RoundChanges[RoundChanges.length-1].PlayedCard.Name);
             if (i == 0)
                 break;
         }
 
         ChangeInfo CumulativeChanges;
-        writeln("Debug: cards: GetLastRoundChanges: Writing cumulative changes");
         foreach (ChangeInfo CI; RoundChanges)
         {
             CumulativeChanges.Bricks += CI.Bricks;
@@ -423,10 +415,7 @@ void InitLuaFunctions()
             CumulativeChanges.Dungeon += CI.Dungeon;
             CumulativeChanges.Tower += CI.Tower;
             CumulativeChanges.Wall += CI.Wall;
-            writeln("Debug: cards: GetLastRoundChanges: Wrote a change: "~to!string(CI.Bricks)~"/"~to!string(CI.Gems)~"/"~to!string(CI.Recruits));
-            writeln("Debug: cards: GetLastRoundChanges: Cumulative so far: "~to!string(CumulativeChanges.Bricks)~"/"~to!string(CumulativeChanges.Gems)~"/"~to!string(CumulativeChanges.Recruits));
         }
-        writeln("Debug: cards: GetLastRoundChanges finished");
 
         switch (Query)
         {
