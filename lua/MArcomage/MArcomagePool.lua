@@ -489,3 +489,33 @@ Card
         return AIRemoveEnemyTower(5)+AIRemoveEnemyBricks(2)+AIRemoveEnemyGems(2)+AIRemoveEnemyRecruits(2)
     end;
 }
+
+-- GEm: Atlantis: requires summoning
+-- GEm: Auxilia: requires mass discarding and card selection
+-- GEm: Avatar of vengeance: requires card selection
+-- GEm: Avenger: requires cyan card support
+-- GEm: Avenging angel: requires cyan card support
+-- GEm: Azure unicorn: requires cyan card support
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Bahamut";
+    Description = "Enemy wall: -80\nAttack: 150";
+    Frequency = 1;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 75;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_637.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Dragon\nLegend";
+    PlayFunction = function ()
+        RemoveWall(1, 80)
+        Damage(1, 150)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIRemoveEnemyWall(80)+AIDamageEnemy(150 + math.min(GetWall(1), 80))
+    end;
+}
