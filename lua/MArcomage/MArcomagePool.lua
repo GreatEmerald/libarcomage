@@ -519,3 +519,34 @@ Card
         return AIRemoveEnemyWall(80)+AIDamageEnemy(150 + math.min(GetWall(1), 80))
     end;
 }
+
+-- GEm: Baku: requires summoning
+-- GEm: Ballistae: requires keyword counts, yellow card support
+-- GEm: Balrog: requires summoning, cyan card support
+-- GEm: Bank: requires yellow card support
+-- GEm: Banshee: requires keyword count, cyan card support
+-- GEm: Barbz's hideout: requires rarity count
+-- GEm: Barbz's pupil: requires summoning
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Baron's keep";
+    Description = "Tower: +3\nWall: +7";
+    Frequency = 13;
+    BrickCost = 10;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "card_289f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Far sight";
+    PlayFunction = function ()
+        AddTower(0, 3)
+        AddWall(0, 7)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(3)+AIAddWall(7)
+    end;
+}
