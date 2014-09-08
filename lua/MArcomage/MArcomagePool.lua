@@ -550,3 +550,103 @@ Card
         return AIAddTower(3)+AIAddWall(7)
     end;
 }
+
+Card
+{
+    Name = "Basic wall";
+    Description = "If Wall = 0\nWall: +10\nelse\nWall: +3";
+    Frequency = 13;
+    BrickCost = 1;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "card_1.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "";
+    PlayFunction = function ()
+        if GetWall(0) <= 0 then
+            AddWall(0, 10)
+        else
+            AddWall(0, 3)
+        end
+        return 1
+    end;
+    AIFunction = function ()
+        if GetWall(0) <= 0 then return AIAddWall(10) end
+        return AIAddWall(3)
+    end;
+}
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Basilisk";
+    Description = "Attack: 20\nWall: +10\nQuarry: +1\nEnemy wall: +10\nEnemy quarry: +1";
+    Frequency = 6;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 10;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_142f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Beast";
+    PlayFunction = function ()
+        Damage(1, 20)
+        AddWall(0, 10)
+        AddQuarry(0, 1)
+        AddWall(1, 10)
+        AddQuarry(1, 1)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(20)+AIAddWall(10)+AIAddQuarry(1)+AIAddEnemyWall(10)+AIAddEnemyQuarry(1)
+    end;
+}
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Battering ram";
+    Description = "Enemy wall: -10";
+    Frequency = 13;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 5;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_54.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Siege";
+    PlayFunction = function ()
+        RemoveWall(1, 10)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIRemoveEnemyWall(10)
+    end;
+}
+
+-- GEm: Battle rager: requires keyword counting
+-- GEm: Battlements: requires keyword counting
+-- GEm: Beast farm: requires summoning
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Beast mistress";
+    Description = "Attack: 12";
+    Frequency = 1;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 5;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_69.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Beast\nFrenzy";
+    PlayFunction = function ()
+        Damage(1, 12)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(12)
+    end;
+}
