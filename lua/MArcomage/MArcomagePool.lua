@@ -650,3 +650,79 @@ Card
         return AIDamageEnemy(12)
     end;
 }
+
+-- GEm: Beastmaster: requires summoning
+-- GEm: Benediction: requires keyword counts
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Black dragon";
+    Description = "Attack: 60\nEnemy recruits: -15";
+    Frequency = 1;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 43;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_127f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Dragon";
+    PlayFunction = function ()
+        Damage(1, 60)
+        RemoveRecruits(1, 15)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(60)+AIRemoveEnemyRecruits(15)
+    end;
+}
+
+-- GEm: Black market: requires summoning
+-- GEm: Black unicorn: requires rarity counts
+
+Card
+{
+    Name = "Blacksmith";
+    Description = "Dungeon: +1";
+    Frequency = 6;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 10;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_12f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddDungeon(0, 1)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddDungeon(1)
+    end;
+}
+
+-- GEm: Blind Guardian: requires white card support
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Blizzard";
+    Description = "Enemy stock: -20";
+    Frequency = 6;
+    BrickCost = 0;
+    GemCost = 32;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "card_241.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Nature\nAria";
+    PlayFunction = function ()
+        RemoveBricks(1, 20)
+        RemoveGems(1, 20)
+        RemoveRecruits(1, 20)
+        return 1
+    end;
+    AIFunction = function ()
+        return math.min(AIRemoveEnemyBricks(20)+AIRemoveEnemyGems(20)+AIRemoveEnemyRecruits(20), 0.95)
+    end;
+}
