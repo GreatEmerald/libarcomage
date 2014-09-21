@@ -726,3 +726,120 @@ Card
         return math.min(AIRemoveEnemyBricks(20)+AIRemoveEnemyGems(20)+AIRemoveEnemyRecruits(20), 0.95)
     end;
 }
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Blood sacrifice";
+    Description = "Magic: -1\nGems: +25";
+    Frequency = 6;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 5;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_43f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Demonic";
+    PlayFunction = function ()
+        RemoveMagic(0, 1)
+        AddGems(0, 25)
+        return 1
+    end;
+    AIFunction = function ()
+        return math.min(AIRemoveMagic(1)+AIAddGems(25), 0.95)
+    end;
+}
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Bloody moon";
+    Description = "Enemy dungeon: -1";
+    Frequency = 6;
+    BrickCost = 0;
+    GemCost = 12;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "card_29f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Destruction";
+    PlayFunction = function ()
+        RemoveDungeon(1, 1)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIRemoveEnemyDungeon(1)
+    end;
+}
+
+-- GEm: Bone dragon: requires cyan card support
+-- GEm: Book of eternity: requires discarding, white card support
+-- GEm: Book of life: requires summoning
+
+Card
+{
+    Name = "Book of magic";
+    Description = "Magic: +1";
+    Frequency = 6;
+    BrickCost = 0;
+    GemCost = 12;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "card_34f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddMagic(0, 1)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddMagic(1)
+    end;
+}
+
+Card
+{
+    Name = "Border fortress";
+    Description = "Tower: +25\nWall: +50";
+    Frequency = 6;
+    BrickCost = 45;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "card_276f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddTower(0, 25)
+        AddWall(0, 50)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(25)+AIAddWall(50)
+    end;
+}
+
+-- GEm: Bounty hunter: requires discarding support
+-- GEm: Breeze: requires "new" attribute support
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Bronze golem";
+    Description = "Enemy wall: -6";
+    Frequency = 13;
+    BrickCost = 4;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "card_256f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Unliving\nBanish";
+    PlayFunction = function ()
+        RemoveWall(1, 6)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIRemoveEnemyWall(6)
+    end;
+}
