@@ -843,3 +843,33 @@ Card
         return AIRemoveEnemyWall(6)
     end;
 }
+
+-- GEm: Requires keyword support
+Card
+{
+    Name = "Burglar";
+    Description = "Attack: 2\nStock: +2\nEnemy stock: -2";
+    Frequency = 13;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 8;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "card_260.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Brigand";
+    PlayFunction = function ()
+        Damage(1, 2)
+        AddBricks(0, 2)
+        AddGems(0, 2)
+        AddRecruits(0, 2)
+        RemoveBricks(1, 2)
+        RemoveGems(1, 2)
+        RemoveRecruits(1, 2)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(2)+AIAddBricks(2)+AIAddGems(2)+AIAddRecruits(2)+AIRemoveEnemyBricks(2)+AIRemoveEnemyGems(2)+AIRemoveEnemyRecruits(2)
+    end;
+}
+
+-- GEm: Byakko: requires production changes, keyword support
