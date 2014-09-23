@@ -431,7 +431,7 @@ Card
         return 1
     end;
     AIFunction = function ()
-        return AIRemoveEnemyTower(2)
+        return AIRemoveEnemyTower(3)
     end;
 }
 
