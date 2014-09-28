@@ -25,7 +25,7 @@ Card
     end;
 }
 
--- GEm: Requires keyword, black card support
+-- GEm: Requires keyword support
 Card
 {
     Name = "Abyssal Scavenger";
@@ -35,7 +35,7 @@ Card
     GemCost = 0;
     RecruitCost = 0;
     Cursed = false;
-    Colour = "Green";
+    Colour = "Black";
     Picture = {File = "card_402.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
     Keywords = "Demonic\nFar sight";
     PlayFunction = function ()
@@ -157,7 +157,7 @@ Card
     end;
 }
 
--- GEm: Requires keyword, black card support
+-- GEm: Requires keyword support
 Card
 {
     Name = "Alchemist";
@@ -167,7 +167,7 @@ Card
     GemCost = 0;
     RecruitCost = 0;
     Cursed = false;
-    Colour = "Blue";
+    Colour = "Black";
     Picture = {File = "card_664.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
     Keywords = "Restoration";
     PlayFunction = function ()
@@ -241,7 +241,7 @@ Card
 -- GEm: Ancient Dragon: requires modesetting support
 -- GEm: Ancient Power: requires keyword count support
 
--- GEm: Requires black card, keyword support
+-- GEm: Requires keyword support
 Card
 {
     Name = "Ancient ruins";
@@ -251,7 +251,7 @@ Card
     GemCost = 0;
     RecruitCost = 0;
     Cursed = false;
-    Colour = "Red";
+    Colour = "Black";
     Picture = {File = "card_146f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
     Keywords = "Runic";
     PlayFunction = function ()
@@ -269,7 +269,6 @@ Card
 -- GEm: Angel: requires keyword count support
 -- GEm: Angel of Destruction: requires cyan card support
 
--- GEm: Requires black card support
 Card
 {
     Name = "Angry mob";
@@ -279,7 +278,7 @@ Card
     GemCost = 0;
     RecruitCost = 0;
     Cursed = false;
-    Colour = "Green";
+    Colour = "Black";
     Picture = {File = "card_299.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
     Keywords = "";
     PlayFunction = function ()

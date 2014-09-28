@@ -91,14 +91,14 @@ char GetCanAffordCard(int Who, char CardNum)
 //GE: Get a colour number from the number of the card in hand.
 int GetColourType(int Pool, int Card)
 {
-	switch (CardDB[Pool][Card].Colour)
-	{
-		case "Red": return 0; //GE: Make sure adapter is in sync!
-		case "Blue": return 1;
-		case "Green": return 2;
-		case "White": case "Brown": return 3;
-		default: return 4;
-	}
+    switch (CardDB[Pool][Card].Colour)
+    {
+        case "Red": case "red": return 0; //GE: Make sure adapter is in sync!
+        case "Blue": case "blue": return 1;
+        case "Green": case "green": return 2;
+        case "White": case "white": case "Brown": case "brown": return 3;
+        default: return 4;
+    }
 }
 
 void GetCardDBSize(int* NumPools, int** NumCards)
