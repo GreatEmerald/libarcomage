@@ -205,9 +205,33 @@ Card
     end;
 }
 
--- GEm: All-elemental attack: requires white card support
+-- GEm: Requires keyword support
+Card
+{
+    Name = "All-elemental attack";
+    Description = "Attack: #Stock\nStock: = 0";
+    Frequency = 1;
+    BrickCost = 18;
+    GemCost = 18;
+    RecruitCost = 18;
+    Cursed = false;
+    Colour = "White";
+    Picture = {File = "card_285.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "Destruction\nNature";
+    PlayFunction = function ()
+        Damage(1, GetBricks(0)+GetGems(0)+GetRecruits(0))
+        SetBricks(0, 0)
+        SetGems(0, 0)
+        SetRecruits(0, 0)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(GetBricks(0)+GetGems(0)+GetRecruits(0))
+    end;
+}
+
 -- GEm: Alucard: requires cyan card, keyword count support
--- GEm: Amazon tribe: requires white card support
+-- GEm: Amazon tribe: requires keyword count support
 
 -- GEm: Requires keyword support, better AI code
 Card
@@ -700,7 +724,26 @@ Card
     end;
 }
 
--- GEm: Blind Guardian: requires white card support
+Card
+{
+    Name = "Blind guardian";
+    Description = "Tower: +12";
+    Frequency = 6;
+    BrickCost = 4;
+    GemCost = 4;
+    RecruitCost = 4;
+    Cursed = false;
+    Colour = "White";
+    Picture = {File = "card_231f.png", Coordinates = {x = 0, y = 0, w = 80, h = 60}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddTower(0, 12)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(12)
+    end;
+}
 
 -- GEm: Requires keyword support
 Card
