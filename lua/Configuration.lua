@@ -9,6 +9,7 @@ math.randomseed( os.time() ) -- Keep this line if you want to use math.random()
 Fullscreen = false -- Whether the program is running in fullscreen or windowed mode.
 ResolutionX = 800 -- Window resolution. Relevant only to graphical frontends.
 ResolutionY = 600 -- Window resolution. Relevant only to graphical frontends.
+FrameDelay = 16 -- Time to wait between frames, in ms. FPS = 1000/FrameDelay. More saves energy, less is smoother.
 SoundEnabled = true -- Whether the sound system is enabled. This might not be relevant to certain frontends.
 CardTranslucency = 96 -- The amount of translucency applied to inactive cards. The range is 0-255.
 CardsInHand = 6 -- The amount of cards each player gets at the start of the game. The sane range is 4-8 (more works, but may not fit).

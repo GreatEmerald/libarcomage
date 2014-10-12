@@ -84,6 +84,7 @@ struct S_Config {
     bool Fullscreen;
     int ResolutionX;
     int ResolutionY;
+    int FrameDelay;
     bool SoundEnabled;
     byte CardTranslucency;
     byte CardsInHand;
@@ -157,6 +158,7 @@ void initLua()
     Config.Fullscreen = lua.get!bool("Fullscreen"); //GE: Configuration support.
     Config.ResolutionX = lua.get!int("ResolutionX");
     Config.ResolutionY = lua.get!int("ResolutionY");
+    Config.FrameDelay = lua.get!int("FrameDelay");
     Config.SoundEnabled = lua.get!bool("SoundEnabled");
     Config.CardTranslucency = lua.get!byte("CardTranslucency");
     Config.CardsInHand = lua.get!byte("CardsInHand");
