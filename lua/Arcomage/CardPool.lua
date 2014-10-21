@@ -25,7 +25,7 @@ bUseOriginalCards = false
 DeckSize = 0
 
 --[[ GE: Copy paste convenience.
-Card 
+Card
 {
     Name = "";
     Description = "";
@@ -42,7 +42,7 @@ Card
 }
 ]]
 
-Card 
+Card
 {
     Name = "Brick Shortage";
     Description = "All players\nlose 8 bricks";
@@ -73,7 +73,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Lucky Cache";
     Description = "+2 Bricks\n+2 Gems\nPlay again";
@@ -93,7 +93,7 @@ Card
     AIFunction = function () return 1 end;
 }
 
-Card 
+Card
 {
     Name = "Friendly Terrain";
     Description = "+1 Wall\nPlay again";
@@ -112,7 +112,7 @@ Card
     AIFunction = function () return 0.97 end;
 }
 
-Card 
+Card
 {
     Name = "Miners";
     Description = "+1 Quarry";
@@ -133,7 +133,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Mother Lode";
     Description = "If quarry<enemy\nquarry, +2 quarry\nElse, +1\nquarry";
@@ -159,7 +159,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Dwarven Miners";
     Description = "+4 Wall\n+1 Quarry";
@@ -181,7 +181,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Work Overtime";
     Description = "+5 Wall\nYou lose 6 gems";
@@ -203,7 +203,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Copping the Tech";
     Description = "If quarry<enemy\nquarry, quarry =\nenemy quarry";
@@ -226,7 +226,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Basic Wall";
     Description = "+3 Wall";
@@ -247,7 +247,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Sturdy Wall";
     Description = "+4 Wall";
@@ -268,7 +268,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Innovations";
     Description = "+1 to all players\nquarrys, you gain\n+4 gems";
@@ -295,7 +295,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Foundations";
     Description = "If wall = 0, +6\nwall, else\n+3 wall";
@@ -321,7 +321,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Tremors";
     Description = "All walls take\n5 damage\nPlay again";
@@ -343,7 +343,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Secret Room";
     Description = "+1 Magic\nPlay again";
@@ -362,7 +362,7 @@ Card
     AIFunction = function () return 0.97 end;
 }
 
-Card 
+Card
 {
     Name = "Earthquake";
     Description = "-1 To all players\nquarrys";
@@ -388,7 +388,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Big Wall";
     Description = "+6 Wall";
@@ -409,7 +409,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Collapse!";
     Description = "-1 Enemy quarry";
@@ -430,7 +430,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "New Equipment";
     Description = "+2 quarry";
@@ -442,7 +442,7 @@ Card
     Colour = "Red";
     Picture = {File = "images.png", Coordinates = {x = 88*5, y = 52*2, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         AddQuarry(0, 2)
         return 1
     end;
@@ -451,7 +451,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Strip Mine";
     Description = "-1 Quarry, +10\nwall. You gain\n5 gems";
@@ -463,7 +463,7 @@ Card
     Colour = "Red";
     Picture = {File = "images.png", Coordinates = {x = 0, y = 52*3, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         RemoveQuarry(0, 1)
         AddWall(0, 10)
         AddGems(0, 5)
@@ -474,7 +474,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Reinforced wall";
     Description = "+8 Wall";
@@ -486,7 +486,7 @@ Card
     Colour = "Red";
     Picture = {File = "images.png", Coordinates = {x = 88, y = 52*3, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         AddWall(0, 8)
         return 1
     end;
@@ -495,7 +495,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Porticulus";
     Description = "+6 Wall\n+1 Dungeon";
@@ -507,7 +507,7 @@ Card
     Colour = "Red";
     Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*3, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         AddWall(0, 6)
         AddDungeon(0, 1)
         return 1
@@ -517,7 +517,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Crystal Rocks";
     Description = "+7 Wall\ngain 7 gems";
@@ -529,7 +529,7 @@ Card
     Colour = "Red";
     Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*3, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         AddWall(0, 7)
         AddGems(0, 7)
         return 1
@@ -539,7 +539,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Harmonic Ore";
     Description = "+6 Wall\n+3 Tower";
@@ -551,7 +551,7 @@ Card
     Colour = "Red";
     Picture = {File = "images.png", Coordinates = {x = 88*4, y = 52*3, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         AddWall(0, 6)
         AddTower(0, 3)
         return 1
@@ -561,7 +561,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Mondo Wall";
     Description = "+12 Wall";
@@ -582,7 +582,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Focused Designs";
     Description = "+8 Wall\n+5 Tower";
@@ -594,7 +594,7 @@ Card
     Colour = "Red";
     Picture = {File = "images.png", Coordinates = {x = 88*0, y = 52*4, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         AddWall(0, 8)
         AddTower(0, 5)
         return 1
@@ -604,7 +604,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Great Wall";
     Description = "+15 Wall";
@@ -625,7 +625,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Rock Launcher";
     Description = "+6 Wall\n10 Damage\nto enemy";
@@ -647,7 +647,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Dragon's Heart";
     Description = "+20 Wall\n+8 Tower";
@@ -669,7 +669,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Forced Labor";
     Description = "+9 Wall\nLose 5 recruits";
@@ -691,7 +691,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Rock Garden";
     Description = "+1 Wall\n+1 Tower\n+2 recruits";
@@ -714,7 +714,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Flood Water";
     Description = "Player(s) w/ lowest\nWall are -1 Dung-\neon and 2 dam-\nage to Tower";
@@ -742,7 +742,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Barracks";
     Description = "+6 recruits, +6 Wall\nif dungeon <\nenemy dungeon,\n+1 dungeon";
@@ -768,7 +768,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Battlements";
     Description = "+7 Wall\n6 damage to\nenemy";
@@ -790,7 +790,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Shift";
     Description = "Switch your Wall\nwith enemy Wall";
@@ -814,7 +814,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Quartz";
     Description = "+1 Tower,\nplay again";
@@ -833,7 +833,7 @@ Card
     AIFunction = function () return 0.95 end;
 }
 
-Card 
+Card
 {
     Name = "Smoky Quartz";
     Description = "1 Damage to\nenemy tower\nPlay again";
@@ -852,7 +852,7 @@ Card
     AIFunction = function () return 0.95 end;
 }
 
-Card 
+Card
 {
     Name = "Amethyst";
     Description = "+3 Tower";
@@ -873,7 +873,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Spell Weavers";
     Description = "+1 Magic";
@@ -894,7 +894,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Prism";
     Description = "Draw 1 card\nDiscard 1 card\nPlay again";
@@ -906,7 +906,7 @@ Card
     Colour = "Blue";
     Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*6, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         return -1
     end;
     AIFunction = function ()
@@ -914,7 +914,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Lodestone";
     Description = "+3 Tower. This\ncard can't be dis-\ncarded without\nplaying it";
@@ -935,7 +935,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Solar Flare";
     Description = "+2 Tower\n2 Damage to\nenemy tower";
@@ -957,7 +957,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Crystal Matrix";
     Description = "+1 Magic\n+3 Tower\n+1 Enemy\ntower";
@@ -980,7 +980,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Gemstone Flaw";
     Description = "3 Damage to\nenemy tower";
@@ -1001,7 +1001,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Ruby";
     Description = "+5 Tower";
@@ -1022,7 +1022,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Gem Spear";
     Description = "5 Damage\nto enemy tower";
@@ -1043,7 +1043,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Power Burn";
     Description = "5 Damage\nto your tower\n+2 Magic";
@@ -1065,7 +1065,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Harmonic Vibe";
     Description = "+1 Magic\n+3 Tower\n+3 Wall";
@@ -1112,7 +1112,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Emerald";
     Description = "+8 Tower";
@@ -1133,7 +1133,7 @@ Card
         end;
 }
 
-Card 
+Card
 {
     Name = "Pearl of Wisdom";
     Description = "+5 Tower\n+1 Magic";
@@ -1155,7 +1155,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Shatterer";
     Description = "-1 Magic.\n9 Damage to\nenemy tower";
@@ -1178,7 +1178,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Crumblestone";
     Description = "+5 Tower\nEnemy loses\n6 bricks";
@@ -1200,7 +1200,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Sapphire";
     Description = "+11 Tower";
@@ -1221,7 +1221,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Discord";
     Description = "7 Damage to\nall towers, all\nplayer's magic\n-1";
@@ -1245,7 +1245,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Fire Ruby";
     Description = "+6 Tower\n4 Damage to\nall enemy\ntowers";
@@ -1265,7 +1265,7 @@ Card
     AIFunction = function () return 0 end;
 }
 
-Card 
+Card
 {
     Name = "Quarry's Help";
     Description = "+7 Tower\nLose 10\nbricks";
@@ -1287,7 +1287,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Crystal Shield";
     Description = "+8 Tower\n+3 Wall";
@@ -1309,7 +1309,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Empathy Gem";
     Description = "+8 Tower\n+1 Dungeon";
@@ -1331,7 +1331,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Diamond";
     Description = "+15 Tower";
@@ -1352,7 +1352,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Sanctuary";
     Description = "+10 Tower\n+5 Wall\nGain 5\nrecruits";
@@ -1375,7 +1375,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Lava Jewel";
     Description = "+12 Tower\n6 damage to\nall enemies";
@@ -1397,7 +1397,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Dragon's Eye";
     Description = "+20 Tower";
@@ -1418,7 +1418,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Crystallize";
     Description = "+11 Tower\n-6 Wall";
@@ -1440,10 +1440,10 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Bag of Baubles";
-    Description = "If Tower < enemy\nTower\n+2 Tower\nelse\n+1 Tower";
+    Description = "If Tower < enemy Tower\n+2 Tower\nelse +1 Tower";
     Frequency = 1;
     BrickCost = 0;
     GemCost = 2;
@@ -1466,7 +1466,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Rainbow";
     Description = "+1 Tower to all\nplayers.\nYou gain\n3 gems";
@@ -1489,7 +1489,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Apprentice";
     Description = "+4 Tower, you\nlose 3 recruits\n2 damage to\nenemy Tower";
@@ -1512,7 +1512,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Lightning Shard";
     Description = "If Tower > enemy\nWall, 8 damage\nto enemy tower\nelse 8 damage";
@@ -1538,7 +1538,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Phase Jewel";
     Description = "+13 Tower\n+6 recruits\n+6 bricks";
@@ -1561,7 +1561,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Mad Cow Disease";
     Description = "All players lose\n6 recruits";
@@ -1583,7 +1583,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Faerie";
     Description = "2 Damage\nPlay again";
@@ -1602,7 +1602,7 @@ Card
     AIFunction = function () return 0.97 end;
 }
 
-Card 
+Card
 {
     Name = "Moody Goblins";
     Description = "4 Damage\nYou lose\n3 gems";
@@ -1624,7 +1624,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Minotaur"; --GE: AKA Husbandry
     Description = "+1 Dungeon";
@@ -1645,7 +1645,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Elven Scout";
     Description = "Draw 1 card\nDiscard 1 card\nPlay again";
@@ -1663,7 +1663,7 @@ Card
     AIFunction = function () return 0.05 end;
 }
 
-Card 
+Card
 {
     Name = "Goblin Mob";
     Description = "6 Damage\nYou take\n3 damage";
@@ -1685,7 +1685,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Goblin Archers";
     Description = "3 Damage to\nenemy tower\nYou take 1\ndamage";
@@ -1707,7 +1707,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Shadow Faerie";
     Description = "2 Damage to\nenemy tower\nPlay again";
@@ -1726,7 +1726,7 @@ Card
     AIFunction = function () return 0.97 end;
 }
 
-Card 
+Card
 {
     Name = "Orc";
     Description = "5 Damage";
@@ -1747,7 +1747,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Dwarves";
     Description = "4 Damage\n+3 Wall";
@@ -1769,7 +1769,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Little Snakes";
     Description = "4 Damage to\nenemy tower";
@@ -1790,7 +1790,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Troll Trainer";
     Description = "+2 Dungeon";
@@ -1811,7 +1811,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Tower Gremlin";
     Description = "2 Damage\n+4 Wall\n+2 Tower";
@@ -1834,7 +1834,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Full Moon";
     Description = "+1 to all player's\nDungeon\nYou gain 3\nrecruits";
@@ -1857,7 +1857,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Slasher";
     Description = "6 Damage";
@@ -1878,7 +1878,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Ogre";
     Description = "7 Damage";
@@ -1899,7 +1899,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Rabid Sheep";
     Description = "6 Damage\nEnemy loses\n3 recruits";
@@ -1921,7 +1921,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Imp";
     Description = "6 Damage. All\nplayers lose 5\nbricks, gems\nand recruits";
@@ -1933,7 +1933,7 @@ Card
     Colour = "Green";
     Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*14, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         Damage(1, 6)
         RemoveBricks(1, 5)
         RemoveGems(1, 5)
@@ -1948,7 +1948,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Spizzer";
     Description = "If enemy wall\n= 0, 10 damage,\nelse 6\ndamage";
@@ -1960,7 +1960,7 @@ Card
     Colour = "Green";
     Picture = {File = "images.png", Coordinates = {x = 88*2, y = 52*14, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         if GetWall(1) == 0 then
             Damage(1, 10)
         else
@@ -1974,7 +1974,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Werewolf";
     Description = "9 Damage";
@@ -1986,7 +1986,7 @@ Card
     Colour = "Green";
     Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*14, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         Damage(1, 9)
         return 1
     end;
@@ -1995,7 +1995,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Corrosion Cloud";
     Description = "If enemy wall>0,\n10 damage, else\n7 damage";
@@ -2021,7 +2021,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Unicorn";
     Description = "If magic>enemy\nmagic, 12 dam-\nage, else\n8 damage";
@@ -2047,7 +2047,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Elven Archers";
     Description = "If wall>enemy\nwall, 6 damage\nto enemy tower\nelse 6 damage";
@@ -2073,7 +2073,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Succubus";
     Description = "5 Damage to\nenemy tower,\nenemy loses\n8 recruits";
@@ -2085,7 +2085,7 @@ Card
     Colour = "Green";
     Picture = {File = "images.png", Coordinates = {x = 88*1, y = 52*15, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         RemoveTower(1, 5)
         RemoveRecruits(1, 8)
         return 1
@@ -2095,7 +2095,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Rock Stompers";
     Description = "8 Damage\n-1 Enemy quarry";
@@ -2117,7 +2117,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Thief";
     Description = "Enemy loses 10\ngems, 5 bricks,\nyou gain 1/2 amt.\nround up";
@@ -2129,7 +2129,7 @@ Card
     Colour = "Green";
     Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*15, w = 88, h = 52}};
     Keywords = "";
-    PlayFunction = function () 
+    PlayFunction = function ()
         if GetGems(1) >= 10 then
             RemoveGems(1, 10)
             AddGems(0, 5)
@@ -2158,7 +2158,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Stone Giant";
     Description = "10 Damage\n+4 Wall";
@@ -2180,7 +2180,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Vampire";
     Description = "10 Damage\nEnemy loses 5\nrecruits, -1 enemy\nDungeon";
@@ -2203,7 +2203,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Dragon";
     Description = "20 Damage\nEnemy loses 10\ngems, -1 enemy\nDungeon";
@@ -2228,7 +2228,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Spearman";
     Description = "If Wall>enemy\nWall do 3\nDamage else\ndo 2 Damage";
@@ -2254,7 +2254,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Gnome";
     Description = "3 Damage\n+1 gem";
@@ -2276,7 +2276,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Berserker";
     Description = "8 Damage\n3 Damage to\nyour Tower";
@@ -2298,7 +2298,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Warlord";
     Description = "13 Damage\nYou lose 3 gems";
@@ -2320,7 +2320,7 @@ Card
     end;
 }
 
-Card 
+Card
 {
     Name = "Pegasus Lancer";
     Description = "12 Damage to\nenemy tower";
