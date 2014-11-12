@@ -11,6 +11,7 @@ import std.stdio; //GE: Debugging purposes so far.
 import std.conv;
 import std.string;
 import std.file;
+import std.process;
 import luad.all;
 import cards;
 
@@ -150,12 +151,8 @@ void initLua()
     lua.setPanicHandler(&LuaProtectionFault);
     lua.openLibs();
 
-    if (!exists("lua/Configuration.lua"))
-    {
-        writeln("The configuration file is missing! It must be relatively in lua/Configuration.lua.");
-        return;
-    }
-    lua.doFile("lua/Configuration.lua"); //GE: This sets global variables inside Lua. We need to fish them out now.
+    auto ConfigPath = FindConfig();
+    lua.doFile(ConfigPath ~ "/Configuration.lua"); //GE: This sets global variables inside Lua. We need to fish them out now.
     Config.Fullscreen = lua.get!bool("Fullscreen"); //GE: Configuration support.
     Config.ResolutionX = lua.get!int("ResolutionX");
     Config.ResolutionY = lua.get!int("ResolutionY");
@@ -197,6 +194,63 @@ void initLua()
         PoolNames ~= Pool.Name; //GE: Put pool names into PoolNames[].
         CardDB ~= CardInfo.fromFile(Pool.Path); //GE: Populate the CardDB.
     }
+}
+
+/**
+ * Returns the location of the configuration directory.
+ * This is to be compliant with XDG.
+ */
+string FindConfig()
+{
+    string Subdirectories, SearchPath;
+
+    // GEm: Let's see if someone is asking us specifically to look into something
+    SearchPath = environment.get("LIBARCOMAGE_CONFIG_PATH");
+    if (exists(SearchPath ~ "/Configuration.lua"))
+        return SearchPath;
+
+    // GEm: Development/old Windows version, check if there is something nearby
+    if (exists("lua/Configuration.lua"))
+        return "lua";
+    if (exists("../lua/Configuration.lua"))
+        return "../lua";
+    if (exists("../libarcomage/lua/Configuration.lua"))
+        return "../libarcomage/lua";
+
+    // GEm: Nope, so let's try going the XDG way (users can override configuration)
+
+    // GEm: Outside the default tree, we expect "lua" dir to be called this instead
+    Subdirectories = "arcomage/libarcomage";
+    // GEm: Does the user/distro use a custom directory?
+    SearchPath = environment.get("XDG_DATA_HOME");
+    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/Configuration.lua"))
+        return SearchPath ~ "/" ~ Subdirectories;
+
+    // GEm: Nothing, this is normal. Default to what the spec says
+    // GEm: XDG:
+    SearchPath = environment.get("HOME");
+    if (exists(SearchPath ~ "/.local/share/" ~ Subdirectories ~ "/Configuration.lua"))
+        return SearchPath ~ "/.local/share/" ~ Subdirectories;
+    // GEm: Try the Windows spec. APPDATA is the closest thing to a universally accepted place for that
+    SearchPath = environment.get("APPDATA");
+    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/Configuration.lua"))
+        return SearchPath ~ "/" ~ Subdirectories;
+
+    // GEm: Nope, no overrides. Now try system defaults (FHS).
+    if (exists("/usr/share/" ~ Subdirectories ~ "/Configuration.lua"))
+        return "/usr/share/" ~ Subdirectories;
+    // GEm: Windows?
+    SearchPath = environment.get("ProgramFiles");
+    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/Configuration.lua"))
+        return SearchPath ~ "/" ~ Subdirectories;
+    // GEm: 64-bit Windows, and this is compiled as 32-bit?
+    SearchPath = environment.get("ProgramFiles(x86)");
+    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/Configuration.lua"))
+        return SearchPath ~ "/" ~ Subdirectories;
+
+    // GEm: Well, I tried...
+    throw new Exception("FATAL: libarcomage: arco: Failed to locate configuration file! Set LIBARCOMAGE_CONFIG_PATH to force override.");
+    return null;
 }
 
 static void LuaProtectionFault(LuaState lua, in char[] error)
