@@ -12,6 +12,7 @@ import std.conv;
 import std.string;
 import std.file;
 import std.process;
+import std.algorithm;
 import luad.all;
 import cards;
 
@@ -151,7 +152,10 @@ void initLua()
     lua.setPanicHandler(&LuaProtectionFault);
     lua.openLibs();
 
-    auto ConfigPath = FindConfig();
+    auto ConfigPath = FindResource("Configuration.lua", "arcomage/libarcomage",
+        ["lua", "../lua", "../../../libarcomage/lua"], "LIBARCOMAGE_CONFIG_PATH");
+    if (ConfigPath is null)
+        throw new Exception("FATAL: libarcomage: arco: initLua: Failed to locate configuration file! Set LIBARCOMAGE_CONFIG_PATH to force override.");
     lua.doFile(ConfigPath ~ "/Configuration.lua"); //GE: This sets global variables inside Lua. We need to fish them out now.
     Config.Fullscreen = lua.get!bool("Fullscreen"); //GE: Configuration support.
     Config.ResolutionX = lua.get!int("ResolutionX");
@@ -177,8 +181,6 @@ void initLua()
     Config.UseOriginalMenu = lua.get!bool("UseOriginalMenu");
     Config.UseOriginalCards = lua.get!bool("UseOriginalCards");
     Config.DataDir = lua.get!string("DataDir");
-    if (Config.DataDir == "")
-        Config.DataDir = "../data/";
 
     InitLuaFunctions();
 
@@ -197,60 +199,77 @@ void initLua()
 }
 
 /**
- * Returns the location of the configuration directory.
+ * Attempts to find a file in default directories.
  * This is to be compliant with XDG.
+ *
+ * File: filename to search for (empty to search for a directory only)
+ * Subdirectories: What subdirs to look at in /usr/share and .local/share
+ * CustomTests: Some additional directories these files could be found in
+ * OverrideVariable: What environment variable overrides the path
  */
-string FindConfig()
+string FindResource(string File, string Subdirectories, string[] CustomTests, string OverrideVariable)
 {
-    string Subdirectories, SearchPath;
+    string SearchPath;
 
     // GEm: Let's see if someone is asking us specifically to look into something
-    SearchPath = environment.get("LIBARCOMAGE_CONFIG_PATH");
-    if (exists(SearchPath ~ "/Configuration.lua"))
-        return SearchPath;
+    if (OverrideVariable != null && OverrideVariable != "")
+    {
+        SearchPath = environment.get(OverrideVariable);
+        if (exists(SearchPath ~ "/" ~ File))
+            return SearchPath;
+    }
 
     // GEm: Development/old Windows version, check if there is something nearby
-    if (exists("lua/Configuration.lua"))
-        return "lua";
-    if (exists("../lua/Configuration.lua"))
-        return "../lua";
-    if (exists("../libarcomage/lua/Configuration.lua"))
-        return "../libarcomage/lua";
+    foreach (string CustomPath; CustomTests)
+        if (exists(CustomPath ~ "/" ~ File))
+            return CustomPath;
 
     // GEm: Nope, so let's try going the XDG way (users can override configuration)
 
-    // GEm: Outside the default tree, we expect "lua" dir to be called this instead
-    Subdirectories = "arcomage/libarcomage";
     // GEm: Does the user/distro use a custom directory?
     SearchPath = environment.get("XDG_DATA_HOME");
-    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/Configuration.lua"))
+    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/" ~ File))
         return SearchPath ~ "/" ~ Subdirectories;
 
     // GEm: Nothing, this is normal. Default to what the spec says
     // GEm: XDG:
     SearchPath = environment.get("HOME");
-    if (exists(SearchPath ~ "/.local/share/" ~ Subdirectories ~ "/Configuration.lua"))
+    if (exists(SearchPath ~ "/.local/share/" ~ Subdirectories ~ "/" ~ File))
         return SearchPath ~ "/.local/share/" ~ Subdirectories;
     // GEm: Try the Windows spec. APPDATA is the closest thing to a universally accepted place for that
     SearchPath = environment.get("APPDATA");
-    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/Configuration.lua"))
+    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/" ~ File))
         return SearchPath ~ "/" ~ Subdirectories;
 
-    // GEm: Nope, no overrides. Now try system defaults (FHS).
-    if (exists("/usr/share/" ~ Subdirectories ~ "/Configuration.lua"))
-        return "/usr/share/" ~ Subdirectories;
+    // GEm: Nope, no overrides. Now try system directories.
+    SearchPath = environment.get("XDG_DATA_DIRS", "/usr/local/share/:/usr/share/");
+    auto DataDirs = splitter(SearchPath, ':');
+    foreach (string DataDir; DataDirs)
+        if (exists(DataDir ~ "/" ~ Subdirectories ~ "/" ~ File))
+            return DataDir ~ "/" ~ Subdirectories;
     // GEm: Windows?
     SearchPath = environment.get("ProgramFiles");
-    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/Configuration.lua"))
+    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/" ~ File))
         return SearchPath ~ "/" ~ Subdirectories;
     // GEm: 64-bit Windows, and this is compiled as 32-bit?
     SearchPath = environment.get("ProgramFiles(x86)");
-    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/Configuration.lua"))
+    if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/" ~ File))
         return SearchPath ~ "/" ~ Subdirectories;
 
     // GEm: Well, I tried...
-    throw new Exception("FATAL: libarcomage: arco: Failed to locate configuration file! Set LIBARCOMAGE_CONFIG_PATH to force override.");
     return null;
+}
+
+/// Overload helper for FindConfig
+string FindResource(string File, string Subdirectories, string[] CustomTests)
+{
+    return FindResource(File, Subdirectories, CustomTests, null);
+}
+
+/// Ditto
+string FindResource(string File, string Subdirectories)
+{
+    return FindResource(File, Subdirectories, null, null);
 }
 
 static void LuaProtectionFault(LuaState lua, in char[] error)
