@@ -24,3 +24,4 @@ Phobos 2
 Programming tips:
 D mailing list participants (Jacob Carlborg, pelle.mansson, Andrew Wiley, Nick
 Sabalausky, Daniel Green, Jesse Phillips)
+Participants in #d and #cmake on Freenode

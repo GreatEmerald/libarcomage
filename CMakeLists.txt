@@ -13,11 +13,15 @@ SET(CMAKE_D_USE_PHOBOS True)
 # check for DDoc usage
 INCLUDE(UseDDoc)
 
+# GEm: Make sure we allow setting the right lib[64] path
+INCLUDE (GNUInstallDirs)
+
 #################################
 # Project
 ##############
 
 PROJECT (libarcomage D)
+SET (PROJECT_VERSION "0.1.1")
 
 # GEm: Add LuaD
 # GEm: These are the files we need (from LuaD Makefile)
@@ -55,3 +59,16 @@ endforeach()
 
 # GEm: Continue processing
 ADD_SUBDIRECTORY (src)
+
+# GEm: Install config and decks
+INSTALL (DIRECTORY lua/ DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/arcomage/libarcomage)
+
+# GEm: CPack specifics below. This can be openSUSE-specific, so other distros should use their own packaging.
+SET (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Backend for free Arcomage-like games")
+SET (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING.TXT")
+SET (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.TXT")
+SET (CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/DESCRIPTION.TXT")
+# GEm: RPM specifics, this is definitely openSUSE-specific
+SET (CPACK_RPM_PACKAGE_LICENSE "GPL-3.0+")
+SET (CPACK_RPM_PACKAGE_GROUP "Amusements/Games")
+INCLUDE (CPack)
