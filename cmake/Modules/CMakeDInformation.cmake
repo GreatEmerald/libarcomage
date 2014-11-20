@@ -112,7 +112,11 @@ INCLUDE(CMakeCommonLanguageInclude)
 
 #set(CMAKE_D_VERSION_FLAG "-fversion=")
 set(CMAKE_SHARED_LIBRARY_D_FLAGS "-fPIC")
-set(CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS "-shared -defaultlib=libphobos2.so")
+if(CMAKE_COMPILER_IS_DMD)
+  set(CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS "-shared -defaultlib=libphobos2.so")
+else(CMAKE_COMPILER_IS_DMD)
+  set(CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS "-shared")
+endif(CMAKE_COMPILER_IS_DMD)
 set(CMAKE_D_COMPILE_OPTIONS_PIC "-fPIC")
 set(CMAKE_INCLUDE_FLAG_D "-I")       # -I
 set(CMAKE_INCLUDE_FLAG_D_SEP "")     # , or empty
@@ -125,6 +129,7 @@ elseif(CMAKE_COMPILER_IS_DMD OR CMAKE_COMPILER_IS_LDC)
   set(CMAKE_OUTPUT_D_FLAG "-of")
   set(CMAKE_LIBRARY_PATH_FLAG "-L-L")
   set(CMAKE_LINK_LIBRARY_FLAG "-L-l")
+  set(CMAKE_SHARED_LIBRARY_SONAME_D_FLAG "-L-soname -L")
 endif(CMAKE_COMPILER_IS_GDC)
 
 # create a D shared library
