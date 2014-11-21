@@ -362,13 +362,13 @@ void InitLuaFunctions()
 
     lua["GetLastCard"] = (int Who, string Query)
     {
-        ulong i;
+        //ulong i;
 
         if (StatChanges.length == 0)
             return 0;
 
         ChangeInfo LastTurn = StatChanges[StatChanges.length-1][GetAbsolutePlayer(Who)];
-        for (i = StatChanges.length-1; LastTurn.PlayedCard.Name == ""; i--)
+        for (auto i = StatChanges.length-1; LastTurn.PlayedCard.Name == ""; i--)
             LastTurn = StatChanges[i][GetAbsolutePlayer(Who)];
 
         if (LastTurn.bDiscarded)
@@ -386,7 +386,7 @@ void InitLuaFunctions()
 
     lua["GetLastRoundChanges"] = (int Who, string Query)
     {
-        ulong i;
+        size_t i;
 
         if (StatChanges.length == 0)
             return 0;
