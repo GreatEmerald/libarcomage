@@ -82,6 +82,8 @@ string[] PoolNames; //GE: Holds the names of each pool. Becareful to align this 
 //string[] PrecachePictures;
 //int[] Queue; //GE: This is the list of card IDs in the bank.
 
+string ConfigPath; // GEm: Path to the lua/ directory
+
 struct S_Config {
     bool Fullscreen;
     int ResolutionX;
@@ -152,7 +154,7 @@ void initLua()
     lua.setPanicHandler(&LuaProtectionFault);
     lua.openLibs();
 
-    auto ConfigPath = FindResource("Configuration.lua", "arcomage/libarcomage",
+    ConfigPath = FindResource("Configuration.lua", "arcomage/libarcomage",
         ["lua", "../lua", "../../../libarcomage/lua"], "LIBARCOMAGE_CONFIG_PATH");
     if (ConfigPath is null)
         throw new Exception("FATAL: libarcomage: arco: initLua: Failed to locate configuration file! Set LIBARCOMAGE_CONFIG_PATH to force override.");
@@ -184,17 +186,17 @@ void initLua()
 
     InitLuaFunctions();
 
-    lua.doFile("lua/CardPools.lua"); //GE: Execute the CardPools file. Here we get to know what pools there are on the system.
+    lua.doFile(ConfigPath ~ "/CardPools.lua"); //GE: Execute the CardPools file. Here we get to know what pools there are on the system.
     struct PoolInfo                  //GE: Thanks to JakobOvrum for a nice way to fill PoolNames and CardDB!
     {
         string Name;
-        string Path;
+        string PoolFile;
     };
     auto Pools = lua.get!(PoolInfo[])("PoolInfo");
     foreach (PoolInfo Pool; Pools)
     {
         PoolNames ~= Pool.Name; //GE: Put pool names into PoolNames[].
-        CardDB ~= CardInfo.fromFile(Pool.Path); //GE: Populate the CardDB.
+        CardDB ~= CardInfo.fromFile(ConfigPath ~ "/" ~ Pool.Name ~ "/" ~ Pool.PoolFile); //GE: Populate the CardDB.
     }
 }
 
@@ -247,6 +249,9 @@ string FindResource(string File, string Subdirectories, string[] CustomTests, st
     foreach (string DataDir; DataDirs)
         if (exists(DataDir ~ "/" ~ Subdirectories ~ "/" ~ File))
             return DataDir ~ "/" ~ Subdirectories;
+    // GEm: Relative Windows paths
+    if (exists("../share/" ~ Subdirectories ~ "/" ~ File))
+        return "../share/" ~ Subdirectories;
     // GEm: Windows?
     SearchPath = environment.get("ProgramFiles");
     if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/" ~ File))
