@@ -252,6 +252,8 @@ string FindResource(string File, string Subdirectories, string[] CustomTests, st
     // GEm: Relative Windows paths
     if (exists("../share/" ~ Subdirectories ~ "/" ~ File))
         return "../share/" ~ Subdirectories;
+    if (exists("share/" ~ Subdirectories ~ "/" ~ File))
+        return "share/" ~ Subdirectories;
     // GEm: Windows?
     SearchPath = environment.get("ProgramFiles");
     if (exists(SearchPath ~ "/" ~ Subdirectories ~ "/" ~ File))
