@@ -23,6 +23,8 @@ INCLUDE (GNUInstallDirs)
 PROJECT (libarcomage D)
 SET (PROJECT_VERSION "0.1.1")
 
+SET (DYNAMIC_LINKING "YES" CACHE BOOL "Whether to link with LuaD dynamically or statically. Dynamic is default and recommended.")
+
 # GEm: Add LuaD
 # GEm: These are the files we need (from LuaD Makefile)
 # GEm: They can't be in include/ itself due to scope issues
@@ -50,12 +52,16 @@ SET (LUAD_SOURCES
   luad/conversions/structs.d
   luad/conversions/variant.d
 )
-# GEm: Hopefully it's in a subdirectory called include/LuaD (change if you need to)
-SET (LUAD_PATH include/LuaD CACHE PATH "Path to the LuaD root directory")
-# GEm: Get a full path
-foreach (luad_src ${LUAD_SOURCES})
-  list (APPEND LUAD_FILE_PATHS "${CMAKE_SOURCE_DIR}/${LUAD_PATH}/${luad_src}")
-endforeach()
+find_path (LUAD_PATH luad/all.d
+  PATHS ${CMAKE_SOURCE_DIR}/include/LuaD
+  PATH_SUFFIXES dlang d dmd
+  DOC "Path to the LuaD root directory")
+if (NOT DYNAMIC_LINKING)
+  # GEm: Get a full path
+  foreach (luad_src ${LUAD_SOURCES})
+    list (APPEND LUAD_FILE_PATHS "${LUAD_PATH}/${luad_src}")
+  endforeach()
+endif (NOT DYNAMIC_LINKING)
 
 # GEm: Continue processing
 ADD_SUBDIRECTORY (src)

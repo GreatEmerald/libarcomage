@@ -1,7 +1,9 @@
-libarcomage is the backend library for card games similar to Arcomage (by New 
-World Computing, minigame in Might and Magic VII and VIII). It's written in D.
+The backend library for card games, where two players use resources to play 
+cards with a variety of effects that help build their own tower or destroy the 
+opponent's tower as quickly as possible.
 
-This package also includes the configuration and card decks, which are shared 
-throughout the backends.
+The library written in D, and uses Lua scripts to allow users to easily create 
+new cards or card decks, or to alter the computer AI. These changes apply to any 
+frontend to the library.
 
-Use a frontend, like DArcomage or CLArcomage, to be able to actually play.
+Install a frontend, like DArcomage or CLArcomage, to be able to actually play.
