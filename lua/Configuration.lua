@@ -32,7 +32,7 @@ TowerVictory = math.max(TowerLevels+10, math.random(30, 200)) -- The height of t
 ResourceVictory = math.random(100, 500) -- The amount of resources a player must gather to win.
 OneResourceVictory = false -- Whether to allow victory for getting only one of the resources to the amount indicated above.
 
-UseOriginalMenu = false -- Whether to use the original Arcomage menu appearance. You need to own the original Arcomage for this.
-UseOriginalCards = false -- Whether to use the original Arcomage card appearance. You need to own the original Arcomage or one of the Might and Magic games for this.
+UseOriginalMenu = false -- Whether to use the original Arcomage appearance. You need to own the original Arcomage or one of the Might and Magic games for this.
+UseOriginalSounds = false -- Whether to use the original Arcomage sounds. You need to own the original Arcomage or one of the Might and Magic games for this.
 
-DataDir = "" -- Path to the Arcomage image and sound data directory. This is relative to the path of the frontend executable. If empty, assumed '../data/'. Only relevant to GUIs.
+DataDir = "" -- Path to the Arcomage image and sound data directory. This is relative to the path of the frontend executable. If empty, autodetected. Only relevant to GUIs.

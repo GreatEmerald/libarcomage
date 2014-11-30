@@ -60,16 +60,27 @@ ELSE(NOT CMAKE_D_COMPILER_WORKS)
       "the following output:\n${OUTPUT}\n\n") 
   ENDIF(C_TEST_WAS_RUN)
   SET(CMAKE_D_COMPILER_WORKS 1 CACHE INTERNAL "")
+  
+  # Determine ABI
+  include(${CMAKE_ROOT}/Modules/CMakeDetermineCompilerABI.cmake)
+  FILE(WRITE ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/CMakeDCompilerABI.d
+      "string numToStr( T )( T number ) { string result; while( number != 0 ) { result =  [ cast(immutable char)( number % 10 + '0' ) ] ~ result; number /= 10; } return result; }\n"
+      "void main() {\n"
+      "enum info_sizeof_dptr = \"INFO:sizeof_dptr[\"~numToStr!int( (void*).sizeof ) ~\"]\";\n"
+      "auto required = info_sizeof_dptr; }\n")
+  CMAKE_DETERMINE_COMPILER_ABI(D ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/CMakeDCompilerABI.d)
+  
   # re-configure this file CMakeDCompiler.cmake so that it gets
   # the value for CMAKE_SIZEOF_VOID_P
   # configure variables set in this file for fast reload later on
   IF(EXISTS ${CMAKE_SOURCE_DIR}/cmake/Modules/CMakeDCompiler.cmake.in)
   	CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/Modules/CMakeDCompiler.cmake.in 
-  	  ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeDCompiler.cmake IMMEDIATE)
+  	  "${CMAKE_PLATFORM_INFO_DIR}/CMakeDCompiler.cmake" IMMEDIATE)
   ELSE(EXISTS ${CMAKE_SOURCE_DIR}/cmake/Modules/CMakeDCompiler.cmake.in)
   	CONFIGURE_FILE(${CMAKE_ROOT}/Modules/CMakeDCompiler.cmake.in 
-	  ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeDCompiler.cmake IMMEDIATE)
+	  "${CMAKE_PLATFORM_INFO_DIR}/CMakeDCompiler.cmake" IMMEDIATE)
   ENDIF(EXISTS ${CMAKE_SOURCE_DIR}/cmake/Modules/CMakeDCompiler.cmake.in)
+  include(${CMAKE_PLATFORM_INFO_DIR}/CMakeDCompiler.cmake)
 ENDIF(NOT CMAKE_D_COMPILER_WORKS)
 
 IF(NOT CMAKE_D_PHOBOS_WORKS)

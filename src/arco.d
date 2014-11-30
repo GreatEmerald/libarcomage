@@ -106,7 +106,7 @@ struct S_Config {
     int TowerVictory;
     int ResourceVictory;
     bool OneResourceVictory;
-    bool UseOriginalCards;
+    bool UseOriginalSounds;
     bool UseOriginalMenu;
     string DataDir;
 }
@@ -181,7 +181,7 @@ void initLua()
     Config.ResourceVictory = lua.get!int("ResourceVictory");
     Config.OneResourceVictory = lua.get!bool("OneResourceVictory");
     Config.UseOriginalMenu = lua.get!bool("UseOriginalMenu");
-    Config.UseOriginalCards = lua.get!bool("UseOriginalCards");
+    Config.UseOriginalSounds = lua.get!bool("UseOriginalSounds");
     Config.DataDir = lua.get!string("DataDir");
 
     InitLuaFunctions();

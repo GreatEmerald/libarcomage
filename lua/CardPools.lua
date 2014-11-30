@@ -4,8 +4,9 @@
 -- GreatEmerald, 2011, 2014
 
 -- GEm: Insert things into PoolInfo to add more pools. Cards from all pools will be added to the game.
-PoolInfo = { {Name = "Arcomage", PoolFile = "CardPool.lua"}, {Name = "MArcomage", PoolFile = "MArcomagePool.lua"} } --GE: Temporary until we can implement working MArcomage cards.
---PoolInfo = { {Name = "Touhou", PoolFile = "TouhouPool.lua"} }
+PoolInfo = {  {Name = "MArcomage", PoolFile = "MArcomagePool.lua"} }
+-- GEm: Below is a (working) example of how to add more than one pool into the game at the same time.
+--PoolInfo = { {Name = "Arcomage", PoolFile = "CardPool.lua"}, {Name = "Touhou", PoolFile = "TouhouPool.lua"} }
 
 -- GE: Below are global AI functions. If you change those, the AI in the whole game will change.
 

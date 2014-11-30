@@ -60,7 +60,7 @@ int GetConfig(int Type)
         case 13: return Config.ResourceVictory;
         case 14: return Config.TowerVictory;
         case 15: return cast(int)Config.OneResourceVictory;
-        case 16: return cast(int)Config.UseOriginalCards;
+        case 16: return cast(int)Config.UseOriginalSounds;
         case 17: return cast(int)Config.UseOriginalMenu;
         case 18: return 800; //FIXME - Needs to be configurable
         case 19: return 600;
