@@ -20,6 +20,7 @@ Libraries used:
 LuaD
 Lua 5.1
 Phobos 2
+CMakeD
 
 Programming tips:
 D mailing list participants (Jacob Carlborg, pelle.mansson, Andrew Wiley, Nick

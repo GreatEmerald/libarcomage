@@ -1,54 +1,77 @@
-Arcomage Clone Library (libarcomage) v0.1
-Revision 2012.01.13, GreatEmerald
+libarcomage v0.1.1
+Revision 2014.12.02, GreatEmerald
 
-Arcomage Clone is, as the name implies, a clone of Arcomage. The goal of this
-project is to recreate the standalone Arcomage to a feature parity, while
-introducing new features to keep the game fresh and moddable.
+The backend library for card games, where two players use resources to play 
+cards with a variety of effects that help build their own tower or destroy the 
+opponent's tower as quickly as possible.
 
-This is the library of Arcomage, it is the essential part of the Arcomage Clone
-project. It handles all of the internal game logic and configuration. The
-library is licensed under the GNU GPLv3, see the COPYING.TXT file for more
-information.
+The library written in D, and uses Lua scripts to allow users to easily create 
+new cards or card decks, or to alter the computer AI. These changes apply to 
+any 
+frontend to the library.
+
+Make sure to install a frontend, like DArcomage or CLArcomage, to be able to 
+actually play.
+
 
 ========
 BUILDING
 ========
 
-This library is written in the D programming language, so you will have to get
-a D compiler (unless it's already provided by your distribution, but even then
-you probably need another one). This library also depends on Lua for all of the
-configuration needs.
+Building libarcomage itself is only relevant to Linux systems, as Windows does 
+not yet support building dlls from D source code. For build instructions there, 
+refer to build instructions for each individual frontend.
 
-Right now, this library is compiled as a static library due to the limitations
-in the DMD compiler. The LLVM D compiler is capable of producing dynamic
-libraries, but it does not work on Windows, so it's best to wait until either
-DMD gains dynamic library support (it is a planned feature), or LDC gains proper
-Windows support (which is less likely to happen).
-
-First off, the short form of what you need to build, depending on the operating
-system:
-
-Windows:
+To build the shared library on Linux, you need:
   Mandatory:
-    DMD (Digital Mars D compiler): http://www.digitalmars.com/d/download.html
-
-Linux:
-  Mandatory:
-    DMD 2.052+ (Digital Mars D compiler): http://www.digitalmars.com/d/download.html
-    GCC 4.4+ (GNU Compiler Collection; gcc, gcc-4.4 or gcc-4.5)
+    DMD 2.052+ (Digital Mars D compiler): 
+http://www.digitalmars.com/d/download.html
     Lua 5.1 (liblua5.1-dev on Debian and lua-devel on openSUSE)
+    Make (GNU Make, gmake)
+    CMake 2.8+ (although 3.0+ is recommended; cmake)
+  Optional (bundled):
+    LuaD
 
-NOTE: D compilers other than DMD were not tested, but might also work. GDC or
-LLVM D compilers are sometimes included in Linux distributions by default, but
-they were untested, so more likely than not don't work with this library.
+NOTE: D compilers other than DMD were not tested, but might also work. However, 
+the CMakeD build system may not properly support them at this time. Patches 
+welcome.
 
-You should make sure that with this source code file you also have the source
-for LuaD (shown in the 'Structure' section below). If not, download the LuaD
-sources manually and put them into the required place manually.
+If you have cloned the repository from git, and don't have LuaD installed, then 
+enable the bundled LuaD by updating git submodules:
 
-In order to build the static library, after installing the needed requirements,
-open a terminal and navigate to the 'utils' directory. Then run './compile.sh'
-on Linux or 'compile.cmd' on Windows.
+git submodule update --init
+
+The build process involves changing directory to "build", running CMake, then 
+running make and finally install with either make install or by using CPack to 
+generate an RPM, then installing it with a native package manager. You can pass 
+the build type to CMake to change the build optimisation. All the commands, in 
+short, are:
+
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+
+By default, it is assumed that you have LuaD installed as a shared library. If 
+you want to compile it statically into libarcomage itself, tell CMake about it:
+
+cmake -DCMAKE_BUILD_TYPE=Release -DDYNAMIC_LINKING=NO ..
+
+If the library gets installed to the wrong lib{,32,64} directory, you can pass 
+it to CMake too:
+
+cmake -DCMAKE_INSTALL_LIBDIR=/usr/lib64 ..
+
+To install directly:
+
+make install
+
+Or to make an RPM:
+
+cpack -G RPM
+
+Which you can then install, for instance:
+
+zypper install libarcomage*
 
 =========
 STRUCTURE
@@ -58,51 +81,44 @@ This project includes several directories, whose use may not be obvious at first
 glance, so I have provided an overview of the directory structure for the
 library sources below.
 
+  +-- build
+  +-- cmake
   +-- include
   |   +-- LuaD
-  +-- lib
   +-- lua
   |   +-- Arcomage
   |   +-- MArcomage
-  +-- old
-  |   +-- d
-  |   +-- win32
+  |   +-- Touhou
   +-- src
   +-- utils
   |-- COPYING.TXT
   |-- CREDITS.TXT
   |-- README.TXT
 
-include contains the source code of LuaD, which is a source library used by this
-project. It is required on all platforms.
+build is a placeholder directory where all the files generated by cmake should 
+go to.
 
-lib contains the precompiled libarcomage library and/or is the output location
-for the library during the compilation process. This directory also includes
-other static libraries, required by Windows in order to compile the library.
-Linux users may ignore the other libraries there.
+cmake contains the CMakeD module that tells CMake how to compile D code.
 
-lua contains the Lua scripts for the game. They control the configuration,
-manage installed card decks and contain the AI of the enemy, and thus are needed
-to run the game. lua/Arcomage contains the information about the stock Arcomage
-deck, while lua/MArcomage will contain information about cards used in the
-MArcomage project.
+include contains the source code of LuaD, used to read Lua-based configuration 
+files.
 
-old is a directory for obsolete files that could still be useful as a reference.
-It should be of no concern for others and should not be included in the release
-version of the library's source code.
+lua contains the Lua scripts for the game. They control the configuration, 
+manage installed card decks and define computer AI, and thus are needed to run 
+the game. lua/Arcomage contains the information about the stock Arcomage deck, 
+lua/MArcomage will contains some of the cards used in the MArcomage project, and 
+Touhou is a deck based on spell cards from the Touhou Project.
 
 src is the D source code. That's the crucial (and the most interesting) part of
 the project, since the D code is at the core of the program and manages the
 whole logic of the game, such as player statistics, card queue, executes actions
 performed by cards etc.
 
-utils contains utilities for building the code. Those are shell scripts for
-quick compilation; you are free to change them in order to accomodate for your
-specific machine architecture, setup etc. The scripts are there just for 
-onvenience; the library may be compiled manually as well, although you would
-have to make sure to include everything the library needs in the command.
-Therefore it is always best to tweak the scripts here in case something doesn't
-work.
+utils contains miscellaneous utilities for building the code. They were used 
+before the transition to CMake. Now their use is discouraged, but they are 
+fairly simple and thus are useful to see what is supposed to be happening during 
+compilation under the hood (but they are static, so likely won't work without 
+adjustments).
 
 COPYING.TXT is a text file that contains GPL licensing information.
 
