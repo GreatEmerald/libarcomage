@@ -294,7 +294,7 @@ void BackendReset()
     Player = Player.init;
     CardDB = CardDB.init;
     PoolNames = PoolNames.init;
-    Turn = NextTurn = LastTurn = CurrentPosition = 0;
+    Turn = NextTurn = LastTurn = 0;
     initLua();
 }
 

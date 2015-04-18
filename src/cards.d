@@ -27,7 +27,7 @@ extern(C) shared int Turn; /// Number of the player whose turn it is. This is an
 int NextTurn; /// Number of the player who will go next.
 int LastTurn; /// Number of the player whose turn ended before.
 CardInfo[] Queue; /// Cards in the bank.
-int CurrentPosition = 0; /// The current position in the Queue.
+size_t ShuffleTimer; /// Countdown until a reshuffling is needed.
 
 struct ChangeInfo
 {
@@ -598,44 +598,43 @@ void InitDeck()
     ShuffleQueue();
 }
 
+/**
+ * Shuffles the card queue using the Fisher-Yates algorithm
+ */
 void ShuffleQueue()
 {
-    int a, b;
+    size_t i, a;
     CardInfo t;
-    for (int i=0; i<32000; i++) //GE: A ludicrous way to randomise the Queue array.
+    for (i = Queue.length-1; i > 0; i--)
     {
-        a=uniform(0, cast(int).Queue.length);
-        b=uniform(0, cast(int).Queue.length);
-        t=Queue[a]; Queue[a]=Queue[b]; Queue[b]=t;
+        a = uniform(0, i+1);
+        t=Queue[a]; Queue[a]=Queue[i]; Queue[i]=t;
     }
+    ShuffleTimer = Queue.length-1;
     FrontendFunctions.EffectNotify(0, EffectType.CardShuffle, 0);
 }
 
 /**
- * Returns the next card in the queue and moves the CurrentPosition up.
+ * Pops and returns the next card in the queue and moves the ShuffleTimer down.
  */
 CardInfo GetCard()
 {
     CardInfo CI;
-    CI = Queue[CurrentPosition];
-    if (CurrentPosition + 1 < Queue.length)
-	   CurrentPosition++;
+    CI = Queue[$-1]; // GEm: Save the last card
+    Queue.length--; // GEm: Pop it out of the array
+    if (ShuffleTimer > 0)
+        ShuffleTimer--;
     else
-    {
       ShuffleQueue();
-      CurrentPosition = 0;
-    }
     return CI;
 }
 
 /**
- * Puts the card to the closest garbage card slot.
- * This way we know what has been discarded before etc.
+ * Pushes the card into the queue.
  */
 void PutCard(CardInfo CI)
 {
-
-    Queue[((CurrentPosition-Config.CardsInHand*2)+cast(int).Queue.length)%cast(int).Queue.length] = CI;
+    Queue = CI ~ Queue;
 }
 
 extern (C) bool IsVictorious(int PlayerNumber)
