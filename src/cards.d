@@ -620,6 +620,10 @@ void ShuffleQueue()
 CardInfo GetCard()
 {
     CardInfo CI;
+
+    if (Queue.length <= 1)
+        throw new Exception("cards.GetCard: Ran out of cards in the bank! Enable more card pools, add more cards to enabled card pools, or lower the number of cards in hand.");
+
     CI = Queue[$-1]; // GEm: Save the last card
     Queue.length--; // GEm: Pop it out of the array
     if (ShuffleTimer > 0)
