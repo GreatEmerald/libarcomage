@@ -13,3 +13,5 @@ pcb-16: Error406
 pcb-19: DesiresArt
 pcb-21: Dennis Jarvis
 pcb-23: barefootliam
+pcb-41: bakaotaku
+pcb-42: bakaotaku

@@ -1,5 +1,5 @@
 -- A Touhou Perfect Cherry Blossom theme pool for Arcomage
--- Copyright © GreatEmerald, 2015
+-- Copyright © GreatEmerald, 2015, 2016
 
 -- Ratio is 22:13!
 Card
@@ -628,5 +628,455 @@ Card
     end;
     AIFunction = function ()
         return AIRemoveEnemyTower(6)+AIRemoveRecruits(6)
+    end;
+}
+
+Card
+{
+    Name = "Kimontonkou";
+    Description = "Gain +2 of each resource and +2 wall";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 3;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "pcb-26.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddBricks(0, 2)
+        AddGems(0, 2)
+        AddRecruits(0, 2)
+        AddWall(0, 2)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddBricks(2)+AIAddGems(2)+AIAddRecruits(2)+AIAddWall(2)
+    end;
+}
+
+Card
+{
+    Name = "Maiden's Bunraku";
+    Description = "If dungeon < enemy dungeon, gain +1 dungeon";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 5;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "pcb-27.jpg", Coordinates = {x = 0, y = 0, w = 342, h = 202}};
+    Keywords = "";
+    PlayFunction = function ()
+        if GetDungeon(0) < GetDungeon(1) then
+            AddDungeon(0, 1)
+        end
+        return 1
+    end;
+    AIFunction = function ()
+        if GetDungeon(0) < GetDungeon(1) then
+            return AIAddDungeon(1)
+        end
+        return 0
+    end;
+}
+
+Card
+{
+    Name = "Maiden's Bunraku L";
+    Description = "If quarry < enemy quarry or magic < enemy magic, gain +1 dungeon";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 7;
+    Cursed = false;
+    Colour = "Green";
+    Picture = {File = "pcb-28.jpg", Coordinates = {x = 0, y = 0, w = 300, h = 178}};
+    Keywords = "";
+    PlayFunction = function ()
+        if GetQuarry(0) < GetQuarry(1) or GetMagic(0) < GetMagic(1) then
+            AddDungeon(0, 1)
+        end
+        return 1
+    end;
+    AIFunction = function ()
+        if GetQuarry(0) < GetQuarry(1) or GetMagic(0) < GetMagic(1) then
+            return AIAddDungeon(1)
+        end
+        return 0
+    end;
+}
+
+Card
+{
+    Name = "French Dolls E";
+    Description = "+3 tower";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 2;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "pcb-29.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddTower(0, 3)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(3)
+    end;
+}
+
+Card
+{
+    Name = "French Dolls";
+    Description = "+4 tower";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 3;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "pcb-30.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddTower(0, 4)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(4)
+    end;
+}
+
+Card
+{
+    Name = "French Dolls H";
+    Description = "+5 tower";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 4;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "pcb-31.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddTower(0, 5)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(5)
+    end;
+}
+
+Card
+{
+    Name = "Orléans Dolls";
+    Description = "+5 tower and +1 wall";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 4;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "pcb-32.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddTower(0, 5)
+        AddWall(0, 1)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(5)+AIAddWall(1)
+    end;
+}
+
+Card
+{
+    Name = "Dutch Dolls E";
+    Description = "Deal 3 damage";
+    Frequency = 3;
+    BrickCost = 2;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "pcb-33.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 3)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(3)
+    end;
+}
+
+Card
+{
+    Name = "Dutch Dolls";
+    Description = "Deal 4 damage";
+    Frequency = 3;
+    BrickCost = 3;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Red";
+    Picture = {File = "pcb-34.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 4)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(4)
+    end;
+}
+
+Card
+{
+    Name = "Russian Dolls";
+    Description = "Deal 5 damage, take 1 damage";
+    Frequency = 3;
+    BrickCost = 1;
+    GemCost = 1;
+    RecruitCost = 1;
+    Cursed = false;
+    Colour = "White";
+    Picture = {File = "pcb-35.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 5)
+        Damage(0, 1)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(5)+AIDamage(1)
+    end;
+}
+
+Card
+{
+    Name = "Russian Dolls L";
+    Description = "Deal 7 damage, take 2 damage";
+    Frequency = 3;
+    BrickCost = 2;
+    GemCost = 2;
+    RecruitCost = 2;
+    Cursed = false;
+    Colour = "White";
+    Picture = {File = "pcb-36.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 7)
+        Damage(0, 2)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(7)+AIDamage(2)
+    end;
+}
+
+Card
+{
+    Name = "London Dolls E";
+    Description = "Deal 2 damage and give +2 wall to each player";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Black";
+    Picture = {File = "pcb-37.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 2)
+        Damage(0, 2)
+        AddWall(1, 2)
+        AddWall(0, 2)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(2)+AIDamage(2)+AIAddEnemyWall(2)+AIAddWall(2)
+    end;
+}
+
+Card
+{
+    Name = "Foggy London Dolls";
+    Description = "Deal 4 damage and give +4 wall to each player";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Black";
+    Picture = {File = "pcb-38.jpg", Coordinates = {x = 0, y = 0, w = 478, h = 282}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 4)
+        Damage(0, 4)
+        AddWall(1, 4)
+        AddWall(0, 4)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(4)+AIDamage(4)+AIAddEnemyWall(4)+AIAddWall(4)
+    end;
+}
+
+Card
+{
+    Name = "Tibetan Dolls";
+    Description = "Gain +2 tower and +3 wall";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 3;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "pcb-39.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddTower(0, 2)
+        AddWall(0, 3)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddTower(2)+AIAddWall(3)
+    end;
+}
+
+Card
+{
+    Name = "Spring Kyoto Dolls";
+    Description = "Gain +5 gems and +3 wall";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 3;
+    RecruitCost = 0;
+    Cursed = false;
+    Colour = "Blue";
+    Picture = {File = "pcb-40.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        AddGems(0, 5)
+        AddWall(0, 3)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIAddGems(5)+AIAddWall(3)
+    end;
+}
+
+Card
+{
+    Name = "Shanghai Dolls E";
+    Description = "Deal 3 damage, lose 2 random resources. Cannot discard";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = true;
+    Colour = "Black";
+    Picture = {File = "pcb-41.jpg", Coordinates = {x = 0, y = 0, w = 270, h = 160}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 3)
+        Loss = math.random(3)
+        if Loss == 1 then
+            RemoveBricks(0, 2)
+        elseif Loss == 2 then
+            RemoveGems(0, 2)
+        else
+            RemoveRecruits(0, 2)
+        end
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(3)+AIRemoveBricks(2)/3+AIRemoveGems(2)/3+AIRemoveRecruits(2)/3
+    end;
+}
+
+Card
+{
+    Name = "Shanghai Dolls";
+    Description = "Deal 4 damage, lose 3 random resources. Cannot discard";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = true;
+    Colour = "Black";
+    Picture = {File = "pcb-42.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 4)
+        Loss = math.random(3)
+        if Loss == 1 then
+            RemoveBricks(0, 3)
+        elseif Loss == 2 then
+            RemoveGems(0, 3)
+        else
+            RemoveRecruits(0, 3)
+        end
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(4)+AIRemoveBricks(3)/3+AIRemoveGems(3)/3+AIRemoveRecruits(3)/3
+    end;
+}
+
+Card
+{
+    Name = "Shanghai Dolls H";
+    Description = "Deal 6 damage, lose 4 random resources. Cannot discard";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = true;
+    Colour = "Black";
+    Picture = {File = "pcb-43.jpg", Coordinates = {x = 0, y = 0, w = 440, h = 260}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 6)
+        Loss = math.random(3)
+        if Loss == 1 then
+            RemoveBricks(0, 4)
+        elseif Loss == 2 then
+            RemoveGems(0, 4)
+        else
+            RemoveRecruits(0, 4)
+        end
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(6)+AIRemoveBricks(4)/3+AIRemoveGems(4)/3+AIRemoveRecruits(4)/3
+    end;
+}
+
+Card
+{
+    Name = "Hanged Hourai Dolls";
+    Description = "Deal 8 damage, lose 2 stock. Cannot discard";
+    Frequency = 3;
+    BrickCost = 0;
+    GemCost = 0;
+    RecruitCost = 0;
+    Cursed = true;
+    Colour = "Black";
+    Picture = {File = "pcb-44.jpg", Coordinates = {x = 0, y = 0, w = 480, h = 284}};
+    Keywords = "";
+    PlayFunction = function ()
+        Damage(1, 8)
+        RemoveBricks(0, 2)
+        RemoveGems(0, 2)
+        RemoveRecruits(0, 2)
+        return 1
+    end;
+    AIFunction = function ()
+        return AIDamageEnemy(8)+AIRemoveBricks(2)+AIRemoveGems(2)+AIRemoveRecruits(2)
     end;
 }
