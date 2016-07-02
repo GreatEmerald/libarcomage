@@ -1,12 +1,15 @@
 #
 # CMakeD - CMake module for D Language
 #
-# Copyright (c) 2007, Selman Ulug <selman.ulug@gmail.com>
+# Copyright (c) 2013, Selman Ulug <selman.ulug@gmail.com>
 #                     Tim Burrell <tim.burrell@gmail.com>
+#                     Steve King <sk@metrokings.com>
+#                     Dragos Carp <dragos.carp@gmail.com>
+#                     Konstantin Oblaukhov <oblaukhov.konstantin@gmail.com>
 #
 # All rights reserved.
 #
-# See Copyright.txt for details.
+# See LICENSE for details.
 #
 # Modified from CMake 2.6.5 CMakeCInformation.cmake
 # See http://www.cmake.org/HTML/Copyright.html for details
@@ -15,73 +18,192 @@
 # This file sets the basic flags for the D language in CMake.
 # It also loads the available platform file for the system-compiler
 # if it exists.
+# It also loads a system - compiler - processor (or target hardware)
+# specific file, which is mainly useful for crosscompiling and embedded systems.
 
+# Load compiler-specific information.
+
+set(_INCLUDED_FILE 0)  # reset the indicator if an include occurred.
+
+if(CMAKE_D_COMPILER_ID)
+  include(Compiler/${CMAKE_D_COMPILER_ID}-D OPTIONAL)
+endif(CMAKE_D_COMPILER_ID)
+
+# set(CMAKE_D_OUTPUT_EXTENSION .o)
+set(CMAKE_C_OUTPUT_EXTENSION_REPLACE TRUE )
+set(CMAKE_D_OUTPUT_EXTENSION_REPLACE TRUE )
+
+set(CMAKE_BASE_NAME)
 get_filename_component(CMAKE_BASE_NAME ${CMAKE_D_COMPILER} NAME_WE)
-if (CMAKE_BASE_NAME STREQUAL "dmd")
-    set (CMAKE_COMPILER_IS_DMD 1)
-elseif (CMAKE_BASE_NAME STREQUAL "ldmd2")
-    set (CMAKE_COMPILER_IS_LDC 1)
-elseif(CMAKE_BASE_NAME STREQUAL "gdc")
-    set(CMAKE_COMPILER_IS_GDC 1)
-else()
-    message(FATAL_ERROR "Unknown D compiler : ${CMAKE_BASE_NAME} does not belong to {dmd, gdc, ldmd2} ")
-endif()
 
-set(CMAKE_SYSTEM_AND_D_COMPILER_INFO_FILE 
-  ${CMAKE_ROOT}/Modules/Platform/${CMAKE_SYSTEM_NAME}-${CMAKE_BASE_NAME}.cmake)
-include(Platform/${CMAKE_SYSTEM_NAME}-${CMAKE_BASE_NAME} OPTIONAL)
+set(_INCLUDED_FILE 0)  # reset the indicator if an include occurred.
+
+# load a hardware specific file, mostly useful for embedded compilers
+if(CMAKE_SYSTEM_PROCESSOR)
+  if(CMAKE_D_COMPILER_ID)
+    include(Platform/${CMAKE_SYSTEM_NAME}-${CMAKE_D_COMPILER_ID}-D-${CMAKE_SYSTEM_PROCESSOR} OPTIONAL RESULT_VARIABLE _INCLUDED_FILE)
+  endif(CMAKE_D_COMPILER_ID)
+  if(NOT _INCLUDED_FILE)
+    include(Platform/${CMAKE_SYSTEM_NAME}-${CMAKE_BASE_NAME}-${CMAKE_SYSTEM_PROCESSOR} OPTIONAL)
+  endif(NOT _INCLUDED_FILE)
+endif(CMAKE_SYSTEM_PROCESSOR)
+
+set(_INCLUDED_FILE 0)  # reset the indicator if an include occurred.
+
+# load the system- and compiler specific files
+if(CMAKE_D_COMPILER_ID)
+  include(Platform/${CMAKE_SYSTEM_NAME}-${CMAKE_D_COMPILER_ID}-D
+    OPTIONAL RESULT_VARIABLE _INCLUDED_FILE)
+endif(CMAKE_D_COMPILER_ID)
+
+# if no high specificity file was included, then try a more general one
+if(NOT _INCLUDED_FILE)
+  include(Platform/${CMAKE_SYSTEM_NAME}-${CMAKE_BASE_NAME}
+    OPTIONAL RESULT_VARIABLE _INCLUDED_FILE)
+endif(NOT _INCLUDED_FILE)
+
+# We specify the compiler information in the system file for some
+# platforms, but this language may not have been enabled when the file
+# was first included.  Include it again to get the language info.
+# Remove this when all compiler info is removed from system files.
+if(NOT _INCLUDED_FILE)
+  include(Platform/${CMAKE_SYSTEM_NAME} OPTIONAL)
+endif(NOT _INCLUDED_FILE)
+
 
 # This should be included before the _INIT variables are
-# used to initialize the cache.  Since the rule variables 
+# used to initialize the cache.  Since the rule variables
 # have if blocks on them, users can still define them here.
 # But, it should still be after the platform file so changes can
 # be made to those values.
 
-IF(CMAKE_USER_MAKE_RULES_OVERRIDE)
-   INCLUDE(${CMAKE_USER_MAKE_RULES_OVERRIDE})
-ENDIF(CMAKE_USER_MAKE_RULES_OVERRIDE)
+if(CMAKE_USER_MAKE_RULES_OVERRIDE)
+   include(${CMAKE_USER_MAKE_RULES_OVERRIDE})
+endif(CMAKE_USER_MAKE_RULES_OVERRIDE)
 
-IF(CMAKE_USER_MAKE_RULES_OVERRIDE_D)
-   INCLUDE(${CMAKE_USER_MAKE_RULES_OVERRIDE_D})
-ENDIF(CMAKE_USER_MAKE_RULES_OVERRIDE_D)
+if(CMAKE_USER_MAKE_RULES_OVERRIDE_D)
+   include(${CMAKE_USER_MAKE_RULES_OVERRIDE_D})
+endif(CMAKE_USER_MAKE_RULES_OVERRIDE_D)
+
+# Lines below was taken from CMakeCXXInformation.cmake
+# Not all of this flags are available on D compilers for now, but some as OPTIONS_PIC are.
+
+if(NOT CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS)
+   set(CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS ${CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS})
+endif()
+
+if(NOT CMAKE_D_COMPILE_OPTIONS_PIC)
+   set(CMAKE_DCOMPILE_OPTIONS_PIC ${CMAKE_D_COMPILE_OPTIONS_PIC})
+endif()
+
+if(NOT CMAKE_D_COMPILE_OPTIONS_PIE)
+   set(CMAKE_D_COMPILE_OPTIONS_PIE ${CMAKE_D_COMPILE_OPTIONS_PIE})
+endif()
+
+if(NOT CMAKE_D_COMPILE_OPTIONS_DLL)
+   set(CMAKE_D_COMPILE_OPTIONS_DLL ${CMAKE_D_COMPILE_OPTIONS_DLL})
+endif()
+
+if(NOT CMAKE_SHARED_LIBRARY_D_FLAGS)
+   set(CMAKE_SHARED_LIBRARY_D_FLAGS ${CMAKE_SHARED_LIBRARY_D_FLAGS})
+endif()
+
+if(NOT DEFINED CMAKE_SHARED_LIBRARY_LINK_D_FLAGS)
+   set(CMAKE_SHARED_LIBRARY_LINK_D_FLAGS ${CMAKE_SHARED_LIBRARY_LINK_D_FLAGS})
+endif()
+
+if(NOT CMAKE_SHARED_LIBRARY_RUNTIME_D_FLAG)
+   set(CMAKE_SHARED_LIBRARY_RUNTIME_D_FLAG ${CMAKE_SHARED_LIBRARY_RUNTIME_D_FLAG})
+endif()
+
+if(NOT CMAKE_SHARED_LIBRARY_RUNTIME_D_FLAG_SEP)
+   set(CMAKE_SHARED_LIBRARY_RUNTIME_D_FLAG_SEP ${CMAKE_SHARED_LIBRARY_RUNTIME_D_FLAG_SEP})
+endif()
+
+if(NOT CMAKE_SHARED_LIBRARY_RPATH_LINK_D_FLAG)
+  set(CMAKE_SHARED_LIBRARY_RPATH_LINK_D_FLAG ${CMAKE_SHARED_LIBRARY_RPATH_LINK_D_FLAG})
+endif()
+
+if(NOT DEFINED CMAKE_EXE_EXPORTS_D_FLAG)
+  set(CMAKE_EXE_EXPORTS_D_FLAG ${CMAKE_EXE_EXPORTS_D_FLAG})
+endif()
+
+if(NOT DEFINED CMAKE_SHARED_LIBRARY_SONAME_D_FLAG)
+   set(CMAKE_SHARED_LIBRARY_SONAME_D_FLAG ${CMAKE_SHARED_LIBRARY_SONAME_D_FLAG})
+endif()
+
+if(NOT CMAKE_EXECUTABLE_RUNTIME_D_FLAG)
+  set(CMAKE_EXECUTABLE_RUNTIME_D_FLAG ${CMAKE_SHARED_LIBRARY_RUNTIME_D_FLAG})
+endif()
+
+if(NOT CMAKE_EXECUTABLE_RUNTIME_D_FLAG_SEP)
+  set(CMAKE_EXECUTABLE_RUNTIME_D_FLAG_SEP ${CMAKE_SHARED_LIBRARY_RUNTIME_D_FLAG_SEP})
+endif()
+
+if(NOT CMAKE_EXECUTABLE_RPATH_LINK_D_FLAG)
+  set(CMAKE_EXECUTABLE_RPATH_LINK_D_FLAG ${CMAKE_SHARED_LIBRARY_RPATH_LINK_D_FLAG})
+endif()
+
+if(NOT DEFINED CMAKE_SHARED_LIBRARY_LINK_D_WITH_RUNTIME_PATH)
+  set(CMAKE_SHARED_LIBRARY_LINK_D_WITH_RUNTIME_PATH ${CMAKE_SHARED_LIBRARY_LINK_D_WITH_RUNTIME_PATH})
+endif()
+
+if(NOT CMAKE_INCLUDE_FLAG_D)
+  set(CMAKE_INCLUDE_FLAG_D ${CMAKE_INCLUDE_FLAG_D})
+endif()
+
+if(NOT CMAKE_INCLUDE_FLAG_SEP_D)
+  set(CMAKE_INCLUDE_FLAG_SEP_D ${CMAKE_INCLUDE_FLAG_SEP_D})
+endif()
 
 # for most systems a module is the same as a shared library
 # so unless the variable CMAKE_MODULE_EXISTS is set just
 # copy the values from the LIBRARY variables
-IF(NOT CMAKE_MODULE_EXISTS)
-  SET(CMAKE_SHARED_MODULE_D_FLAGS ${CMAKE_SHARED_LIBRARY_D_FLAGS})
-  SET(CMAKE_SHARED_MODULE_CREATE_D_FLAGS ${CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS})
-ENDIF(NOT CMAKE_MODULE_EXISTS)
+if(NOT CMAKE_MODULE_EXISTS)
+  set(CMAKE_SHARED_MODULE_D_FLAGS ${CMAKE_SHARED_LIBRARY_D_FLAGS})
+  set(CMAKE_SHARED_MODULE_CREATE_D_FLAGS ${CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS})
+endif(NOT CMAKE_MODULE_EXISTS)
 
-if (NOT CMAKE_COMPILER_IS_LDC)
-  set (CMAKE_D_FLAGS "$ENV{CFLAGS} ${CMAKE_D_FLAGS_INIT}" CACHE STRING "Flags for D compiler.")
-else(NOT CMAKE_COMPILER_IS_LDC)
-    set (CMAKE_D_FLAGS "-I.") # Hack for -I empty not functioning with LDC
-endif(NOT CMAKE_COMPILER_IS_LDC)    
-  
-IF(NOT CMAKE_NOT_USING_CONFIG_FLAGS)
-# default build type is none
-  IF(NOT CMAKE_NO_BUILD_TYPE)
-    SET (CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE_INIT} CACHE STRING 
+# repeat for modules
+if(NOT CMAKE_SHARED_MODULE_CREATE_D_FLAGS)
+  set(CMAKE_SHARED_MODULE_CREATE_D_FLAGS ${CMAKE_SHARED_MODULE_CREATE_D_FLAGS})
+endif()
+
+if(NOT CMAKE_SHARED_MODULE_D_FLAGS)
+  set(CMAKE_SHARED_MODULE_D_FLAGS ${CMAKE_SHARED_MODULE_D_FLAGS})
+endif()
+
+set(CMAKE_D_FLAGS_INIT "$ENV{DFLAGS} ${CMAKE_D_FLAGS_INIT}")
+# avoid just having a space as the initial value for the cache
+if(CMAKE_D_FLAGS_INIT STREQUAL " ")
+  set(CMAKE_D_FLAGS_INIT)
+endif(CMAKE_D_FLAGS_INIT STREQUAL " ")
+set(CMAKE_D_FLAGS "${CMAKE_D_FLAGS_INIT}" CACHE STRING
+     "Flags used by the D compiler during all build types.")
+
+if(NOT CMAKE_NOT_USING_CONFIG_FLAGS)
+  # default build type is none
+  if(NOT CMAKE_NO_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE_INIT} CACHE STRING
       "Choose the type of build, options are: None(CMAKE_D_FLAGS used) Debug Release RelWithDebInfo MinSizeRel.")
-  ENDIF(NOT CMAKE_NO_BUILD_TYPE)
-  SET (CMAKE_D_FLAGS_DEBUG "${CMAKE_D_FLAGS_DEBUG_INIT}" CACHE STRING
+  endif(NOT CMAKE_NO_BUILD_TYPE)
+  set(CMAKE_D_FLAGS_DEBUG "${CMAKE_D_FLAGS_DEBUG_INIT}" CACHE STRING
     "Flags used by the compiler during debug builds.")
-  SET (CMAKE_D_FLAGS_MINSIZEREL "${CMAKE_D_FLAGS_MINSIZEREL_INIT}" CACHE STRING
+  set(CMAKE_D_FLAGS_MINSIZEREL "${CMAKE_D_FLAGS_MINSIZEREL_INIT}" CACHE STRING
     "Flags used by the compiler during release minsize builds.")
-  SET (CMAKE_D_FLAGS_RELEASE "${CMAKE_D_FLAGS_RELEASE_INIT}" CACHE STRING
+  set(CMAKE_D_FLAGS_RELEASE "${CMAKE_D_FLAGS_RELEASE_INIT}" CACHE STRING
     "Flags used by the compiler during release builds (/MD /Ob1 /Oi /Ot /Oy /Gs will produce slightly less optimized but smaller files).")
-  SET (CMAKE_D_FLAGS_RELWITHDEBINFO "${CMAKE_D_FLAGS_RELWITHDEBINFO_INIT}" CACHE STRING
+  set(CMAKE_D_FLAGS_RELWITHDEBINFO "${CMAKE_D_FLAGS_RELWITHDEBINFO_INIT}" CACHE STRING
     "Flags used by the compiler during Release with Debug Info builds.")
-ENDIF(NOT CMAKE_NOT_USING_CONFIG_FLAGS)
+endif(NOT CMAKE_NOT_USING_CONFIG_FLAGS)
 
-IF(CMAKE_D_STANDARD_LIBRARIES_INIT)
-  SET(CMAKE_D_STANDARD_LIBRARIES "${CMAKE_D_STANDARD_LIBRARIES_INIT}"
-    CACHE STRING "Libraries linked by defalut with all D applications.")
-  MARK_AS_ADVANCED(CMAKE_D_STANDARD_LIBRARIES)
-ENDIF(CMAKE_D_STANDARD_LIBRARIES_INIT)
+if(CMAKE_D_STANDARD_LIBRARIES_INIT)
+  set(CMAKE_D_STANDARD_LIBRARIES "${CMAKE_D_STANDARD_LIBRARIES_INIT}"
+    CACHE STRING "Libraries linked by default with all D applications.")
+  mark_as_advanced(CMAKE_D_STANDARD_LIBRARIES)
+endif(CMAKE_D_STANDARD_LIBRARIES_INIT)
 
-INCLUDE(CMakeCommonLanguageInclude)
+include(CMakeCommonLanguageInclude)
 
 # now define the following rule variables
 
@@ -101,69 +223,63 @@ INCLUDE(CMakeCommonLanguageInclude)
 # <LINK_FLAGS>
 
 # D compiler information
-# <CMAKE_D_COMPILER>  
+# <CMAKE_D_COMPILER>
 # <CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS>
 # <CMAKE_SHARED_MODULE_CREATE_D_FLAGS>
 # <CMAKE_D_LINK_FLAGS>
 
 # Static library tools
-# <CMAKE_AR> 
+# <CMAKE_AR>
 # <CMAKE_RANLIB>
 
-#set(CMAKE_D_VERSION_FLAG "-fversion=")
-set(CMAKE_SHARED_LIBRARY_D_FLAGS "-fPIC")
-if(CMAKE_COMPILER_IS_DMD)
-  set(CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS "-shared -defaultlib=libphobos2.so")
-else(CMAKE_COMPILER_IS_DMD)
-  set(CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS "-shared")
-endif(CMAKE_COMPILER_IS_DMD)
-set(CMAKE_D_COMPILE_OPTIONS_PIC "-fPIC")
-set(CMAKE_INCLUDE_FLAG_D "-I")       # -I
-set(CMAKE_INCLUDE_FLAG_D_SEP "")     # , or empty
-
-if(CMAKE_COMPILER_IS_GDC)
-  set(CMAKE_OUTPUT_D_FLAG "-o ")
-  set(CMAKE_LIBRARY_PATH_FLAG "-L")
-  set(CMAKE_LINK_LIBRARY_FLAG "-l")
-elseif(CMAKE_COMPILER_IS_DMD OR CMAKE_COMPILER_IS_LDC)
-  set(CMAKE_OUTPUT_D_FLAG "-of")
-  set(CMAKE_LIBRARY_PATH_FLAG "-L-L")
-  set(CMAKE_LINK_LIBRARY_FLAG "-L-l")
-  set(CMAKE_SHARED_LIBRARY_SONAME_D_FLAG "-L-soname -L")
-endif(CMAKE_COMPILER_IS_GDC)
+# < 2.8.10 backward compatibility
+if(NOT CMAKE_PLATFORM_INFO_DIR)
+  set(CMAKE_PLATFORM_INFO_DIR ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY})
+endif(NOT CMAKE_PLATFORM_INFO_DIR)
 
 # create a D shared library
 if(NOT CMAKE_D_CREATE_SHARED_LIBRARY)
-  	 set(CMAKE_D_CREATE_SHARED_LIBRARY
-  	    "<CMAKE_D_COMPILER> <CMAKE_SHARED_LIBRARY_D_FLAGS> <LANGUAGE_COMPILE_FLAGS> <LINK_FLAGS> <CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS> <CMAKE_SHARED_LIBRARY_SONAME_D_FLAG><TARGET_SONAME> ${CMAKE_OUTPUT_D_FLAG}<TARGET> <OBJECTS> <LINK_LIBRARIES>")
+	set(CMAKE_D_CREATE_SHARED_LIBRARY
+		"<CMAKE_D_COMPILER> <CMAKE_SHARED_LIBRARY_D_FLAGS> <LANGUAGE_COMPILE_FLAGS> <LINK_FLAGS> <CMAKE_SHARED_LIBRARY_CREATE_D_FLAGS> <CMAKE_SHARED_LIBRARY_SONAME_D_FLAG><TARGET_SONAME> ${CMAKE_D_DASH_O}<TARGET> <OBJECTS> <LINK_LIBRARIES> ${DSTDLIB_FLAGS} ${CMAKE_D_STDLIBS}")
 endif(NOT CMAKE_D_CREATE_SHARED_LIBRARY)
 
 # create a D shared module just copy the shared library rule
-IF(NOT CMAKE_D_CREATE_SHARED_MODULE)
-  SET(CMAKE_D_CREATE_SHARED_MODULE ${CMAKE_D_CREATE_SHARED_LIBRARY})
-ENDIF(NOT CMAKE_D_CREATE_SHARED_MODULE)
+if(NOT CMAKE_D_CREATE_SHARED_MODULE)
+  set(CMAKE_D_CREATE_SHARED_MODULE "${CMAKE_D_CREATE_SHARED_LIBRARY}")
+endif(NOT CMAKE_D_CREATE_SHARED_MODULE)
 
-# create a D static library
-if(NOT CMAKE_D_CREATE_STATIC_LIBRARY)
-  set(CMAKE_D_CREATE_STATIC_LIBRARY "<CMAKE_AR> cr <TARGET> <LINK_FLAGS> <OBJECTS> " "<CMAKE_RANLIB> <TARGET> ")
-endif(NOT CMAKE_D_CREATE_STATIC_LIBRARY)
+if(NOT CMAKE_D_CREATE_STATIC_LIBRARY AND CMAKE_STATIC_LIBRARY_CREATE_D_FLAGS)
+	set(CMAKE_D_CREATE_STATIC_LIBRARY
+		"<CMAKE_D_COMPILER> ${CMAKE_STATIC_LIBRARY_CREATE_D_FLAGS} <OBJECTS> ${CMAKE_D_DASH_O}<TARGET>")
+endif(NOT CMAKE_D_CREATE_STATIC_LIBRARY AND CMAKE_STATIC_LIBRARY_CREATE_D_FLAGS)
+
+# Create a static archive incrementally for large object file counts.
+# If CMAKE_D_CREATE_STATIC_LIBRARY is set it will override these.
+set(CMAKE_D_ARCHIVE_CREATE "<CMAKE_AR> cr <TARGET> <LINK_FLAGS> <OBJECTS>")
+set(CMAKE_D_ARCHIVE_APPEND "<CMAKE_AR> r  <TARGET> <LINK_FLAGS> <OBJECTS>")
+set(CMAKE_D_ARCHIVE_FINISH "<CMAKE_RANLIB> <TARGET>")
 
 # compile a D file into an object file
 if(NOT CMAKE_D_COMPILE_OBJECT)
-    set(CMAKE_D_COMPILE_OBJECT "<CMAKE_D_COMPILER> <FLAGS> ${CMAKE_OUTPUT_D_FLAG}<OBJECT> -c <SOURCE>")
+    if(NOT CMAKE_VERSION VERSION_LESS 3.4.0)
+        set(CMAKE_D_COMPILE_OBJECT
+         "<CMAKE_D_COMPILER> <FLAGS> <INCLUDES> ${CMAKE_D_DASH_O}<OBJECT> -c <SOURCE>")
+    else(NOT CMAKE_VERSION VERSION_LESS 3.4.0)
+        set(CMAKE_D_COMPILE_OBJECT
+         "<CMAKE_D_COMPILER> <FLAGS> ${CMAKE_D_DASH_O}<OBJECT> -c <SOURCE>")
+    endif(NOT CMAKE_VERSION VERSION_LESS 3.4.0)
 endif(NOT CMAKE_D_COMPILE_OBJECT)
 
-# link D files into executable 
 if(NOT CMAKE_D_LINK_EXECUTABLE)
-   set(CMAKE_D_LINK_EXECUTABLE
-      "<CMAKE_D_COMPILER> <FLAGS> <CMAKE_D_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> ${CMAKE_OUTPUT_D_FLAG}<TARGET> <LINK_LIBRARIES> ${DSTDLIB_FLAGS} ${DSTDLIB_TYPE}")
+  set(CMAKE_D_LINK_EXECUTABLE
+    "<CMAKE_D_COMPILER> <FLAGS> <CMAKE_D_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> ${CMAKE_D_DASH_O}<TARGET> <LINK_LIBRARIES> ${CMAKE_D_STDLIBS}")
 endif(NOT CMAKE_D_LINK_EXECUTABLE)
 
-MARK_AS_ADVANCED(
+mark_as_advanced(
 CMAKE_D_FLAGS
 CMAKE_D_FLAGS_DEBUG
 CMAKE_D_FLAGS_MINSIZEREL
 CMAKE_D_FLAGS_RELEASE
 CMAKE_D_FLAGS_RELWITHDEBINFO
 )
-SET(CMAKE_D_INFORMATION_LOADED 1)
+set(CMAKE_D_INFORMATION_LOADED 1)

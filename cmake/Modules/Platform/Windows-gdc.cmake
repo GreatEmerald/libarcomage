@@ -6,7 +6,7 @@
 #
 # All rights reserved.
 #
-# See Copyright.txt for details.
+# See LICENSE for details.
 #
 # Modified from CMake 2.6.5 gcc.cmake
 # See http://www.cmake.org/HTML/Copyright.html for details
@@ -33,4 +33,3 @@ SET (CMAKE_D_FLAGS_RELWITHDEBINFO_INIT "-O2 -g ${DDOC_FLAGS}")
 #  SET (CMAKE_D_CREATE_PREPROCESSED_SOURCE "<CMAKE_D_COMPILER> <FLAGS> -E <SOURCE> > <PREPROCESSED_SOURCE>")
 SET (CMAKE_D_CREATE_ASSEMBLY_SOURCE "<CMAKE_D_COMPILER> <FLAGS> -S <SOURCE> -o <ASSEMBLY_SOURCE>")
 #SET (CMAKE_INCLUDE_SYSTEM_FLAG_D "-isystem ")
-
