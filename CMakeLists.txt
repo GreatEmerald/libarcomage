@@ -1,7 +1,7 @@
 # GEm: The main CMake file to build the shared library.
 # GEm: Usage: cd to build/ and execute `cmake ..`
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
 # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ 
 # is checked
@@ -11,7 +11,7 @@ SET (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 SET(CMAKE_D_USE_PHOBOS True)
 
 # GEm: Which files to generate documentation for
-SET(CMAKE_D_BUILD_DOCS True)
+SET(CMAKE_D_BUILD_DOCS True CACHE BOOL "Whether to build documentation.")
 SET(CMAKE_D_DDOC_MODULES "arco;cards;wrapper")
 INCLUDE(UseDDoc)
 
@@ -22,8 +22,7 @@ INCLUDE (GNUInstallDirs)
 # Project
 ##############
 
-PROJECT (libarcomage D)
-SET (PROJECT_VERSION "0.2.0")
+PROJECT (libarcomage VERSION 0.2.0 LANGUAGES D)
 
 SET (DYNAMIC_LINKING "YES" CACHE BOOL "Whether to link with LuaD dynamically or statically. Dynamic is default and recommended.")
 
@@ -71,7 +70,15 @@ ADD_SUBDIRECTORY (src)
 # GEm: Install config and decks
 INSTALL (DIRECTORY lua/ DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/arcomage/libarcomage)
 
+# GEm: Install documentation
+if (CMAKE_D_BUILD_DOCS)
+  INSTALL (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/documentation/ DESTINATION ${CMAKE_INSTALL_DOCDIR}/libarcomage)
+endif (CMAKE_D_BUILD_DOCS)
+
 # GEm: CPack specifics below. This can be openSUSE-specific, so other distros should use their own packaging.
+SET (CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+SET (CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+SET (CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 SET (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Backend for tower-building card games")
 SET (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING.TXT")
 SET (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.TXT")
