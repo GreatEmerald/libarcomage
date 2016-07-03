@@ -10,7 +10,9 @@ SET (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 # Using Phobos
 SET(CMAKE_D_USE_PHOBOS True)
 
-# check for DDoc usage
+# GEm: Which files to generate documentation for
+SET(CMAKE_D_BUILD_DOCS True)
+SET(CMAKE_D_DDOC_MODULES "arco;cards;wrapper")
 INCLUDE(UseDDoc)
 
 # GEm: Make sure we allow setting the right lib[64] path
@@ -21,7 +23,7 @@ INCLUDE (GNUInstallDirs)
 ##############
 
 PROJECT (libarcomage D)
-SET (PROJECT_VERSION "0.1.1")
+SET (PROJECT_VERSION "0.2.0")
 
 SET (DYNAMIC_LINKING "YES" CACHE BOOL "Whether to link with LuaD dynamically or statically. Dynamic is default and recommended.")
 
