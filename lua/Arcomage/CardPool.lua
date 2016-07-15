@@ -1262,7 +1262,9 @@ Card
         RemoveTower(1, 4)
         return 1
     end;
-    AIFunction = function () return 0 end;
+    AIFunction = function ()
+        return AIAddTower(6)+AIRemoveEnemyTower(4)
+    end;
 }
 
 Card
@@ -2130,30 +2132,16 @@ Card
     Picture = {File = "images.png", Coordinates = {x = 88*3, y = 52*15, w = 88, h = 52}};
     Keywords = "";
     PlayFunction = function ()
-        if GetGems(1) >= 10 then
-            RemoveGems(1, 10)
-            AddGems(0, 5)
-        else
-            RemoveGems(1, 10)
-            AddGems(0, math.ceil(GetGems(1)/2))
-        end
-        if GetBricks(1) >= 5 then
-            RemoveBricks(1, 5)
-            AddBricks(0, 3)
-        else
-            RemoveBricks(1, 5)
-            AddBricks(0, math.ceil(GetBricks(1)/2))
-        end
+        RemoveGems(1, 10)
+        AddGems(0, math.ceil(math.min(GetGems(1), 10)/2.0))
+        RemoveBricks(1, 5)
+        AddBricks(0, math.ceil(math.min(GetBricks(1), 5)/2.0))
         return 1
     end;
     AIFunction = function ()
         local Priority = 0.0
-        if GetGems(1) >= 10 then Priority = Priority+AIRemoveEnemyGems(10)+AIAddGems(5)
-        else Priority = Priority+AIRemoveEnemyGems(10)+AIAddGems(math.ceil(GetGems(1)/2))
-        end
-        if GetBricks(1) >= 5 then Priority = Priority+AIRemoveEnemyBricks(5)+AIAddBricks(3)
-        else Priority = Priority+AIRemoveEnemyBricks(5)+AIAddBricks(math.ceil(GetBricks(1)/2))
-        end
+        Priority = Priority+AIRemoveEnemyGems(10)+AIAddGems(math.ceil(math.min(GetGems(1), 10)/2.0))
+        Priority = Priority+AIRemoveEnemyBricks(5)+AIAddBricks(math.ceil(math.min(GetBricks(1), 5)/2.0))
         return Priority
     end;
 }
